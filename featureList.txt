@@ -1,10 +1,24 @@
 * main table
-* sort
+* sorting
 * pagination
-* checkbox
+* checkbox logic
+* base API
 * css API
 * css API as props
 * events handling (onResize, onSort, onPagination, onCheckbox)
 * loading state
 * error state
 * empty state
+* option for custom components
+* dictionary
+* optional context provider for overriding default components
+
+component:
+* tooltip component
+* skeleton component
+* checkbox component
+* text component
+* icon button component
+* icon component
+* select component
+* table pagination component

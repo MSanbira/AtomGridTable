@@ -1,0 +1,83 @@
+.AGT-typography {
+  color: var(--AGT-c-text-primary);
+  margin: 0;
+}
+
+h1.AGT-typography {
+  font-size: 24px;
+  font-weight: var(--AGT-bold-font);
+}
+
+h2.AGT-typography {
+  font-size: 20px;
+  font-weight: var(--AGT-bold-font);
+}
+
+h3.AGT-typography {
+  font-size: 18px;
+  font-weight: var(--AGT-bold-font);
+}
+
+h4.AGT-typography {
+  font-size: 16px;
+  font-weight: var(--AGT-bold-font);
+}
+
+p.AGT-typography,
+h5.AGT-typography {
+  font-size: 14px;
+  font-weight: var(--AGT-regular-font);
+}
+
+p.AGT-typography.body2 {
+  font-size: 12px;
+  font-weight: var(--AGT-regular-font);
+}
+
+.AGT-typography.color-secondary {
+  color: var(--AGT-c-text-secondary);
+}
+
+.AGT-typography.color-tertiary {
+  color: var(--AGT-c-text-tertiary);
+}
+
+.AGT-typography.color-annotation {
+  color: var(--AGT-c-text-annotation);
+}
+
+.AGT-typography.color-error {
+  color: var(--AGT-c-error);
+}
+
+.AGT-typography.color-warning {
+  color: var(--AGT-c-warning);
+}
+
+.AGT-typography.color-active {
+  color: var(--AGT-c-primary);
+}
+
+.AGT-typography.color-success {
+  color: var(--AGT-c-success);
+}
+
+.AGT-typography:is(#_, .is-bold) {
+  font-weight: var(--AGT-bold-font);
+}
+
+.AGT-typography.is-low-opacity {
+  opacity: 0.5;
+}
+
+.AGT-typography.small {
+  font-size: 10px;
+}
+
+.AGT-typography.is-underline {
+  text-decoration: underline;
+}
+
+.AGT-typography.is-balanced {
+  text-wrap: balance;
+}

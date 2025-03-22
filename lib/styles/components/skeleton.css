@@ -1,0 +1,25 @@
+.AGT-skeleton {
+  --AGT-skeleton-width: 100%;
+  --AGT-skeleton-height: 100%;
+  --AGT-skeleton-color-start: #f0f0f0;
+  --AGT-skeleton-color-end: #e0e0e0;
+  --AGT-skeleton-border-radius: 4px;
+
+  width: var(--AGT-skeleton-width);
+  height: var(--AGT-skeleton-height);
+  background: var(--AGT-skeleton-color-start);
+  animation: AGT-skeleton-animation 1.5s infinite linear;
+  border-radius: var(--AGT-skeleton-border-radius);
+}
+
+@keyframes AGT-skeleton-animation {
+  0% {
+    background: var(--AGT-skeleton-color-start);
+  }
+  50% {
+    background: var(--AGT-skeleton-color-end);
+  }
+  100% {
+    background: var(--AGT-skeleton-color-start);
+  }
+}
