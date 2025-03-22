@@ -1,0 +1,10 @@
+* main table
+* sort
+* pagination
+* checkbox
+* css API
+* css API as props
+* events handling (onResize, onSort, onPagination, onCheckbox)
+* loading state
+* error state
+* empty state
