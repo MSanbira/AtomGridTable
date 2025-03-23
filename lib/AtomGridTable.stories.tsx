@@ -15,5 +15,64 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: {},
+  args: {
+    colOptions: [
+      {
+        label: "Name",
+        name: "name",
+        width: "200px",
+      },
+      {
+        label: "Age",
+        name: "age",
+        width: "100px",
+      },
+      {
+        label: "Email",
+        name: "email",
+        width: "250px",
+      },
+      {
+        label: "Status",
+        name: "status",
+        width: "150px",
+      },
+    ],
+    rows: [
+      {
+        cells: [
+          { content: "John Doe" },
+          { content: "32", isNumber: true },
+          { content: "john.doe@example.com" },
+          { content: "Active", className: "status-active" },
+        ],
+      },
+      {
+        cells: [
+          { content: "Jane Smith" },
+          { content: "28", isNumber: true },
+          { content: "jane.smith@example.com" },
+          { content: "Inactive", className: "status-inactive" },
+        ],
+      },
+      {
+        cells: [
+          { content: "Bob Johnson" },
+          { content: "45", isNumber: true },
+          { content: "bob.johnson@example.com" },
+          { content: "Active", className: "status-active" },
+        ],
+      },
+      {
+        cells: [
+          { content: "Alice Brown" },
+          { content: "35", isNumber: true },
+          { content: "alice.brown@example.com" },
+          { content: "Active", className: "status-active" },
+        ],
+      },
+    ],
+    isHasSelect: true,
+    tableType: "basic",
+  },
 };

@@ -1,14 +1,14 @@
 import React, { ReactElement } from "react";
 
 export const Tooltip: React.FC<TooltipProps> = (props: TooltipProps) => {
-  const { content, children } = props;
+  const { title, children } = props;
 
   return React.cloneElement(children, {
-    title: content?.toString(),
+    title: title?.toString(),
   } as React.HTMLAttributes<HTMLElement>);
 };
 
 interface TooltipProps {
-  content: React.ReactNode;
+  title: React.ReactNode;
   children: ReactElement;
 }
