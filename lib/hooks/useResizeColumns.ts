@@ -1,13 +1,18 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ColOption } from "../types/table.types";
+import { tableHelper } from "../helpers/tableHelper";
 
 export const useResizeColumns = (props: useResizeColumnsProps) => {
-  const { colOptions } = props;
+  const { colOptions, isHasSelect } = props;
 
   const [mouseClientX, setMouseClientX] = useState<number>(0);
   const [isResizing, setIsResizing] = useState<boolean>(false);
 
   const wrapperRef = useRef<HTMLDivElement>(null);
+
+  const colOptionsWithSelect = useMemo(() => {
+    return tableHelper.getColOptionsWithSelect(colOptions, !!isHasSelect);
+  }, [colOptions, isHasSelect]);
 
   const setResizeCellOptions = useCallback(
     (
@@ -91,6 +96,14 @@ export const useResizeColumns = (props: useResizeColumnsProps) => {
     return () => document.removeEventListener("mousemove", handleMouseMove);
   }, [handleMouseMove]);
 
+  useEffect(() => {
+    if (!wrapperRef.current) return;
+
+    const colWidths = colOptionsWithSelect.map((col) => col.width || "minmax(150px, 1fr)");
+    wrapperRef.current.setAttribute("data-col-widths", colWidths.join(";"));
+    wrapperRef.current.style.setProperty("--template-cols", colWidths.join(" "));
+  }, [colOptionsWithSelect, wrapperRef]);
+
   return {
     wrapperRef,
     isResizing,
@@ -100,4 +113,5 @@ export const useResizeColumns = (props: useResizeColumnsProps) => {
 
 interface useResizeColumnsProps {
   colOptions: ColOption[];
+  isHasSelect?: boolean;
 }
