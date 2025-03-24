@@ -1,8 +1,8 @@
 import React from "react";
-import { PaginationSizeOptions, PaginationStore } from "../../../hooks/usePagination";
-import { Typography } from "../../../components/Typography/Typography";
-import { IconButton } from "../../../components/IconButton/IconButton";
-import { Select } from "../../../components/Select/Select";
+import { PaginationSizeOptions, PaginationStore } from "../../hooks/usePagination";
+import { Typography } from "../Typography/Typography";
+import { IconButton } from "../IconButton/IconButton";
+import { Select } from "../Select/Select";
 
 export const TablePagination = (props: TablePaginationProps) => {
   const {
