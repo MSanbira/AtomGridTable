@@ -1,24 +1,17 @@
-import React, {
-  CSSProperties,
-  ReactElement,
-  ReactNode,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { CSSProperties, ReactElement, ReactNode, useCallback, useEffect, useMemo } from "react";
 import { Typography } from "./components/Typography/Typography";
 import { Tooltip } from "./components/Tooltip/Tooltip";
 import { Checkbox } from "./components/Checkbox/Checkbox";
 import { getClasses } from "./helpers/classNameHelper";
-import { SortingDirection, SortingStore } from "./hooks/useSorting";
+import { SortingDirection } from "./hooks/useSorting";
 import { tableHelper } from "./helpers/tableHelper";
 import { Skeleton } from "./components/Skeleton/Skeleton";
-import { PaginationStore } from "./hooks/usePagination";
 import { InformationToolTipContent } from "./components/Tooltip/InformationToolTipContent";
 import { TablePagination } from "./components/TableParts/TablePagination/TablePagination";
 import "./styles/index.css";
+import { useResizeColumns } from "./hooks/useResizeColumns";
+import { TableProps, TableCell, TableRow } from "./types/table.types";
+import { useSelectRows } from "./hooks/useSelectRows";
 
 export default function AtomGridTable(props: TableProps) {
   const {
@@ -37,7 +30,15 @@ export default function AtomGridTable(props: TableProps) {
     isFirstRowHeader,
   } = props;
 
-  const wrapperRef = useRef<HTMLDivElement>(null);
+  const { wrapperRef, isResizing, handleMouseDownResize } = useResizeColumns({
+    colOptions,
+  });
+
+  const { handleSelectRowClick, handleSelectAllClick } = useSelectRows({
+    rows,
+    selectedRows,
+    setSelected,
+  });
 
   const colOptionsWithSelect = useMemo(() => {
     if (!isHasSelect) return colOptions;
@@ -49,126 +50,6 @@ export default function AtomGridTable(props: TableProps) {
       ...colOptions,
     ];
   }, [colOptions, isHasSelect]);
-
-  const [mouseClientX, setMouseClientX] = useState<number>(0);
-  const [isResizing, setIsResizing] = useState<boolean>(false);
-
-  const setResizeCellOptions = useCallback(
-    (
-      options: {
-        index: number;
-        startX: number;
-        initialWidth: number;
-      } | null
-    ) => {
-      wrapperRef.current?.setAttribute("data-resize-cell-options", JSON.stringify(options));
-    },
-    []
-  );
-
-  const handleResize = useCallback(() => {
-    const resizeCellOptionsStr = wrapperRef.current?.getAttribute("data-resize-cell-options");
-    if (!resizeCellOptionsStr) return;
-
-    const resizeCellOptions = JSON.parse(resizeCellOptionsStr);
-
-    const colResizeOptions = colOptions[resizeCellOptions?.index]?.resizeOptions;
-    if (!colResizeOptions) return;
-
-    const delta = mouseClientX - resizeCellOptions.startX;
-    const colWidths = wrapperRef.current?.getAttribute("data-col-widths")?.split(";") ?? [];
-    const colWidth = colWidths[resizeCellOptions.index];
-    const colWidthNumber = colWidth.match(/^\d+px$/g)
-      ? parseInt(colWidth.replace("px", ""))
-      : resizeCellOptions.initialWidth;
-    const clampValue = Math.min(
-      Math.max(Math.round(colWidthNumber + delta), colResizeOptions.min),
-      colResizeOptions.max
-    );
-
-    if (clampValue >= colResizeOptions.max || clampValue <= colResizeOptions.min) return;
-
-    colWidths[resizeCellOptions.index] = `${clampValue}px`;
-    wrapperRef.current?.setAttribute("data-col-widths", colWidths.join(";"));
-    wrapperRef.current?.style.setProperty("--template-cols", colWidths.join(" "));
-
-    setResizeCellOptions({ ...resizeCellOptions, startX: mouseClientX });
-  }, [colOptions, mouseClientX, setResizeCellOptions]);
-
-  const handleRemoveResize = useCallback(() => {
-    // to not register a click on a sorting header
-    setTimeout(() => {
-      setResizeCellOptions(null);
-      setIsResizing(false);
-    }, 50);
-  }, [setResizeCellOptions]);
-
-  const handleMouseMove = useCallback((e: MouseEvent) => {
-    setMouseClientX(e.clientX);
-  }, []);
-
-  const handleMouseDownResize = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>, index: number) => {
-      setResizeCellOptions({
-        index: index,
-        startX: e.clientX,
-        initialWidth: e.currentTarget?.parentElement?.clientWidth ?? 100,
-      });
-      setIsResizing(true);
-    },
-    [setResizeCellOptions]
-  );
-
-  const handleSelectRowClick = useCallback(
-    (e: React.MouseEvent, identifier: number | string) => {
-      e.stopPropagation();
-      const temp = [...selectedRows];
-      const index = temp.indexOf(identifier);
-      if (e.shiftKey && temp.length) {
-        const lastSelectedIndex = temp[temp.length - 1];
-        const lastIndex = rows.findIndex((row) => row.selectIdentifier === lastSelectedIndex);
-        const currentIndex = rows.findIndex((row) => row.selectIdentifier === identifier);
-        const [start, end] = lastIndex > currentIndex ? [currentIndex, lastIndex] : [lastIndex, currentIndex];
-        const range = rows.map((row, i) => row.selectIdentifier ?? i).slice(start, end + 1);
-        const newSelected = temp.includes(identifier) ? temp.filter((id) => !range.includes(id)) : [...temp, ...range];
-        setSelected(newSelected);
-        return;
-      }
-
-      if (index !== -1) {
-        temp.splice(index, 1);
-      } else {
-        temp.push(identifier);
-      }
-
-      setSelected(temp);
-    },
-    [rows, selectedRows, setSelected]
-  );
-
-  const handleSelectAllClick = useCallback(() => {
-    if (selectedRows.length) {
-      setSelected([]);
-    } else {
-      setSelected(rows.map((row, i) => row.selectIdentifier ?? i));
-    }
-  }, [rows, selectedRows, setSelected]);
-
-  useEffect(() => {
-    if (isResizing) {
-      handleResize();
-    }
-  }, [mouseClientX, handleResize, isResizing]);
-
-  useEffect(() => {
-    document.addEventListener("mouseup", handleRemoveResize);
-    return () => document.removeEventListener("mouseup", handleRemoveResize);
-  }, [handleRemoveResize]);
-
-  useEffect(() => {
-    document.addEventListener("mousemove", handleMouseMove);
-    return () => document.removeEventListener("mousemove", handleMouseMove);
-  }, [handleMouseMove]);
 
   useEffect(() => {
     if (!wrapperRef.current) return;
@@ -399,18 +280,19 @@ export default function AtomGridTable(props: TableProps) {
       </>
     );
   }, [
-    colOptions,
-    handleSelectRowClick,
-    isHasSelect,
     isLoading,
-    loaderRowsCount,
-    paginationStore,
-    rows,
-    selectedRows,
     tableHeaders,
-    selectionArea,
-    getTableRowCell,
+    rows.length,
+    wrapperRef,
     rowsToDisplay,
+    selectionArea,
+    isHasSelect,
+    paginationStore,
+    selectedRows,
+    loaderRowsCount,
+    colOptions.length,
+    handleSelectRowClick,
+    getTableRowCell,
   ]);
 
   return (
@@ -418,48 +300,4 @@ export default function AtomGridTable(props: TableProps) {
       {tableContent}
     </div>
   );
-}
-
-interface TableProps {
-  colOptions: ColOption[];
-  rows: TableRow[];
-  className?: string;
-  isLoading?: boolean;
-  paginationStore?: PaginationStore;
-  sortingStore?: SortingStore;
-  loaderRowsCount?: number;
-  selectedRows?: (number | string)[];
-  isHasSelect?: boolean;
-  setSelected?: (selected: (number | string)[]) => void;
-  tableType?: "basic" | "dashboard" | "dynamicBlock" | "survey";
-  selectionArea?: string;
-  isFirstRowHeader?: boolean;
-}
-
-export interface ColOption {
-  label?: string;
-  tooltip?: string;
-  // will be use as a key for sorting
-  name?: string;
-  width?: string;
-  resizeOptions?: { min: number; max: number };
-  isHeadersColumn?: boolean;
-}
-
-export interface TableRow extends Omit<React.HTMLAttributes<HTMLDivElement>, "content"> {
-  cells: (TableCell | undefined)[];
-  isSelected?: boolean;
-  selectIdentifier?: number | string;
-  isHeader?: boolean;
-}
-
-export interface TableCell extends Omit<React.HTMLAttributes<HTMLDivElement>, "content"> {
-  content: ReactNode;
-  span?: number;
-  isOneLine?: boolean;
-  isNumber?: boolean;
-  isHeader?: boolean;
-  isNoPadding?: boolean;
-  isDisabled?: boolean;
-  isCentered?: boolean;
 }
