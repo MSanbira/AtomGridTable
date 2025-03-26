@@ -1,21 +1,30 @@
 import { ReactNode } from "react";
-import { PaginationStore } from "../hooks/usePagination";
-import { SortingStore } from "../hooks/useSorting";
+import { SortingApiParams, SortingDirection, SortingOptions } from "../hooks/useSorting";
+import { PaginationApiParams, PaginationOptions } from "../hooks/usePagination";
 
-export interface TableProps {
+export interface TableProps extends TableHandlers {
   colOptions: ColOption[];
   rows: TableRow[];
   className?: string;
   isLoading?: boolean;
-  paginationStore?: PaginationStore;
-  sortingStore?: SortingStore;
   loaderRowsCount?: number;
   selectedRows?: (number | string)[];
   isHasSelect?: boolean;
-  setSelected?: (selected: (number | string)[]) => void;
   tableType?: "basic" | "dashboard" | "dynamicBlock" | "survey";
   selectionArea?: string;
   isFirstRowHeader?: boolean;
+  setSelected?: (selected: (number | string)[]) => void;
+  paginationOptions?: PaginationOptions;
+  sortingOptions?: SortingOptions;
+}
+
+interface TableHandlers {
+  onPageOptionChange?: (apiParams: PaginationApiParams | unknown, page: number, pageSize: number) => void;
+  onSortOptionChange?: (
+    apiParams: SortingApiParams | unknown,
+    ordering: string,
+    direction: SortingDirection | null
+  ) => void;
 }
 
 export interface ColOption {

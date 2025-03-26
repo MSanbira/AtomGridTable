@@ -26,8 +26,6 @@ export const TableHeader = ({
     return tableHelper.getColOptionsWithSelect(colOptions, !!isHasSelect);
   }, [colOptions, isHasSelect]);
 
-  console.log("colOptionsWithSelect", colOptionsWithSelect);
-
   return (
     <div
       className={getClasses({
@@ -77,6 +75,7 @@ export const TableHeader = ({
                 {col.label ?? ""}
               </Typography>
               {col.tooltip && <InformationToolTipContent tooltipTitle={col.tooltip} />}
+              {/* TODO: change to on hover when null */}
               {isSorting && (arrowDir === "down" ? "⬇️" : "⬆️")}
               {col.resizeOptions && <div className="resize-bar" onMouseDown={(e) => handleMouseDownResize(e, i)} />}
             </>

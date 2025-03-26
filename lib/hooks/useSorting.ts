@@ -7,16 +7,18 @@ export enum SortingDirection {
 
 const DirectionOptions = [SortingDirection.ASC, SortingDirection.DESC, null];
 
-export const useSorting = (options: useSortingOptions = {}) => {
-  const { defaultOrdering, defaultDirection, onSort } = options;
+export const useSorting = (options: SortingOptions) => {
+  const { defaultOrdering, defaultDirection, resetPage, getApiParams } = options;
   const [ordering, setOrdering] = useState<string>(defaultOrdering ?? "");
   const [direction, setDirection] = useState<SortingDirection | null>(defaultDirection ?? null);
 
-  const apiParams = useMemo<SortingApiParams>(() => {
+  const apiParams = useMemo<SortingApiParams | unknown>(() => {
+    if (getApiParams) return getApiParams(ordering, direction);
+
     if (!direction || !ordering) return { ordering: undefined };
 
     return { ordering: `${direction === SortingDirection.ASC ? "" : "-"}${ordering}` };
-  }, [direction, ordering]);
+  }, [direction, ordering, getApiParams]);
 
   const handleChangeSort = useCallback(
     (newOrdering: string) => {
@@ -24,14 +26,13 @@ export const useSorting = (options: useSortingOptions = {}) => {
         const currentDirectionIndex = DirectionOptions.indexOf(direction);
         const nextDirection = DirectionOptions[(currentDirectionIndex + 1) % DirectionOptions.length];
         setDirection(nextDirection);
-        onSort?.(newOrdering, nextDirection);
       } else {
         setOrdering(newOrdering);
         setDirection(DirectionOptions[0]);
-        onSort?.(newOrdering, DirectionOptions[0]);
       }
+      resetPage();
     },
-    [direction, onSort, ordering]
+    [direction, resetPage, ordering]
   );
 
   return { ordering, direction, handleChangeSort, apiParams };
@@ -39,10 +40,10 @@ export const useSorting = (options: useSortingOptions = {}) => {
 
 export type SortingApiParams = { ordering: string | undefined };
 
-interface useSortingOptions {
+export type SortingStore = ReturnType<typeof useSorting>;
+export interface SortingOptions {
   defaultOrdering?: string;
   defaultDirection?: SortingDirection | null;
-  onSort?: (ordering: string, direction: SortingDirection | null) => void;
+  resetPage: () => void;
+  getApiParams?: (ordering: string, direction: SortingDirection | null) => unknown;
 }
-
-export type SortingStore = ReturnType<typeof useSorting>;
