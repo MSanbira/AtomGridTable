@@ -4,7 +4,7 @@ import { TablePagination } from "./TablePagination";
 import { PaginationStore } from "../../hooks/usePagination";
 
 export const TableFooter = (props: TableFooterProps) => {
-  const { isHasSelect, selectedRows = [], paginationStore } = props;
+  const { isHasSelect, selectedRows = [], paginationStore, isPagination } = props;
   if (!isHasSelect && !paginationStore) return null;
 
   return (
@@ -15,13 +15,14 @@ export const TableFooter = (props: TableFooterProps) => {
         </Typography>
       )}
 
-      {paginationStore && <TablePagination paginationStore={paginationStore} />}
+      {isPagination && <TablePagination paginationStore={paginationStore} />}
     </div>
   );
 };
 
 interface TableFooterProps {
+  paginationStore: PaginationStore;
+  isPagination?: boolean;
   isHasSelect?: boolean;
   selectedRows?: (string | number)[];
-  paginationStore?: PaginationStore;
 }

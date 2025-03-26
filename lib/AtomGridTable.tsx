@@ -1,4 +1,4 @@
-import React, { CSSProperties, ReactElement, useMemo } from "react";
+import React, { CSSProperties, ReactElement, useEffect, useMemo } from "react";
 import { Typography } from "./components/Typography/Typography";
 import { getClasses } from "./helpers/classNameHelper";
 import { tableHelper } from "./helpers/tableHelper";
@@ -11,6 +11,8 @@ import { LoaderRowsCount } from "./constants/tableDefaults";
 import { TableHeader } from "./components/TableParts/TableHeader";
 import { TableRow as TableRowComponent } from "./components/TableParts/TableRow";
 import { TableFooter } from "./components/TableParts/TableFooter";
+import { usePagination } from "./hooks/usePagination";
+import { useSorting } from "./hooks/useSorting";
 
 export default function AtomGridTable(props: TableProps) {
   const {
@@ -18,8 +20,6 @@ export default function AtomGridTable(props: TableProps) {
     rows,
     className,
     isLoading,
-    paginationStore,
-    sortingStore,
     loaderRowsCount = LoaderRowsCount,
     selectedRows = [],
     setSelected = () => {},
@@ -27,7 +27,16 @@ export default function AtomGridTable(props: TableProps) {
     tableType = "basic",
     selectionArea,
     isFirstRowHeader,
+    paginationOptions,
+    onPageOptionChange,
+    onSortOptionChange,
+    sortingOptions,
   } = props;
+
+  const paginationStore = usePagination(paginationOptions ?? {});
+  const { apiParams: paginationApiParams, page, pageSize, setPage } = paginationStore;
+  const sortingStore = useSorting({ ...sortingOptions, resetPage: sortingOptions?.resetPage ?? (() => setPage(0)) });
+  const { apiParams: sortingApiParams, ordering, direction } = sortingStore;
 
   const { wrapperRef, isResizing, handleMouseDownResize } = useResizeColumns({ colOptions, isHasSelect });
   const { handleSelectRowClick, handleSelectAllClick } = useSelectRows({
@@ -43,6 +52,14 @@ export default function AtomGridTable(props: TableProps) {
     temp.shift();
     return temp;
   }, [rows, isFirstRowHeader]);
+
+  useEffect(() => {
+    onPageOptionChange?.(paginationApiParams, page, pageSize);
+  }, [paginationApiParams, page, pageSize, onPageOptionChange]);
+
+  useEffect(() => {
+    onSortOptionChange?.(sortingApiParams, ordering, direction);
+  }, [sortingApiParams, ordering, direction, onSortOptionChange]);
 
   const wrapperClasses = getClasses(
     {
@@ -146,7 +163,12 @@ export default function AtomGridTable(props: TableProps) {
   return (
     <div className={wrapperClasses} ref={wrapperRef}>
       {tableContent}
-      <TableFooter isHasSelect={isHasSelect} selectedRows={selectedRows} paginationStore={paginationStore} />
+      <TableFooter
+        isHasSelect={isHasSelect}
+        selectedRows={selectedRows}
+        paginationStore={paginationStore}
+        isPagination={!!paginationOptions}
+      />
     </div>
   );
 }

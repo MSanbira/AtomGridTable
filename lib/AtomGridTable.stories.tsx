@@ -24,12 +24,10 @@ export const Default: Story = {
       },
       {
         label: "Age",
-        name: "age",
         width: "100px",
       },
       {
         label: "Email",
-        name: "email",
         width: "250px",
       },
       {

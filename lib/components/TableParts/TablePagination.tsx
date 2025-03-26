@@ -1,12 +1,12 @@
 import React from "react";
-import { PaginationSizeOptions, PaginationStore } from "../../hooks/usePagination";
+import { PaginationStore } from "../../hooks/usePagination";
 import { Typography } from "../Typography/Typography";
 import { IconButton } from "../IconButton/IconButton";
 import { Select } from "../Select/Select";
 
 export const TablePagination = (props: TablePaginationProps) => {
   const {
-    paginationStore: { page, pageSize, rowCount, setPage, setPageSize },
+    paginationStore: { page, pageSize, rowCount, setPage, setPageSize, pageSizeOptions },
     dictionary,
   } = props;
 
@@ -17,7 +17,7 @@ export const TablePagination = (props: TablePaginationProps) => {
         <Select
           value={pageSize}
           onChange={(e) => setPageSize(Number(e.target.value))}
-          options={PaginationSizeOptions.map((option) => ({
+          options={pageSizeOptions.map((option) => ({
             value: option.toString(),
           }))}
         />
