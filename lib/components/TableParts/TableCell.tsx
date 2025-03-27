@@ -24,7 +24,7 @@ export const TableCell = (props: TableCellProps) => {
 
   const cellContent = useMemo<ReactNode | null>(() => {
     return ["string", "number"].includes(typeof content) ? (
-      <Typography className={getClasses({ "one-line-text": !!isOneLine })}>{content}</Typography>
+      <Typography className={getClasses({ "AGT-one-line-text": !!isOneLine })}>{content}</Typography>
     ) : (
       content
     );
@@ -35,11 +35,11 @@ export const TableCell = (props: TableCellProps) => {
       key={index}
       className={getClasses(
         {
-          "AGT-module-table-cell": true,
+          "AGT-table-cell": true,
           "has-action": !!onClick,
           "is-number": !!isNumber,
           "is-header": !!isHeader || !!colOptions[index]?.isHeadersColumn,
-          "is-no-padding": !!isNoPadding,
+          "AGT-is-no-padding": !!isNoPadding,
           "is-disabled": !!isDisabled,
           "is-centered": !!isCentered,
         },

@@ -19,13 +19,22 @@ export interface TableProps extends TableHandlers {
 }
 
 interface TableHandlers {
-  onPageOptionChange?: (apiParams: PaginationApiParams | unknown, page: number, pageSize: number) => void;
-  onSortOptionChange?: (
-    apiParams: SortingApiParams | unknown,
-    ordering: string,
-    direction: SortingDirection | null
-  ) => void;
+  onPageOptionChange?: (pageOptions: PaginationChangeOptions) => void;
+  onSortOptionChange?: (sortOptions: SortingChangeOptions) => void;
+  onChange?: (generalOptions: { pageOptions: PaginationChangeOptions; sortOptions: SortingChangeOptions }) => void;
 }
+
+export type PaginationChangeOptions = {
+  apiParams: PaginationApiParams | unknown;
+  page: number;
+  pageSize: number;
+};
+
+export type SortingChangeOptions = {
+  apiParams: SortingApiParams | unknown;
+  ordering: string;
+  direction: SortingDirection | null;
+};
 
 export interface ColOption {
   label?: string;

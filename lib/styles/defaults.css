@@ -20,15 +20,24 @@
   --AGT-c-warning: #f59e0b;
   --AGT-c-primary: #2563eb;
   --AGT-c-success: #16a34a;
+  --AGT-c-primary-light: #dbeafe;
+  --AGT-c-table-row-has-action: #f3f4f6;
+  --AGT-c-line: #e5e7eb;
 
   /* Fonts */
   --AGT-bold-font: 700;
   --AGT-regular-font: 400;
+
+  /* Transitions */
+  --t-time: 300ms;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --AGT-c-text-primary: #fff;
     --AGT-c-text-secondary: #fff;
+    --AGT-c-table-row-has-action: #374151;
+    --AGT-c-primary-light: rgba(37, 99, 235, 0.2);
+    --AGT-c-line: #374151;
   }
 }

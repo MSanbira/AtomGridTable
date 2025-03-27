@@ -29,7 +29,7 @@ export const TableRow = ({
     <div
       className={getClasses(
         {
-          "AGT-module-table-row": true,
+          "AGT-table-row": true,
           "is-selected": !!isSelected,
           "has-action": !!onClick,
           "is-header": !!isHeader,
@@ -41,11 +41,22 @@ export const TableRow = ({
       {...rest}
     >
       {isHasSelect && (
-        <Checkbox
-          checked={selectedRows.includes(selectIdentifier ?? index)}
-          onClick={(e) => handleSelectRowClick(e, selectIdentifier ?? index)}
+        <TableCell
+          key={0}
+          index={-1}
+          cell={{
+            content: (
+              <Checkbox
+                checked={selectedRows.includes(selectIdentifier ?? index)}
+                onClick={(e) => handleSelectRowClick(e, selectIdentifier ?? index)}
+              />
+            ),
+          }}
+          colOptions={colOptions}
+          handleMouseDownResize={handleMouseDownResize}
         />
       )}
+
       {cells.map((cell, cellIndex) => {
         if (!cell) return null;
 

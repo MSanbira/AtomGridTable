@@ -29,7 +29,7 @@ export const TableHeader = ({
   return (
     <div
       className={getClasses({
-        "AGT-module-table-row": true,
+        "AGT-table-row": true,
         "is-header": !!isFirstRowHeader && !!rows[0]?.isHeader,
       })}
     >
@@ -38,7 +38,7 @@ export const TableHeader = ({
         const arrowDir = sortingStore?.direction === SortingDirection.ASC ? "down" : "up";
         const handleSorting = isSorting && !isResizing ? () => sortingStore!.handleChangeSort(col.name!) : undefined;
         const classes = getClasses({
-          "AGT-module-table-header": true,
+          "AGT-table-header": true,
           "is-sortable": isSorting,
           "is-sorting": sortingStore?.ordering === col.name && !!sortingStore?.direction,
         });
@@ -71,7 +71,7 @@ export const TableHeader = ({
         } else {
           headerContent = (
             <>
-              <Typography className="one-line-text" color="secondary">
+              <Typography className="AGT-one-line-text" color="secondary">
                 {col.label ?? ""}
               </Typography>
               {col.tooltip && <InformationToolTipContent tooltipTitle={col.tooltip} />}

@@ -30,6 +30,7 @@ export default function AtomGridTable(props: TableProps) {
     paginationOptions,
     onPageOptionChange,
     onSortOptionChange,
+    onChange,
     sortingOptions,
   } = props;
 
@@ -54,16 +55,23 @@ export default function AtomGridTable(props: TableProps) {
   }, [rows, isFirstRowHeader]);
 
   useEffect(() => {
-    onPageOptionChange?.(paginationApiParams, page, pageSize);
+    onPageOptionChange?.({ apiParams: paginationApiParams, page, pageSize });
   }, [paginationApiParams, page, pageSize, onPageOptionChange]);
 
   useEffect(() => {
-    onSortOptionChange?.(sortingApiParams, ordering, direction);
+    onSortOptionChange?.({ apiParams: sortingApiParams, ordering, direction });
   }, [sortingApiParams, ordering, direction, onSortOptionChange]);
+
+  useEffect(() => {
+    onChange?.({
+      pageOptions: { apiParams: paginationApiParams, page, pageSize },
+      sortOptions: { apiParams: sortingApiParams, ordering, direction },
+    });
+  }, [paginationApiParams, page, pageSize, ordering, direction, sortingApiParams, onChange]);
 
   const wrapperClasses = getClasses(
     {
-      "AGT-layout-table-wrapper": true,
+      "AGT-table-wrapper": true,
       "dashboard-table": tableType === "dashboard",
       "dynamic-block-table": tableType === "dynamicBlock",
       "survey-table": tableType === "survey",
@@ -76,7 +84,7 @@ export default function AtomGridTable(props: TableProps) {
   const tableContent = useMemo<ReactElement>(() => {
     if (isLoading) {
       return (
-        <div className="AGT-layout-table">
+        <div className="AGT-table">
           <TableHeader
             rows={rows}
             isFirstRowHeader={isFirstRowHeader}
@@ -90,7 +98,7 @@ export default function AtomGridTable(props: TableProps) {
             isLoading={isLoading}
           />
           {tableHelper.numLengthArr(loaderRowsCount).map((i) => (
-            <div key={i} className="AGT-module-table-row">
+            <div key={i} className="AGT-table-row">
               {tableHelper.numLengthArr(colOptions.length + (isHasSelect ? 1 : 0)).map((j) => (
                 <Skeleton key={j} />
               ))}
@@ -101,7 +109,7 @@ export default function AtomGridTable(props: TableProps) {
     }
 
     return (
-      <div className="AGT-layout-table">
+      <div className="AGT-table">
         <TableHeader
           rows={rows}
           isFirstRowHeader={isFirstRowHeader}
@@ -138,7 +146,7 @@ export default function AtomGridTable(props: TableProps) {
         ))}
 
         {selectionArea && (
-          <div className="module-table-selection-area" style={{ "--selection-area": selectionArea } as CSSProperties} />
+          <div className="AGT-table-selection-area" style={{ "--selection-area": selectionArea } as CSSProperties} />
         )}
       </div>
     );
