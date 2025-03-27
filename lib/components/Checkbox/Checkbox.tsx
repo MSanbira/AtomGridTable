@@ -14,7 +14,12 @@ export const Checkbox = (props: CheckboxProps) => {
   }, [indeterminate, checked]);
 
   return (
-    <button {...rest} className={getClasses({ "AGT-checkbox": true }, className)}>
+    <button
+      {...rest}
+      className={getClasses({ "AGT-checkbox": true }, className)}
+      role="checkbox"
+      aria-checked={indeterminate ? "mixed" : checked ? "true" : "false"}
+    >
       {buttonContent}
     </button>
   );
