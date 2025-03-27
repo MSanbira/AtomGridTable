@@ -1,0 +1,7 @@
+.AGT-checkbox {
+  width: var(--md);
+  height: var(--md);
+  margin: 0;
+  align-self: center;
+  justify-self: center;
+}

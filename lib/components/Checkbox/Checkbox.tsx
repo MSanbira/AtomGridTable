@@ -1,13 +1,26 @@
-import React, { ComponentProps } from "react";
+import React, { ComponentProps, useMemo } from "react";
 import { getClasses } from "../../helpers/classNameHelper";
 
-// TODO: add indeterminate state
+// TODO: add indeterminate state and make it work with click
 export const Checkbox = (props: CheckboxProps) => {
-  const { className, ...rest } = props;
+  const { className, checked, indeterminate, ...rest } = props;
 
-  return <input type="checkbox" {...rest} className={getClasses({ "AGT-checkbox": true }, className)} />;
+  const buttonContent = useMemo(() => {
+    if (indeterminate) return "➖";
+
+    if (checked) return "✅";
+
+    return "⬜";
+  }, [indeterminate, checked]);
+
+  return (
+    <button {...rest} className={getClasses({ "AGT-checkbox": true }, className)}>
+      {buttonContent}
+    </button>
+  );
 };
 
-interface CheckboxProps extends ComponentProps<"input"> {
+interface CheckboxProps extends ComponentProps<"button"> {
+  checked?: boolean;
   indeterminate?: boolean;
 }

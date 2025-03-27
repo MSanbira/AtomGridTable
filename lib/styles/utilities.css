@@ -1,0 +1,9 @@
+:is(#_, .AGT-one-line-text) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+:is(#_, .AGT-is-no-padding) {
+  padding: 0;
+}

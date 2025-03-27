@@ -1,22 +1,22 @@
-.AGT-layout-table-wrapper {
+.AGT-table-wrapper {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: var(--md);
 }
 
-.AGT-layout-table-wrapper.is-loading .MuiSkeleton-root {
+.AGT-table-wrapper.is-loading .MuiSkeleton-root {
   margin: var(--md);
 }
 
-.AGT-layout-table {
-  --line-style: solid 1px var(--c-line);
+.AGT-table {
+  --line-style: solid 1px var(--AGT-c-line);
   display: grid;
   grid-template-columns: var(--template-cols);
   align-content: start;
   overflow: auto;
 }
 
-.AGT-layout-table .AGT-module-table-row {
+.AGT-table-row {
   display: grid;
   grid-column: 1 / -1;
   /* cant use auto in a col width if not subgrid */
@@ -28,32 +28,33 @@
 }
 
 @supports (grid-template-columns: subgrid) {
-  .AGT-layout-table .AGT-module-table-row {
+  .AGT-table-row {
     grid-template-columns: subgrid;
   }
 }
 
-.AGT-layout-table .AGT-module-table-row:first-child {
+.AGT-table-row:first-child {
   border-top: var(--line-style);
   border-radius: var(--xs) var(--xs) 0 0;
 }
 
-.AGT-layout-table .AGT-module-table-cell,
-.AGT-layout-table .AGT-module-table-header {
+.AGT-table-cell,
+.AGT-table-header {
   border-right: var(--line-style);
   padding: var(--md);
   grid-column: span var(--col-span, 1);
 }
 
-.AGT-layout-table :is(.AGT-module-table-cell, .AGT-module-table-header):last-of-type {
+.AGT-table-cell:last-child,
+.AGT-table-header:last-child {
   border-right: none;
 }
 
-.AGT-layout-table .AGT-module-table-cell.is-number {
+.AGT-table-cell.is-number {
   text-align: right;
 }
 
-.AGT-layout-table .AGT-module-table-header {
+.AGT-table-header {
   display: flex;
   align-items: center;
   gap: var(--sm);
@@ -61,17 +62,17 @@
   white-space: nowrap;
 }
 
-.AGT-layout-table div:has(> .resize-bar) {
+.AGT-table div:has(> .resize-bar) {
   position: relative;
 }
 
-.AGT-layout-table .resize-bar {
+.AGT-table .resize-bar {
   --hover-size: var(--md);
-  --resize-bar-color: var(--c-grey-nav);
+  --AGT-c-resize-bar: var(--AGT-c-text-tertiary);
   --resize-background: linear-gradient(
     90deg,
     #0000 calc(var(--hover-size) / 2 - 1px),
-    var(--resize-bar-color) 0 calc(var(--hover-size) / 2 + 1px),
+    var(--AGT-c-resize-bar) 0 calc(var(--hover-size) / 2 + 1px),
     #0000 0 100%
   );
 
@@ -88,98 +89,88 @@
   z-index: 10;
 }
 
-.AGT-layout-table div:last-child > .resize-bar {
+.AGT-table div:last-child > .resize-bar {
   right: 0;
   padding-right: 0;
 }
 
-.AGT-layout-table .resize-bar:hover {
+.AGT-table .resize-bar:hover {
   opacity: 1;
 }
 
-.AGT-layout-table .AGT-module-table-header.is-sortable {
+.AGT-table-header.is-sortable {
   cursor: pointer;
 }
 
-.AGT-layout-table .AGT-module-table-header .sorting-arrow {
+.AGT-table-header .sorting-arrow {
   opacity: 0;
   transition: opacity 0.3s;
 }
 
-.AGT-layout-table .AGT-module-table-header:hover .sorting-arrow {
+.AGT-table-header:hover .sorting-arrow {
   opacity: 0.5;
 }
 
-.AGT-layout-table .AGT-module-table-header.is-sorting .sorting-arrow {
+.AGT-table-header.is-sorting .sorting-arrow {
   opacity: 1;
 }
 
-.AGT-layout-table .has-action {
+.AGT-table .has-action {
   cursor: pointer;
   transition: var(--t-time);
 }
 
-.AGT-layout-table .has-action:hover {
-  background-color: var(--c-table-row-has-action);
+.AGT-table .has-action:hover {
+  background-color: var(--AGT-c-table-row-has-action);
 }
 
-.AGT-layout-table .is-selected {
-  background-color: var(--c-primary-light);
-  color: var(--c-primary);
+.AGT-table .is-selected {
+  background-color: var(--AGT-c-primary-light);
+  color: var(--AGT-c-primary);
 }
 
-.AGT-layout-table .is-selected .has-action:hover {
+.AGT-table .is-selected .has-action:hover {
   background: inherit;
 }
 
-.AGT-layout-table .is-selected.has-action:hover {
-  background-color: var(--c-primary-light);
+.AGT-table .is-selected.has-action:hover {
+  background-color: var(--AGT-c-primary-light);
 }
 
-.AGT-layout-table-pagination {
+.AGT-table-pagination {
   display: flex;
   align-items: center;
   gap: var(--xxxl);
 }
 
-.AGT-layout-table .module-table-selection-area {
-  border: dashed 2px var(--c-primary);
+.AGT-table-selection-area {
+  border: dashed 2px var(--AGT-c-primary);
   border-radius: var(--sm);
   grid-area: var(--selection-area);
   z-index: 50;
 }
 
-body:has(.AGT-layout-table-wrapper.is-resizing) {
+body:has(.AGT-table-wrapper.is-resizing) {
   cursor: col-resize;
   user-select: none;
 }
 
-.AGT-layout-table .no-rows-text {
+.AGT-table .no-rows-text {
   padding: var(--xxl);
   grid-column: 1 / -1;
-  border-bottom: solid 1px var(--c-line);
+  border-bottom: solid 1px var(--AGT-c-line);
   width: var(--wrapper-width, 100%);
   text-align: center;
   position: sticky;
   left: 0;
 }
 
-.AGT-layout-table .AGT-checkbox {
-  width: var(--xl);
-  height: var(--xl);
-  align-self: center;
-  justify-self: center;
-}
-
-.AGT-layout-table .AGT-module-table-cell:is(#_, .is-no-padding) {
-  padding: 0;
-}
-
-.AGT-layout-table .AGT-module-table-header:has(:is(#_, .AGT-checkbox)) {
+:is(.AGT-table-cell, .AGT-table-header):has(.AGT-checkbox) {
+  display: flex;
   padding: var(--xs);
 }
 
-.AGT-layout-table .AGT-module-table-cell.is-centered {
+.AGT-table-cell.is-centered {
   display: flex;
   flex-direction: column;
   justify-content: center;

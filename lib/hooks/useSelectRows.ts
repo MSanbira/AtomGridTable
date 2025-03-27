@@ -17,7 +17,7 @@ export const useSelectRows = (props: useSelectRowsProps) => {
         const [start, end] = lastIndex > currentIndex ? [currentIndex, lastIndex] : [lastIndex, currentIndex];
         const range = rows.map((row, i) => row.selectIdentifier ?? i).slice(start, end + 1);
         const newSelected = temp.includes(identifier) ? temp.filter((id) => !range.includes(id)) : [...temp, ...range];
-        setSelected(newSelected);
+        setSelected([...new Set(newSelected)]);
         return;
       }
 

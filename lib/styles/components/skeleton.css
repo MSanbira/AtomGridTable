@@ -1,6 +1,6 @@
 .AGT-skeleton {
   --AGT-skeleton-width: 100%;
-  --AGT-skeleton-height: 100%;
+  --AGT-skeleton-height: var(--xl);
   --AGT-skeleton-color-start: #f0f0f0;
   --AGT-skeleton-color-end: #e0e0e0;
   --AGT-skeleton-border-radius: 4px;
