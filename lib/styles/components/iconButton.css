@@ -1,0 +1,30 @@
+.AGT-icon-button {
+  all: unset;
+  cursor: pointer;
+  border-radius: 50%;
+  line-height: 0;
+  padding: var(--xs);
+  transition: background var(--AGT-transition-time);
+}
+
+.AGT-icon-button svg {
+  width: var(--md);
+  height: var(--md);
+  fill: var(--AGT-c-text-primary);
+}
+
+.AGT-icon-button:hover {
+  background: var(--AGT-c-hover);
+}
+
+.AGT-icon-button:active,
+.AGT-icon-button:focus {
+  outline: 1px solid var(--AGT-c-hover);
+  outline-offset: 1px;
+}
+
+.AGT-icon-button:disabled {
+  cursor: default;
+  background: none;
+  opacity: 0.5;
+}

@@ -10,8 +10,8 @@ interface TableRowProps {
   isHasSelect?: boolean;
   colOptions: ColOption[];
   selectedRows?: (string | number)[];
-  handleSelectRowClick: (e: React.MouseEvent, identifier: string | number) => void;
-  handleMouseDownResize: (e: React.MouseEvent<HTMLDivElement>, index: number) => void;
+  handleSelectRowClick?: (e: React.MouseEvent, identifier: string | number) => void;
+  handleMouseDownResize?: (e: React.MouseEvent<HTMLDivElement>, index: number) => void;
 }
 
 export const TableRow = ({
@@ -23,14 +23,14 @@ export const TableRow = ({
   handleSelectRowClick,
   handleMouseDownResize,
 }: TableRowProps) => {
-  const { isSelected, onClick, isHeader, className, selectIdentifier, cells, ...rest } = row;
+  const { isActive, onClick, isHeader, className, selectIdentifier, cells, ...rest } = row;
 
   return (
     <div
       className={getClasses(
         {
           "AGT-table-row": true,
-          "is-selected": !!isSelected,
+          "is-active": !!isActive,
           "has-action": !!onClick,
           "is-header": !!isHeader,
         },
@@ -48,7 +48,7 @@ export const TableRow = ({
             content: (
               <Checkbox
                 checked={selectedRows.includes(selectIdentifier ?? index)}
-                onClick={(e) => handleSelectRowClick(e, selectIdentifier ?? index)}
+                onClick={(e) => handleSelectRowClick?.(e, selectIdentifier ?? index)}
               />
             ),
           }}

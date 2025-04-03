@@ -24,15 +24,17 @@ export default function AtomGridTable(props: TableProps) {
     selectedRows = [],
     setSelected = () => {},
     isHasSelect,
-    tableType = "basic",
+    tableTheme = "basic",
     selectionArea,
-    isFirstRowHeader,
     paginationOptions,
     onPageOptionChange,
     onSortOptionChange,
     onChange,
     sortingOptions,
+    tableStyleOptions,
   } = props;
+
+  const { isFirstRowHeader, isZebra, isNoXCellBorders, isSmallCellPadding } = tableStyleOptions ?? {};
 
   const paginationStore = usePagination(paginationOptions ?? {});
   const { apiParams: paginationApiParams, page, pageSize, setPage } = paginationStore;
@@ -72,11 +74,12 @@ export default function AtomGridTable(props: TableProps) {
   const wrapperClasses = getClasses(
     {
       "AGT-table-wrapper": true,
-      "dashboard-table": tableType === "dashboard",
-      "dynamic-block-table": tableType === "dynamicBlock",
-      "survey-table": tableType === "survey",
       "is-loading": !!isLoading,
       "is-resizing": isResizing,
+      "is-zebra": !!isZebra,
+      "is-no-x-cell-borders": !!isNoXCellBorders,
+      "is-small-cell-padding": !!isSmallCellPadding,
+      [`AGT-table-theme-${tableTheme}`]: !!tableTheme,
     },
     className
   );
@@ -98,11 +101,16 @@ export default function AtomGridTable(props: TableProps) {
             isLoading={isLoading}
           />
           {tableHelper.numLengthArr(loaderRowsCount).map((i) => (
-            <div key={i} className="AGT-table-row">
-              {tableHelper.numLengthArr(colOptions.length + (isHasSelect ? 1 : 0)).map((j) => (
-                <Skeleton key={j} />
-              ))}
-            </div>
+            <TableRowComponent
+              key={i}
+              index={i}
+              row={{
+                cells: tableHelper.numLengthArr(colOptions.length + (isHasSelect ? 1 : 0)).map((j) => ({
+                  content: <Skeleton key={j} />,
+                })),
+              }}
+              colOptions={colOptions}
+            />
           ))}
         </div>
       );

@@ -3,6 +3,7 @@ import { PaginationStore } from "../../hooks/usePagination";
 import { Typography } from "../Typography/Typography";
 import { IconButton } from "../IconButton/IconButton";
 import { Select } from "../Select/Select";
+import { ArrowLeftPageIcon, ArrowRightPageIcon } from "../../icons/ArrowIcons";
 
 export const TablePagination = (props: TablePaginationProps) => {
   const {
@@ -12,7 +13,7 @@ export const TablePagination = (props: TablePaginationProps) => {
 
   return (
     <div className="AGT-table-pagination">
-      <div className="_d-flex-ali-center">
+      <div className="_d-flex-ali-center-sm-gap">
         <Typography color="secondary">{dictionary?.showing || "Showing"}</Typography>
         <Select
           value={pageSize}
@@ -26,11 +27,11 @@ export const TablePagination = (props: TablePaginationProps) => {
         <Typography className="AGT-one-line-text" color="secondary">
           {page * pageSize + 1} - {Math.min(page * pageSize + pageSize, rowCount)} of {rowCount}
         </Typography>
-        <IconButton onClick={() => setPage(page - 1)} disabled={page === 0} icon="<" />
+        <IconButton onClick={() => setPage(page - 1)} disabled={page === 0} icon={<ArrowLeftPageIcon />} />
         <IconButton
           onClick={() => setPage(page + 1)}
           disabled={page === Math.ceil(rowCount / pageSize) - 1}
-          icon={">"}
+          icon={<ArrowRightPageIcon />}
         />
       </div>
     </div>

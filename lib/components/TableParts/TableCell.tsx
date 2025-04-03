@@ -55,7 +55,7 @@ export const TableCell = (props: TableCellProps) => {
       {...rest}
     >
       {cellContent && isOneLine ? <Tooltip title={cellContent}>{cellContent as ReactElement}</Tooltip> : cellContent}
-      {withResize && <div className="resize-bar" onMouseDown={(e) => handleMouseDownResize(e, index)} />}
+      {withResize && <div className="resize-bar" onMouseDown={(e) => handleMouseDownResize?.(e, index)} />}
     </div>
   );
 };
@@ -64,6 +64,6 @@ export interface TableCellProps {
   index: number;
   cell: TableCellType;
   colOptions: ColOption[];
-  handleMouseDownResize: (e: React.MouseEvent<HTMLDivElement>, index: number) => void;
+  handleMouseDownResize?: (e: React.MouseEvent<HTMLDivElement>, index: number) => void;
   withResize?: boolean;
 }

@@ -1,3 +1,4 @@
+import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Checkbox } from "./Checkbox";
 
@@ -13,19 +14,14 @@ export default meta;
 type Story = StoryObj<typeof Checkbox>;
 
 export const Basic: Story = {
-  args: {
-    checked: false,
-  },
-};
-
-export const Checked: Story = {
-  args: {
-    checked: true,
-  },
-};
-
-export const Disabled: Story = {
-  args: {
-    disabled: true,
-  },
+  render: () => (
+    <div className="col-container:3">
+      <Checkbox />
+      <Checkbox checked />
+      <Checkbox indeterminate />
+      <Checkbox disabled />
+      <Checkbox checked disabled />
+      <Checkbox indeterminate disabled />
+    </div>
+  ),
 };

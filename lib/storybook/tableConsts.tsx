@@ -1,4 +1,4 @@
-import { ColOption } from "../types/table.types";
+import { ColOption, TableRow } from "../types/table.types";
 
 export const BasicTableProp = {
   colOptions: [
@@ -58,7 +58,7 @@ export const BasicTableProp = {
         { content: "Active", className: "status-active" },
       ],
     },
-  ],
+  ] as TableRow[],
 };
 
 export const LargeTableProp = {

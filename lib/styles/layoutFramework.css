@@ -1,0 +1,244 @@
+/* 
+
+Usage:
+
+  adding a display > _d-flex, _d-grid (grid has a default gap of 16px)
+  adding align-items > ali-start, ali-center, ali-end, ali-baseline, ali-stretch
+  adding justify-content > jc-start, jc-center, jc-end, jc-sb (space-between)
+  adding gap > xs-gap = 4, sm-gap = 8, md-gap = 16, lg-gap = 24, xl-gap = 48
+
+  to create equal column container > col-container:${n} (n = 2...4)
+  adding a divider to columns > with-divider
+
+Example: 
+
+  <div class="_d-grid-ali-center-jc-end-sm-gap" /> 
+
+  ===
+
+  div {
+    display: grid;
+    align-items: center;
+    justify-content: end;
+    gap: 8px;
+  }
+
+*/
+
+
+[class*="_d-flex"] {
+  display: flex;
+}
+:where([class*="_d-flex"]) {
+  gap: 0;
+}
+[class*="_d-flex"][class*="dir-col"] {
+  flex-direction: column;
+}
+[class*="_d-flex"][class*="f-wrap"] {
+  flex-wrap: wrap;
+}
+[class*="_d-flex"][class*="min-0"] {
+  min-width: 0;
+}
+
+[class*="_d-grid"],
+[class*="col-container"] {
+  display: grid;
+  --layout-gap: 16px;
+}
+
+:where([class*="_d-grid"], [class*="col-container"]) {
+  gap: 16px;
+}
+[class*="_d-grid"] > * {
+  min-width: 0;
+}
+
+[class*="col-container"] {
+  grid-template-columns: var(--col-template, minmax(0, 1fr));
+}
+[class*="col-container:2"] {
+  --col-template: minmax(0, 1fr) minmax(0, 1fr);
+}
+[class*="col-container:3"] {
+  --col-template: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+}
+[class*="col-container:4"] {
+  --col-template: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+}
+[class*="col-container"][class*="with-divider"] > *:not(:last-child) {
+  position: relative;
+}
+[class*="col-container"][class*="with-divider"] > *:not(:last-child)::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  right: calc(var(--layout-gap) / 2 * -1 - 1px);
+  width: 1px;
+  height: 100%;
+  background: var(--divider-color, #E2E8F0);
+}
+[class*="col-container:auto"] {
+  grid-template-columns: repeat(auto-fill, minmax(var(--auto-col-min-width, 0), 1fr));
+}
+
+[class*="ali-start"]:where(
+    [class*="_d-flex"],
+    [class*="_d-grid"],
+    [class*="col-container"]
+  ) {
+  align-items: flex-start;
+}
+[class*="ali-center"]:where(
+    [class*="_d-flex"],
+    [class*="_d-grid"],
+    [class*="col-container"]
+  ) {
+  align-items: center;
+}
+[class*="ali-end"]:where(
+    [class*="_d-flex"],
+    [class*="_d-grid"],
+    [class*="col-container"]
+  ) {
+  align-items: flex-end;
+}
+[class*="ali-baseline"]:where(
+    [class*="_d-flex"],
+    [class*="_d-grid"],
+    [class*="col-container"]
+  ) {
+  align-items: baseline;
+}
+[class*="ali-stretch"]:where(
+    [class*="_d-flex"],
+    [class*="_d-grid"],
+    [class*="col-container"]
+  ) {
+  align-items: stretch;
+}
+[class*="jc-start"]:where(
+    [class*="_d-flex"],
+    [class*="_d-grid"],
+    [class*="col-container"]
+  ) {
+  justify-content: flex-start;
+}
+[class*="jc-center"]:where(
+    [class*="_d-flex"],
+    [class*="_d-grid"],
+    [class*="col-container"]
+  ) {
+  justify-content: center;
+}
+[class*="jc-end"]:where(
+    [class*="_d-flex"],
+    [class*="_d-grid"],
+    [class*="col-container"]
+  ) {
+  justify-content: flex-end;
+}
+[class*="jc-sb"]:where(
+    [class*="_d-flex"],
+    [class*="_d-grid"],
+    [class*="col-container"]
+  ) {
+  justify-content: space-between;
+}
+[class*="jc-se"]:where(
+    [class*="_d-flex"],
+    [class*="_d-grid"],
+    [class*="col-container"]
+  ) {
+  justify-content: space-evenly;
+}
+[class*="xs-gap"]:where(
+    [class*="_d-flex"],
+    [class*="_d-grid"],
+    [class*="col-container"]
+  ) {
+  gap: 4px;
+}
+[class*="sm-gap"]:where(
+    [class*="_d-flex"],
+    [class*="_d-grid"],
+    [class*="col-container"]
+  ) {
+  gap: 8px;
+}
+[class*="md-gap"]:where(
+    [class*="_d-flex"],
+    [class*="_d-grid"],
+    [class*="col-container"]
+  ) {
+  gap: 16px;
+}
+[class*="lg-gap"]:where(
+    [class*="_d-flex"],
+    [class*="_d-grid"],
+    [class*="col-container"]
+  ) {
+  gap: 24px;
+}
+[class*="xl-gap"]:where(
+    [class*="_d-flex"],
+    [class*="_d-grid"],
+    [class*="col-container"]
+  ) {
+  gap: 48px;
+}
+[class*="xxl-gap"]:where(
+    [class*="_d-flex"],
+    [class*="_d-grid"],
+    [class*="col-container"]
+  ) {
+  gap: 64px;
+}
+[class*="xxxl-gap"]:where(
+    [class*="_d-flex"],
+    [class*="_d-grid"],
+    [class*="col-container"]
+  ) {
+  gap: 80px;
+}
+[class*="xxs-gap"]:where(
+    [class*="_d-flex"],
+    [class*="_d-grid"],
+    [class*="col-container"]
+  ) {
+  gap: 2px;
+}
+[class*="no-gap"]:where(
+    [class*="_d-flex"],
+    [class*="_d-grid"],
+    [class*="col-container"]
+  ) {
+    gap: 0;
+}
+
+[class*="xs-gap"][class*="col-container"] {
+  --layout-gap: 4px;
+}
+[class*="sm-gap"][class*="col-container"] {
+  --layout-gap: 8px;
+}
+[class*="md-gap"][class*="col-container"] {
+  --layout-gap: 16px;
+}
+[class*="lg-gap"][class*="col-container"] {
+  --layout-gap: 24px;
+}
+[class*="xl-gap"][class*="col-container"] {
+  --layout-gap: 48px;
+}
+[class*="xxl-gap"][class*="col-container"] {
+  --layout-gap: 64px;
+}
+[class*="xxs-gap"][class*="col-container"] {
+  --layout-gap: 2px;
+}
+[class*="no-gap"][class*="col-container"] {
+  --layout-gap: 1px;
+}

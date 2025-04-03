@@ -10,12 +10,12 @@ export interface TableProps extends TableHandlers {
   loaderRowsCount?: number;
   selectedRows?: (number | string)[];
   isHasSelect?: boolean;
-  tableType?: "basic" | "dashboard" | "dynamicBlock" | "survey";
+  tableTheme?: string;
   selectionArea?: string;
-  isFirstRowHeader?: boolean;
   setSelected?: (selected: (number | string)[]) => void;
   paginationOptions?: PaginationOptions;
   sortingOptions?: SortingOptions;
+  tableStyleOptions?: TableStyleOptions;
 }
 
 interface TableHandlers {
@@ -48,7 +48,7 @@ export interface ColOption {
 
 export interface TableRow extends Omit<React.HTMLAttributes<HTMLDivElement>, "content"> {
   cells: (TableCell | undefined)[];
-  isSelected?: boolean;
+  isActive?: boolean;
   selectIdentifier?: number | string;
   isHeader?: boolean;
 }
@@ -62,4 +62,12 @@ export interface TableCell extends Omit<React.HTMLAttributes<HTMLDivElement>, "c
   isNoPadding?: boolean;
   isDisabled?: boolean;
   isCentered?: boolean;
+}
+
+export interface TableStyleOptions {
+  isFirstRowHeader?: boolean;
+  isZebra?: boolean;
+
+  isNoXCellBorders?: boolean;
+  isSmallCellPadding?: boolean;
 }

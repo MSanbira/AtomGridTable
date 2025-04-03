@@ -39,7 +39,7 @@ const rawData: EmployeeData[] = Array(53)
 const convertToTableRow = (data: EmployeeData): TableRow => ({
   selectIdentifier: `emp-${data.id}`,
   cells: [
-    { content: data.id, isNumber: true },
+    { content: data.id },
     { content: data.name },
     { content: data.department },
     { content: data.performance.text, className: data.performance.class },

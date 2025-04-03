@@ -1,43 +1,58 @@
 :root {
   /* Sizes */
-  --base-size: 8px;
-  --xxs: calc(var(--base-size) / 4);
-  --xs: calc(var(--base-size) / 2);
-  --sm: var(--base-size);
-  --md: calc(var(--base-size) * 2);
-  --lg: calc(var(--base-size) * 3);
-  --xl: calc(var(--base-size) * 4);
-  --xxl: calc(var(--base-size) * 5);
-  --xxxl: calc(var(--base-size) * 6);
-  --xxxxl: calc(var(--base-size) * 8);
+  --AGT-base-size: 8px;
+  --xxs: calc(var(--AGT-base-size) / 4);
+  --xs: calc(var(--AGT-base-size) / 2);
+  --sm: var(--AGT-base-size);
+  --md: calc(var(--AGT-base-size) * 2);
+  --lg: calc(var(--AGT-base-size) * 3);
+  --xl: calc(var(--AGT-base-size) * 4);
+  --xxl: calc(var(--AGT-base-size) * 5);
+  --xxxl: calc(var(--AGT-base-size) * 6);
+  --xxxxl: calc(var(--AGT-base-size) * 8);
 
   /* Colors */
+  --AGT-c-primary: #5a3af7;
+  --AGT-c-error: #dc2626;
+  --AGT-c-warning: #f59e0b;
+  --AGT-c-success: #16a34a;
+  --AGT-c-background: #fff;
+  --AGT-c-active: #eeeefc;
+  --AGT-c-hover: #f4f4f7;
+  --AGT-c-zebra: #fbfbfc;
+  --AGT-c-header: #eeedf2;
+  --AGT-c-line: #dedce9;
+  --AGT-c-disabled: #c9c5da;
+
+  /* Fonts */
   --AGT-c-text-primary: #1a1a1a;
   --AGT-c-text-secondary: #4a4a4a;
   --AGT-c-text-tertiary: #767676;
   --AGT-c-text-annotation: #6b7280;
-  --AGT-c-error: #dc2626;
-  --AGT-c-warning: #f59e0b;
-  --AGT-c-primary: #2563eb;
-  --AGT-c-success: #16a34a;
-  --AGT-c-primary-light: #dbeafe;
-  --AGT-c-table-row-has-action: #f3f4f6;
-  --AGT-c-line: #e5e7eb;
-
-  /* Fonts */
   --AGT-bold-font: 700;
   --AGT-regular-font: 400;
 
   /* Transitions */
-  --t-time: 300ms;
+  --AGT-transition-time: 300ms;
+}
+
+body {
+  font-family: system-ui;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --AGT-c-text-primary: #fff;
+    --AGT-c-background: #171539;
+    --AGT-c-active: #302d6a;
+    --AGT-c-hover: #363463;
+    --AGT-c-zebra: #14122b;
+    --AGT-c-header: #211f47;
+    --AGT-c-line: #5b5385;
+
+    /* Fonts */
+    --AGT-c-text-primary: #e1dfe9;
     --AGT-c-text-secondary: #fff;
-    --AGT-c-table-row-has-action: #374151;
-    --AGT-c-primary-light: rgba(37, 99, 235, 0.2);
-    --AGT-c-line: #374151;
+    --AGT-c-text-tertiary: #fff;
+    --AGT-c-text-annotation: #fff;
   }
 }

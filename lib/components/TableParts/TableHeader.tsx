@@ -2,13 +2,13 @@ import React, { ReactNode, useMemo } from "react";
 import { Typography } from "../Typography/Typography";
 import { Checkbox } from "../Checkbox/Checkbox";
 import { getClasses } from "../../helpers/classNameHelper";
-import { SortingDirection } from "../../hooks/useSorting";
 import { InformationToolTipContent } from "../Tooltip/InformationToolTipContent";
 import { TableCell } from "./TableCell";
 import { TableRow } from "../../types/table.types";
 import { SortingStore } from "../../hooks/useSorting";
 import { ColOption } from "../../types/table.types";
 import { tableHelper } from "../../helpers/tableHelper";
+import { SortingArrow } from "./SortingArrow";
 
 export const TableHeader = ({
   rows,
@@ -35,7 +35,6 @@ export const TableHeader = ({
     >
       {colOptionsWithSelect.map((col, i) => {
         const isSorting = !!sortingStore && !!col.name;
-        const arrowDir = sortingStore?.direction === SortingDirection.ASC ? "down" : "up";
         const handleSorting = isSorting && !isResizing ? () => sortingStore!.handleChangeSort(col.name!) : undefined;
         const classes = getClasses({
           "AGT-table-header": true,
@@ -75,8 +74,9 @@ export const TableHeader = ({
                 {col.label ?? ""}
               </Typography>
               {col.tooltip && <InformationToolTipContent tooltipTitle={col.tooltip} />}
-              {/* TODO: change to on hover when null */}
-              {isSorting && (arrowDir === "down" ? "⬇️" : "⬆️")}
+              {isSorting && (
+                <SortingArrow direction={sortingStore.direction} isOrdered={sortingStore.ordering === col.name} />
+              )}
               {col.resizeOptions && <div className="resize-bar" onMouseDown={(e) => handleMouseDownResize(e, i)} />}
             </>
           );

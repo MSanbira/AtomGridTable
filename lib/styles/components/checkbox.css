@@ -1,7 +1,50 @@
 .AGT-checkbox {
-  width: var(--md);
-  height: var(--md);
+  --AGT-checkbox-color: var(--AGT-c-line);
+  --AGT-checkbox-background: var(--AGT-c-background);
+  --AGT-checkbox-icon-size: var(--lg);
+
+  all: unset;
+  line-height: 0;
   margin: 0;
+  padding: 0;
   align-self: center;
   justify-self: center;
+  border-radius: var(--xs);
+  cursor: pointer;
+  transition: background var(--AGT-transition-time);
+}
+
+.AGT-checkbox.is-selected {
+  --AGT-checkbox-color: var(--AGT-c-primary);
+}
+
+.AGT-checkbox:active,
+.AGT-checkbox:focus {
+  outline: 1px solid var(--AGT-checkbox-color);
+}
+
+.AGT-checkbox:hover {
+  background: var(--AGT-c-hover);
+}
+
+.AGT-checkbox:disabled {
+  --AGT-checkbox-color: var(--AGT-c-disabled);
+  cursor: default;
+  outline: none;
+  background: none;
+}
+
+.AGT-checkbox svg {
+  width: var(--AGT-checkbox-icon-size);
+  height: var(--AGT-checkbox-icon-size);
+  fill: var(--AGT-checkbox-background);
+  transition: fill var(--AGT-transition-time);
+}
+
+.AGT-checkbox.is-selected svg {
+  fill: var(--AGT-checkbox-color);
+}
+
+.AGT-checkbox svg path:first-child {
+  stroke: var(--AGT-checkbox-color);
 }
