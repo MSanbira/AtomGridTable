@@ -22,13 +22,15 @@ export const TableCell = (props: TableCellProps) => {
     ...rest
   } = cell;
 
+  const isContentStringOrNumber = useMemo<boolean>(() => ["string", "number"].includes(typeof content), [content]);
+
   const cellContent = useMemo<ReactNode | null>(() => {
-    return ["string", "number"].includes(typeof content) ? (
+    return isContentStringOrNumber ? (
       <Typography className={getClasses({ "AGT-one-line-text": !!isOneLine })}>{content}</Typography>
     ) : (
       content
     );
-  }, [content, isOneLine]);
+  }, [content, isOneLine, isContentStringOrNumber]);
 
   return (
     <div
@@ -54,7 +56,11 @@ export const TableCell = (props: TableCellProps) => {
       }
       {...rest}
     >
-      {cellContent && isOneLine ? <Tooltip title={cellContent}>{cellContent as ReactElement}</Tooltip> : cellContent}
+      {content && isOneLine && isContentStringOrNumber ? (
+        <Tooltip title={content as string | number}>{cellContent as ReactElement}</Tooltip>
+      ) : (
+        cellContent
+      )}
       {withResize && <div className="resize-bar" onMouseDown={(e) => handleMouseDownResize?.(e, index)} />}
     </div>
   );

@@ -6,6 +6,8 @@ export const BasicTableProp = {
       label: "Name",
       name: "name",
       width: "200px",
+      resizeOptions: { min: 100, max: 300 },
+      tooltip: "This is a tooltip",
     },
     {
       label: "Age",
@@ -25,7 +27,7 @@ export const BasicTableProp = {
     {
       selectIdentifier: "1",
       cells: [
-        { content: "John Doe" },
+        { content: "John Doe", isOneLine: true },
         { content: "32", isNumber: true },
         { content: "john.doe@example.com" },
         { content: "Active", className: "status-active" },
@@ -34,7 +36,7 @@ export const BasicTableProp = {
     {
       selectIdentifier: "2",
       cells: [
-        { content: "Jane Smith" },
+        { content: "Jane Smith", isOneLine: true },
         { content: "28", isNumber: true },
         { content: "jane.smith@example.com" },
         { content: "Inactive", className: "status-inactive" },
@@ -43,7 +45,7 @@ export const BasicTableProp = {
     {
       selectIdentifier: "3",
       cells: [
-        { content: "Bob Johnson" },
+        { content: "Bob Johnson", isOneLine: true },
         { content: "45", isNumber: true },
         { content: "bob.johnson@example.com" },
         { content: "Active", className: "status-active" },
@@ -52,7 +54,7 @@ export const BasicTableProp = {
     {
       selectIdentifier: "4",
       cells: [
-        { content: "Alice Brown" },
+        { content: "Alice Brown", isOneLine: true },
         { content: "35", isNumber: true },
         { content: "alice.brown@example.com" },
         { content: "Active", className: "status-active" },

@@ -68,7 +68,7 @@
 
 .AGT-table .resize-bar {
   --hover-size: var(--md);
-  --AGT-c-resize-bar: var(--AGT-c-text-tertiary);
+  --AGT-c-resize-bar: var(--AGT-c-active);
   --resize-background: linear-gradient(
     90deg,
     #0000 calc(var(--hover-size) / 2 - 1px),

@@ -4,11 +4,11 @@ export const Tooltip: React.FC<TooltipProps> = (props: TooltipProps) => {
   const { title, children } = props;
 
   return React.cloneElement(children, {
-    title: title?.toString(),
+    title: String(title),
   } as React.HTMLAttributes<HTMLElement>);
 };
 
 interface TooltipProps {
-  title: React.ReactNode;
+  title: string | number;
   children: ReactElement;
 }

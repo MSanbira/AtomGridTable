@@ -1,0 +1,15 @@
+.AGT-info-tooltip {
+  --AGT-icon-size: var(--md);
+  --AGT-icon-color: var(--AGT-c-text-primary);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--AGT-icon-color);
+}
+
+.AGT-info-tooltip svg {
+  width: var(--AGT-icon-size);
+  height: var(--AGT-icon-size);
+  fill: currentColor;
+}

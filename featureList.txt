@@ -14,9 +14,11 @@
 * optional context provider for overriding default components
 * sticky header
 * sticky rows
+* optimize resize
 
 component:
-* tooltip component
+* tooltip component V
+* info tooltip component V
 * skeleton component V
 * checkbox component V
 * text component V
