@@ -1,0 +1,27 @@
+.AGT-select {
+  all: unset;
+  appearance: auto;
+  border-radius: var(--xs);
+  border: 1px solid var(--AGT-c-line);
+  background: var(--AGT-c-background);
+  color: var(--AGT-c-text-primary);
+  font-weight: var(--AGT-regular-font);
+  line-height: 1.5;
+  cursor: pointer;
+  transition: background var(--AGT-transition-time);
+}
+
+.AGT-select:focus {
+  outline: 1px solid var(--AGT-c-primary);
+  outline-offset: 1px;
+}
+
+.AGT-select:hover {
+  background: var(--AGT-c-hover);
+}
+
+.AGT-select:disabled {
+  background: var(--AGT-c-disabled);
+  color: var(--AGT-c-text-secondary);
+  cursor: default;
+}

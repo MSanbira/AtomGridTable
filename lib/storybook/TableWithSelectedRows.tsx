@@ -9,7 +9,7 @@ export const TableWithSelectedRows = () => {
 
   return (
     <div>
-      <AtomGridTable {...BasicTableProp} selectedRows={selectedRows} setSelected={setSelectedRows} isHasSelect={true} />
+      <AtomGridTable {...BasicTableProp} selectedRows={selectedRows} setSelected={setSelectedRows} isHasSelect />
       <Typography>
         <strong>Selected Row IDs:</strong> {selectedRows.join(", ")}
       </Typography>

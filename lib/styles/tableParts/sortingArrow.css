@@ -1,0 +1,20 @@
+.AGT-sorting-arrow {
+  --AGT-icon-size: var(--md);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity var(--AGT-transition-time);
+}
+
+.AGT-sorting-arrow.is-ordered,
+.AGT-table-header:hover .AGT-sorting-arrow {
+  opacity: 1;
+}
+
+.AGT-sorting-arrow svg {
+  width: var(--AGT-icon-size);
+  height: var(--AGT-icon-size);
+  fill: var(--AGT-c-line);
+}

@@ -1,14 +1,14 @@
 .AGT-skeleton {
-  --AGT-skeleton-width: 100%;
-  --AGT-skeleton-height: var(--xl);
-  --AGT-skeleton-color-start: #f0f0f0;
-  --AGT-skeleton-color-end: #e0e0e0;
-  --AGT-skeleton-border-radius: 4px;
+  --AGT-skeleton-width: auto;
+  --AGT-skeleton-height: 1em;
+  --AGT-skeleton-color-start: var(--AGT-c-line);
+  --AGT-skeleton-color-end: var(--AGT-c-hover);
+  --AGT-skeleton-border-radius: var(--xs);
 
   width: var(--AGT-skeleton-width);
   height: var(--AGT-skeleton-height);
   background: var(--AGT-skeleton-color-start);
-  animation: AGT-skeleton-animation 1.5s infinite linear;
+  animation: AGT-skeleton-animation 2s infinite linear;
   border-radius: var(--AGT-skeleton-border-radius);
 }
 

@@ -40,6 +40,7 @@ export const TableWithPageAndSort = () => {
       paginationOptions={{ rowCount: totalCount }}
       onChange={handleChange}
       isLoading={isLoading}
+      tableStyleOptions={{ isZebra: true, isSmallCellPadding: true }}
     />
   );
 };

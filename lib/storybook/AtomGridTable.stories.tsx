@@ -5,6 +5,7 @@ import React from "react";
 import { BasicTableProp } from "./tableConsts";
 import { TableWithSelectedRows } from "./TableWithSelectedRows";
 import { TableWithPageAndSort } from "./TableWithPageAndSort";
+import { TableWithActions } from "./TableWithActions";
 
 const meta: Meta<ComponentProps<typeof AtomGridTable>> = {
   title: "Components/AtomGridTable",
@@ -26,4 +27,8 @@ export const WithSelectedRows: Story = {
 
 export const WithPageAndSort: Story = {
   render: () => <TableWithPageAndSort />,
+};
+
+export const WithActions: Story = {
+  render: () => <TableWithActions />,
 };

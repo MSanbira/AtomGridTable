@@ -4,16 +4,15 @@
   gap: var(--md);
 }
 
-.AGT-table-wrapper.is-loading .MuiSkeleton-root {
-  margin: var(--md);
-}
-
 .AGT-table {
   --line-style: solid 1px var(--AGT-c-line);
+  --background-color: var(--AGT-c-background);
+
   display: grid;
   grid-template-columns: var(--template-cols);
   align-content: start;
   overflow: auto;
+  background-color: var(--background-color);
 }
 
 .AGT-table-row {
@@ -60,6 +59,7 @@
   gap: var(--sm);
   padding-block: var(--sm);
   white-space: nowrap;
+  background-color: var(--AGT-c-header);
 }
 
 .AGT-table div:has(> .resize-bar) {
@@ -68,7 +68,7 @@
 
 .AGT-table .resize-bar {
   --hover-size: var(--md);
-  --AGT-c-resize-bar: var(--AGT-c-text-tertiary);
+  --AGT-c-resize-bar: var(--AGT-c-active);
   --resize-background: linear-gradient(
     90deg,
     #0000 calc(var(--hover-size) / 2 - 1px),
@@ -117,24 +117,24 @@
 
 .AGT-table .has-action {
   cursor: pointer;
-  transition: var(--t-time);
+  transition: var(--AGT-transition-time);
 }
 
 .AGT-table .has-action:hover {
-  background-color: var(--AGT-c-table-row-has-action);
+  background-color: var(--AGT-c-hover);
 }
 
-.AGT-table .is-selected {
-  background-color: var(--AGT-c-primary-light);
+.AGT-table .is-active {
+  background-color: var(--AGT-c-active);
   color: var(--AGT-c-primary);
 }
 
-.AGT-table .is-selected .has-action:hover {
+.AGT-table .is-active .has-action:hover {
   background: inherit;
 }
 
-.AGT-table .is-selected.has-action:hover {
-  background-color: var(--AGT-c-primary-light);
+.AGT-table .is-active.has-action:hover {
+  background-color: var(--AGT-c-active);
 }
 
 .AGT-table-pagination {
@@ -174,4 +174,18 @@ body:has(.AGT-table-wrapper.is-resizing) {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.is-zebra :where(.AGT-table-row:nth-child(even)) {
+  background-color: var(--AGT-c-zebra);
+}
+
+.is-no-x-cell-borders .AGT-table-cell,
+.is-no-x-cell-borders .AGT-table-header {
+  border-inline: none;
+}
+
+.is-small-cell-padding .AGT-table-cell,
+.is-small-cell-padding .AGT-table-header {
+  padding: var(--sm);
 }

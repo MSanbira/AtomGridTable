@@ -1,24 +1,27 @@
-* main table
-* sorting
-* pagination
-* checkbox logic
-* base API
+* main table V
+* sorting V
+* pagination V
+* checkbox logic V
+* zebra stripes V
+* loading state V
+* with or without inline border V
 * css API
 * css API as props
-* events handling (onResize, onSort, onPagination, onCheckbox)
-* loading state
-* error state
+* events handling (onResize, onSort V, onPagination V, onCheckbox)
 * empty state
 * option for custom components
 * dictionary
 * optional context provider for overriding default components
+* sticky header
+* sticky rows
+* optimize resize
 
 component:
-* tooltip component
-* skeleton component
-* checkbox component
-* text component
-* icon button component
-* icon component
-* select component
-* table pagination component
+* tooltip component V
+* info tooltip component V
+* skeleton component V
+* checkbox component V
+* text component V
+* icon button component V
+* select component V
+* table pagination component V
