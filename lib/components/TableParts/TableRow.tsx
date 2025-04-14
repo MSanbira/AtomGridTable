@@ -1,8 +1,10 @@
-import React, { CSSProperties } from "react";
+import React, { CSSProperties, useContext } from "react";
 import { Checkbox } from "../Checkbox/Checkbox";
 import { getClasses } from "../../helpers/classNameHelper";
 import { TableCell } from "./TableCell";
 import { ColOption, TableRow as TableRowType } from "../../types/table.types";
+import { AtomGridTableContext } from "../../context/AtomGridTableContext";
+import { ComponentOverride } from "../ComponentOverride/ComponentOverride";
 
 interface TableRowProps {
   row: TableRowType;
@@ -24,6 +26,7 @@ export const TableRow = ({
   handleMouseDownResize,
 }: TableRowProps) => {
   const { isActive, onClick, isHeader, className, selectIdentifier, cells, ...rest } = row;
+  const { customComponents } = useContext(AtomGridTableContext);
 
   return (
     <div
@@ -46,7 +49,9 @@ export const TableRow = ({
           index={-1}
           cell={{
             content: (
-              <Checkbox
+              <ComponentOverride
+                defaultComponent={Checkbox}
+                overrideComponent={customComponents?.checkbox}
                 checked={selectedRows.includes(selectIdentifier ?? index)}
                 onClick={(e) => handleSelectRowClick?.(e, selectIdentifier ?? index)}
               />

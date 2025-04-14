@@ -1,4 +1,4 @@
-import React, { ReactNode, useMemo } from "react";
+import React, { ReactNode, useContext, useMemo } from "react";
 import { Typography } from "../Typography/Typography";
 import { Checkbox } from "../Checkbox/Checkbox";
 import { getClasses } from "../../helpers/classNameHelper";
@@ -9,19 +9,24 @@ import { SortingStore } from "../../hooks/useSorting";
 import { ColOption } from "../../types/table.types";
 import { tableHelper } from "../../helpers/tableHelper";
 import { SortingArrow } from "./SortingArrow";
+import { AtomGridTableContext } from "../../context/AtomGridTableContext";
+import { ComponentOverride } from "../ComponentOverride/ComponentOverride";
 
-export const TableHeader = ({
-  rows,
-  isFirstRowHeader,
-  sortingStore,
-  isResizing,
-  isHasSelect,
-  colOptions,
-  handleMouseDownResize,
-  handleSelectAllClick,
-  selectedRows = [],
-  isLoading,
-}: TableHeaderProps) => {
+export const TableHeader = (props: TableHeaderProps) => {
+  const {
+    rows,
+    isFirstRowHeader,
+    sortingStore,
+    isResizing,
+    isHasSelect,
+    colOptions,
+    handleMouseDownResize,
+    handleSelectAllClick,
+    selectedRows = [],
+    isLoading,
+  } = props;
+
+  const { customComponents } = useContext(AtomGridTableContext);
   const colOptionsWithSelect = useMemo(() => {
     return tableHelper.getColOptionsWithSelect(colOptions, !!isHasSelect);
   }, [colOptions, isHasSelect]);
@@ -60,7 +65,9 @@ export const TableHeader = ({
         let headerContent: ReactNode | null = null;
         if (isHasSelect && i === 0) {
           headerContent = (
-            <Checkbox
+            <ComponentOverride
+              defaultComponent={Checkbox}
+              overrideComponent={customComponents?.checkbox}
               onClick={handleSelectAllClick}
               checked={!!rows.length && selectedRows.length === rows.length}
               indeterminate={!!selectedRows.length && selectedRows.length < rows.length}
@@ -70,9 +77,14 @@ export const TableHeader = ({
         } else {
           headerContent = (
             <>
-              <Typography className="AGT-one-line-text" color="secondary">
+              <ComponentOverride
+                defaultComponent={Typography}
+                overrideComponent={customComponents?.typography}
+                className="AGT-one-line-text"
+                color="secondary"
+              >
                 {col.label ?? ""}
-              </Typography>
+              </ComponentOverride>
               {col.tooltip && <InformationToolTipContent tooltipTitle={col.tooltip} />}
               {isSorting && (
                 <SortingArrow direction={sortingStore.direction} isOrdered={sortingStore.ordering === col.name} />

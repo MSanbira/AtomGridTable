@@ -15,7 +15,7 @@ export const Select = (props: SelectProps) => {
   );
 };
 
-interface SelectProps extends ComponentProps<"select"> {
+export interface SelectProps extends ComponentProps<"select"> {
   options: SelectOption[];
 }
 

@@ -1,11 +1,14 @@
-import React, { ReactElement, CSSProperties, useMemo, ReactNode } from "react";
+import React, { ReactElement, CSSProperties, useMemo, ReactNode, useContext } from "react";
 import { getClasses } from "../../helpers/classNameHelper";
 import { TableCell as TableCellType, ColOption } from "../../types/table.types";
 import { Typography } from "../Typography/Typography";
 import { Tooltip } from "../Tooltip/Tooltip";
+import { AtomGridTableContext } from "../../context/AtomGridTableContext";
+import { ComponentOverride } from "../ComponentOverride/ComponentOverride";
 
 export const TableCell = (props: TableCellProps) => {
   const { index, cell, withResize, handleMouseDownResize, colOptions } = props;
+  const { customComponents } = useContext(AtomGridTableContext);
 
   const {
     className,
@@ -26,11 +29,17 @@ export const TableCell = (props: TableCellProps) => {
 
   const cellContent = useMemo<ReactNode | null>(() => {
     return isContentStringOrNumber ? (
-      <Typography className={getClasses({ "AGT-one-line-text": !!isOneLine })}>{content}</Typography>
+      <ComponentOverride
+        defaultComponent={Typography}
+        overrideComponent={customComponents?.typography}
+        className={getClasses({ "AGT-one-line-text": !!isOneLine })}
+      >
+        {content}
+      </ComponentOverride>
     ) : (
       content
     );
-  }, [content, isOneLine, isContentStringOrNumber]);
+  }, [content, isOneLine, isContentStringOrNumber, customComponents]);
 
   return (
     <div
@@ -57,7 +66,13 @@ export const TableCell = (props: TableCellProps) => {
       {...rest}
     >
       {content && isOneLine && isContentStringOrNumber ? (
-        <Tooltip title={content as string | number}>{cellContent as ReactElement}</Tooltip>
+        <ComponentOverride
+          defaultComponent={Tooltip}
+          overrideComponent={customComponents?.tooltip}
+          title={content as string | number}
+        >
+          {cellContent as ReactElement}
+        </ComponentOverride>
       ) : (
         cellContent
       )}

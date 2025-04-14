@@ -11,6 +11,6 @@ export const IconButton = (props: IconButtonProps) => {
   );
 };
 
-interface IconButtonProps extends ComponentProps<"button"> {
+export interface IconButtonProps extends ComponentProps<"button"> {
   icon: React.ReactNode;
 }

@@ -8,7 +8,7 @@ export const Tooltip: React.FC<TooltipProps> = (props: TooltipProps) => {
   } as React.HTMLAttributes<HTMLElement>);
 };
 
-interface TooltipProps {
+export interface TooltipProps {
   title: string | number;
   children: ReactElement;
 }
