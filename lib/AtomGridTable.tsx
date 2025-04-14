@@ -14,30 +14,34 @@ import { TableFooter } from "./components/TableParts/TableFooter";
 import { usePagination } from "./hooks/usePagination";
 import { useSorting } from "./hooks/useSorting";
 import { AtomGridTableContext } from "./context/AtomGridTableContext";
+import { ComponentOverride } from "./components/ComponentOverride/ComponentOverride";
 
 export default function AtomGridTable(props: TableProps) {
+  const { defaultTableOptions, customComponents } = useContext(AtomGridTableContext);
+
   const {
     colOptions,
     rows,
     className,
     isLoading,
-    loaderRowsCount = LoaderRowsCount,
-    selectedRows = [],
-    setSelected = () => {},
-    isHasSelect,
-    tableTheme = "basic",
-    selectionArea,
-    paginationOptions,
-    onPageOptionChange,
-    onSortOptionChange,
-    onChange,
-    sortingOptions,
+    loaderRowsCount = defaultTableOptions?.loaderRowsCount ?? LoaderRowsCount,
+    selectedRows = defaultTableOptions?.selectedRows ?? [],
+    setSelected = defaultTableOptions?.setSelected ?? (() => {}),
+    isHasSelect = defaultTableOptions?.isHasSelect,
+    tableTheme = defaultTableOptions?.tableTheme ?? "basic",
+    selectionArea = defaultTableOptions?.selectionArea,
+    paginationOptions = defaultTableOptions?.paginationOptions,
+    onPageOptionChange = defaultTableOptions?.onPageOptionChange,
+    onSortOptionChange = defaultTableOptions?.onSortOptionChange,
+    onChange = defaultTableOptions?.onChange,
+    sortingOptions = defaultTableOptions?.sortingOptions,
     tableStyleOptions,
   } = props;
 
-  const { isFirstRowHeader, isZebra, isNoXCellBorders, isSmallCellPadding } = tableStyleOptions ?? {};
-  const { defaultTableOptions } = useContext(AtomGridTableContext);
-  console.log(defaultTableOptions);
+  const { isFirstRowHeader, isZebra, isNoXCellBorders, isSmallCellPadding } = {
+    ...defaultTableOptions?.tableStyleOptions,
+    ...tableStyleOptions,
+  };
 
   const paginationStore = usePagination(paginationOptions ?? {});
   const { apiParams: paginationApiParams, page, pageSize, setPage } = paginationStore;
@@ -109,7 +113,13 @@ export default function AtomGridTable(props: TableProps) {
               index={i}
               row={{
                 cells: tableHelper.numLengthArr(colOptions.length + (isHasSelect ? 1 : 0)).map((j) => ({
-                  content: <Skeleton key={j} />,
+                  content: (
+                    <ComponentOverride
+                      key={j}
+                      defaultComponent={Skeleton}
+                      overrideComponent={customComponents?.skeleton}
+                    />
+                  ),
                 })),
               }}
               colOptions={colOptions}
@@ -135,12 +145,14 @@ export default function AtomGridTable(props: TableProps) {
         />
 
         {rows.length === 0 && (
-          <Typography
+          <ComponentOverride
+            defaultComponent={Typography}
+            overrideComponent={customComponents?.typography}
             className="no-rows-text"
             style={{ "--wrapper-width": `${wrapperRef.current?.clientWidth}px` } as CSSProperties}
           >
             No rows
-          </Typography>
+          </ComponentOverride>
         )}
 
         {rowsToDisplay.map((row, i) => (
@@ -177,6 +189,7 @@ export default function AtomGridTable(props: TableProps) {
     selectionArea,
     loaderRowsCount,
     handleSelectRowClick,
+    customComponents,
   ]);
 
   return (

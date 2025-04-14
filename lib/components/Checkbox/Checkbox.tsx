@@ -1,10 +1,9 @@
-import React, { ComponentProps, useMemo } from "react";
+import React, { useMemo } from "react";
 import { getClasses } from "../../helpers/classNameHelper";
 import { CheckboxIconIndeterminate, CheckboxIconUnchecked, CheckboxIconChecked } from "./CheckboxIcons";
 
-// TODO: add indeterminate state and make it work with click
 export const Checkbox = (props: CheckboxProps) => {
-  const { className, checked, indeterminate, ...rest } = props;
+  const { className, checked, indeterminate, onClick, disabled } = props;
 
   const buttonContent = useMemo(() => {
     if (indeterminate) return <CheckboxIconIndeterminate />;
@@ -16,17 +15,21 @@ export const Checkbox = (props: CheckboxProps) => {
 
   return (
     <button
-      {...rest}
       className={getClasses({ "AGT-checkbox": true, "is-selected": !!checked || !!indeterminate }, className)}
       role="checkbox"
       aria-checked={indeterminate ? "mixed" : checked ? "true" : "false"}
+      onClick={(e) => onClick?.(e, !checked)}
+      disabled={disabled}
     >
       {buttonContent}
     </button>
   );
 };
 
-interface CheckboxProps extends ComponentProps<"button"> {
+export interface CheckboxProps {
   checked?: boolean;
+  onClick?: (e: React.MouseEvent, value: boolean) => void;
+  className?: string;
   indeterminate?: boolean;
+  disabled?: boolean;
 }
