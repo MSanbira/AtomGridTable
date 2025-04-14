@@ -6,6 +6,7 @@ import { BasicTableProp } from "./tableConsts";
 import { TableWithSelectedRows } from "./TableWithSelectedRows";
 import { TableWithPageAndSort } from "./TableWithPageAndSort";
 import { TableWithActions } from "./TableWithActions";
+import { TableWithContext } from "./TableWithContext";
 
 const meta: Meta<ComponentProps<typeof AtomGridTable>> = {
   title: "Components/AtomGridTable",
@@ -31,4 +32,8 @@ export const WithPageAndSort: Story = {
 
 export const WithActions: Story = {
   render: () => <TableWithActions />,
+};
+
+export const WithContext: Story = {
+  render: () => <TableWithContext />,
 };
