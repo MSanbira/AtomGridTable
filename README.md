@@ -117,6 +117,106 @@ interface TableCell {
 }
 ```
 
+## Custom Components
+
+Atom Grid Table allows you to replace its base components with your own custom implementations. This is done through the `AtomGridTableProvider` context. Here's how to use it:
+
+```tsx
+import { AtomGridTableProvider } from "@sanbira/atom-grid-table";
+
+// Your custom components
+const CustomTooltip = (props) => <div className="my-tooltip">{props.children}</div>;
+const CustomSelect = (props) => <select className="my-select">{props.children}</select>;
+const CustomIconButton = (props) => <button className="my-icon-button">{props.children}</button>;
+const CustomTypography = (props) => <span className="my-typography">{props.children}</span>;
+const CustomSkeleton = () => <div className="my-skeleton" />;
+const CustomCheckbox = (props) => <input type="checkbox" className="my-checkbox" {...props} />;
+
+function App() {
+  return (
+    <AtomGridTableProvider
+      customComponents={{
+        tooltip: CustomTooltip,
+        select: CustomSelect,
+        iconButton: CustomIconButton,
+        typography: CustomTypography,
+        skeleton: CustomSkeleton,
+        checkbox: CustomCheckbox,
+      }}
+    >
+      <AtomGridTable colOptions={colOptions} rows={rows} />
+    </AtomGridTableProvider>
+  );
+}
+```
+
+### Available Custom Components
+
+You can replace any of these base components:
+
+- `tooltip`: For tooltip functionality
+- `select`: For dropdown selections
+- `iconButton`: For icon buttons
+- `typography`: For text elements
+- `skeleton`: For loading states
+- `checkbox`: For checkbox inputs
+
+## Table Context Provider
+
+The `AtomGridTableProvider` allows you to set default options and custom components that will be used across all `AtomGridTable` instances within its scope. This is particularly useful for:
+
+1. Setting global table defaults
+2. Providing custom components
+3. Maintaining consistent styling and behavior across multiple tables
+
+### Usage
+
+```tsx
+import { AtomGridTableProvider } from "@sanbira/atom-grid-table";
+
+function App() {
+  return (
+    <AtomGridTableProvider
+      defaultTableOptions={{
+        tableStyleOptions: {
+          isFirstRowHeader: true,
+          isZebra: true,
+          isNoXCellBorders: false,
+          isSmallCellPadding: true,
+        },
+        isHasSelect: true,
+        loaderRowsCount: 5,
+        // ... other default options
+      }}
+      customComponents={
+        {
+          // ... your custom components
+        }
+      }
+    >
+      <AtomGridTable colOptions={colOptions} rows={rows} />
+      <AtomGridTable colOptions={otherColOptions} rows={otherRows} />
+    </AtomGridTableProvider>
+  );
+}
+```
+
+### Props
+
+```typescript
+interface AtomGridTableContextProps {
+  defaultTableOptions?: Partial<TableProps>;
+  customComponents?: {
+    tooltip?: React.ComponentType<TooltipProps>;
+    select?: React.ComponentType<SelectProps>;
+    iconButton?: React.ComponentType<IconButtonProps>;
+    typography?: React.ComponentType<TypographyProps>;
+    skeleton?: React.ComponentType;
+    checkbox?: React.ComponentType<CheckboxProps>;
+  };
+}
+```
+
 ## Features
 
 - Column resizing

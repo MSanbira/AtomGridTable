@@ -35,13 +35,13 @@ export default function AtomGridTable(props: TableProps) {
     onSortOptionChange = defaultTableOptions?.onSortOptionChange,
     onChange = defaultTableOptions?.onChange,
     sortingOptions = defaultTableOptions?.sortingOptions,
-    tableStyleOptions = {
-      ...defaultTableOptions?.tableStyleOptions,
-      ...props.tableStyleOptions,
-    },
+    tableStyleOptions,
   } = props;
 
-  const { isFirstRowHeader, isZebra, isNoXCellBorders, isSmallCellPadding } = tableStyleOptions ?? {};
+  const { isFirstRowHeader, isZebra, isNoXCellBorders, isSmallCellPadding } = {
+    ...defaultTableOptions?.tableStyleOptions,
+    ...tableStyleOptions,
+  };
 
   const paginationStore = usePagination(paginationOptions ?? {});
   const { apiParams: paginationApiParams, page, pageSize, setPage } = paginationStore;
