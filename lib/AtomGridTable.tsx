@@ -1,4 +1,4 @@
-import React, { CSSProperties, ReactElement, useEffect, useMemo } from "react";
+import React, { CSSProperties, ReactElement, useContext, useEffect, useMemo } from "react";
 import { Typography } from "./components/Typography/Typography";
 import { getClasses } from "./helpers/classNameHelper";
 import { tableHelper } from "./helpers/tableHelper";
@@ -13,6 +13,7 @@ import { TableRow as TableRowComponent } from "./components/TableParts/TableRow"
 import { TableFooter } from "./components/TableParts/TableFooter";
 import { usePagination } from "./hooks/usePagination";
 import { useSorting } from "./hooks/useSorting";
+import { AtomGridTableContext } from "./context/AtomGridTableContext";
 
 export default function AtomGridTable(props: TableProps) {
   const {
@@ -35,6 +36,8 @@ export default function AtomGridTable(props: TableProps) {
   } = props;
 
   const { isFirstRowHeader, isZebra, isNoXCellBorders, isSmallCellPadding } = tableStyleOptions ?? {};
+  const { defaultTableOptions } = useContext(AtomGridTableContext);
+  console.log(defaultTableOptions);
 
   const paginationStore = usePagination(paginationOptions ?? {});
   const { apiParams: paginationApiParams, page, pageSize, setPage } = paginationStore;
