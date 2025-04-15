@@ -9,9 +9,9 @@
 * css API as props
 * events handling (onResize, onSort V, onPagination V, onCheckbox)
 * empty state
-* option for custom components
+* option for custom components V
 * dictionary
-* optional context provider for overriding default components
+* optional context provider for overriding default components V
 * sticky header
 * sticky rows
 * optimize resize

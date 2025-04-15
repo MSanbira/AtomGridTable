@@ -12,7 +12,7 @@ export const TableFooter = (props: TableFooterProps) => {
   if (!isHasSelect && !paginationStore) return null;
 
   return (
-    <div className="_d-flex-ali-center-jc-sb">
+    <div className="AGT-table-footer _d-flex-ali-center-jc-sb">
       {isHasSelect && (
         <ComponentOverride defaultComponent={Typography} overrideComponent={customComponents?.typography}>
           {!!selectedRows.length && `${selectedRows.length} ${selectedRows.length === 1 ? "row" : "rows"} selected`}

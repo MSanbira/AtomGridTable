@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import { LargeTableProp } from "./tableConsts";
 import AtomGridTable from "../AtomGridTable";
 import { getRows } from "./apiSimulator";
@@ -26,21 +26,16 @@ export const TableWithPageAndSort = () => {
     []
   );
 
-  useEffect(() => {
-    handleChange({
-      pageOptions: { apiParams: { limit: 10, offset: 0 } },
-      sortOptions: { apiParams: { ordering: "id" } },
-    });
-  }, [handleChange]);
-
   return (
-    <AtomGridTable
-      colOptions={LargeTableProp.colOptions}
-      rows={rows}
-      paginationOptions={{ rowCount: totalCount }}
-      onChange={handleChange}
-      isLoading={isLoading}
-      tableStyleOptions={{ isZebra: true, isSmallCellPadding: true }}
-    />
+    <div style={{ height: "80vh", width: "150%" }}>
+      <AtomGridTable
+        colOptions={LargeTableProp.colOptions}
+        rows={rows}
+        paginationOptions={{ rowCount: totalCount }}
+        onChange={handleChange}
+        isLoading={isLoading}
+        tableStyleOptions={{ isZebra: true, isSmallCellPadding: true, isStickyHeader: true }}
+      />
+    </div>
   );
 };

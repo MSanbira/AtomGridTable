@@ -31,9 +31,26 @@
   --AGT-c-text-annotation: #6b7280;
   --AGT-bold-font: 700;
   --AGT-regular-font: 400;
+  --AGT-base-font-size: 14px;
+  --AGT-base-line-height: 1.2;
 
   /* Transitions */
   --AGT-transition-time: 300ms;
+
+  /* Table defaults */
+  --AGT-line-style: solid 1px var(--AGT-c-line);
+  --AGT-c-table-background: var(--AGT-c-background);
+  --AGT-sticky-row-z-index: 100;
+
+  /* Resize bar */
+  --AGT-resize-bar-hover-size: var(--md);
+  --AGT-resize-bar-color: var(--AGT-c-active);
+  --AGT-resize-bar-background: linear-gradient(
+    90deg,
+    #0000 calc(var(--hover-size) / 2 - 1px),
+    var(--AGT-c-resize-bar) 0 calc(var(--hover-size) / 2 + 1px),
+    #0000 0 100%
+  );
 }
 
 body {

@@ -1,5 +1,6 @@
 .AGT-typography {
   color: var(--AGT-c-text-primary);
+  line-height: var(--AGT-base-line-height);
   margin: 0;
 }
 

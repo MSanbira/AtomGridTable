@@ -69,16 +69,19 @@ export const LargeTableProp = {
       label: "Employee ID",
       name: "id",
       width: "120px",
+      resizeOptions: { min: 100, max: 300 },
     },
     {
       label: "Full Name",
       name: "name",
       width: "200px",
+      resizeOptions: { min: 100, max: 300 },
     },
     {
       label: "Department",
       name: "department",
       width: "180px",
+      resizeOptions: { min: 100, max: 300 },
     },
     {
       label: "Performance",

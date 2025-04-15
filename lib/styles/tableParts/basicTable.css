@@ -1,18 +1,20 @@
 .AGT-table-wrapper {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
   gap: var(--md);
+  height: 100%;
+  width: max-content;
+  max-width: 100%;
+  font-size: var(--AGT-base-font-size);
 }
 
 .AGT-table {
-  --line-style: solid 1px var(--AGT-c-line);
-  --background-color: var(--AGT-c-background);
-
   display: grid;
   grid-template-columns: var(--template-cols);
   align-content: start;
   overflow: auto;
-  background-color: var(--background-color);
+  background-color: var(--AGT-c-table-background);
 }
 
 .AGT-table-row {
@@ -21,7 +23,7 @@
   /* cant use auto in a col width if not subgrid */
   grid-template-columns: var(--template-cols);
   grid-row: var(--grid-row);
-  border: var(--line-style);
+  border: var(--AGT-line-style);
   border-top: none;
   position: relative;
 }
@@ -33,13 +35,19 @@
 }
 
 .AGT-table-row:first-child {
-  border-top: var(--line-style);
+  border-top: var(--AGT-line-style);
   border-radius: var(--xs) var(--xs) 0 0;
+}
+
+.AGT-table-row.is-sticky {
+  position: sticky;
+  top: 0;
+  z-index: var(--AGT-sticky-row-z-index);
 }
 
 .AGT-table-cell,
 .AGT-table-header {
-  border-right: var(--line-style);
+  border-right: var(--AGT-line-style);
   padding: var(--md);
   grid-column: span var(--col-span, 1);
 }
@@ -62,30 +70,25 @@
   background-color: var(--AGT-c-header);
 }
 
+.AGT-table-footer {
+  align-self: start;
+}
+
 .AGT-table div:has(> .resize-bar) {
   position: relative;
 }
 
 .AGT-table .resize-bar {
-  --hover-size: var(--md);
-  --AGT-c-resize-bar: var(--AGT-c-active);
-  --resize-background: linear-gradient(
-    90deg,
-    #0000 calc(var(--hover-size) / 2 - 1px),
-    var(--AGT-c-resize-bar) 0 calc(var(--hover-size) / 2 + 1px),
-    #0000 0 100%
-  );
-
   width: 2px;
-  padding-inline: calc(var(--hover-size) * 0.5);
-  background: var(--resize-background);
+  padding-inline: calc(var(--AGT-resize-bar-hover-size) * 0.5);
+  background: var(--AGT-resize-bar-background);
   opacity: 0;
   height: 100%;
   position: absolute;
   top: 0;
-  right: calc(var(--hover-size) * -0.5);
+  right: calc(var(--AGT-resize-bar-hover-size) * -0.5);
   cursor: col-resize;
-  transition: 300ms;
+  transition: var(--AGT-transition-time);
   z-index: 10;
 }
 
