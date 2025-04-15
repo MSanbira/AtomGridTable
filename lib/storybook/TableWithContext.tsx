@@ -3,13 +3,12 @@ import { BasicTableProp } from "./tableConsts";
 import AtomGridTable from "../AtomGridTable";
 import { AtomGridTableProvider } from "../context/AtomGridTableProvider";
 import { Typography, TypographyProps } from "../components/Typography/Typography";
-import { CheckboxProps } from "../components/Checkbox/Checkbox";
-import { TooltipProps } from "../components/Tooltip/Tooltip";
+import { AtomGridTableContextProps } from "../types/tableContext.types";
 
 export const TableWithContext = () => {
   const [selectedRows, setSelectedRows] = useState<(string | number)[]>([]);
 
-  const contextValue = {
+  const contextValue: AtomGridTableContextProps = {
     defaultTableOptions: {
       isHasSelect: true,
       selectedRows,
@@ -17,23 +16,15 @@ export const TableWithContext = () => {
       tableStyleOptions: {
         isZebra: true,
         isSmallCellPadding: true,
+        colorScheme: "light",
       },
     },
     customComponents: {
       skeleton: () => <div>☠️</div>,
       typography: (props: TypographyProps) => (
-        <p {...props} style={{ color: "red" }}>
+        <p {...props} style={{ fontFamily: "monospace" }}>
           {props.children}
         </p>
-      ),
-      checkbox: (props: CheckboxProps) => (
-        <input type="checkbox" checked={props.checked} onClick={(e) => props.onClick?.(e, !props.checked)} />
-      ),
-      tooltip: (props: TooltipProps) => (
-        <div>
-          {props.children}
-          {props.title}
-        </div>
       ),
     },
   };

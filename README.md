@@ -15,6 +15,7 @@ A highly customizable React table component built with CSS Grid and Subgrid, off
 - 🎭 Multiple theme support
 - 🎪 Zebra striping option
 - 📊 Header row configuration
+- 📌 Sticky header and sticky row support
 - ⚡ Lightweight with minimal dependencies (only React and React DOM)
 
 ## Dependencies
@@ -228,6 +229,7 @@ interface AtomGridTableContextProps {
 - Zebra striping
 - Custom cell padding
 - Header row support
+- Sticky header and sticky row support
 
 ## License
 

@@ -16,16 +16,9 @@ interface TableRowProps {
   handleMouseDownResize?: (e: React.MouseEvent<HTMLDivElement>, index: number) => void;
 }
 
-export const TableRow = ({
-  row,
-  index,
-  isHasSelect,
-  colOptions,
-  selectedRows = [],
-  handleSelectRowClick,
-  handleMouseDownResize,
-}: TableRowProps) => {
-  const { isActive, onClick, isHeader, className, selectIdentifier, cells, ...rest } = row;
+export const TableRow = (props: TableRowProps) => {
+  const { row, index, isHasSelect, colOptions, selectedRows = [], handleSelectRowClick, handleMouseDownResize } = props;
+  const { isActive, onClick, isHeader, className, selectIdentifier, cells, isSticky, ...rest } = row;
   const { customComponents } = useContext(AtomGridTableContext);
 
   return (
@@ -36,6 +29,7 @@ export const TableRow = ({
           "is-active": !!isActive,
           "has-action": !!onClick,
           "is-header": !!isHeader,
+          "is-sticky": !!isSticky,
         },
         className
       )}

@@ -7,6 +7,7 @@ import { TableWithSelectedRows } from "./TableWithSelectedRows";
 import { TableWithPageAndSort } from "./TableWithPageAndSort";
 import { TableWithActions } from "./TableWithActions";
 import { TableWithContext } from "./TableWithContext";
+import { TableWithMultiSections } from "./TableWithMultiSections";
 
 const meta: Meta<ComponentProps<typeof AtomGridTable>> = {
   title: "Components/AtomGridTable",
@@ -22,6 +23,8 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = { args: BasicTableProp };
 
+export const EmptyState: Story = { args: { ...BasicTableProp, rows: [] } };
+
 export const WithSelectedRows: Story = {
   render: () => <TableWithSelectedRows />,
 };
@@ -36,4 +39,8 @@ export const WithActions: Story = {
 
 export const WithContext: Story = {
   render: () => <TableWithContext />,
+};
+
+export const MultiSectioned: Story = {
+  render: () => <TableWithMultiSections />,
 };

@@ -24,6 +24,7 @@ export const TableHeader = (props: TableHeaderProps) => {
     handleSelectAllClick,
     selectedRows = [],
     isLoading,
+    isStickyHeader,
   } = props;
 
   const { customComponents } = useContext(AtomGridTableContext);
@@ -36,6 +37,7 @@ export const TableHeader = (props: TableHeaderProps) => {
       className={getClasses({
         "AGT-table-row": true,
         "is-header": !!isFirstRowHeader && !!rows[0]?.isHeader,
+        "is-sticky": !!isStickyHeader,
       })}
     >
       {colOptionsWithSelect.map((col, i) => {
@@ -115,4 +117,5 @@ interface TableHeaderProps {
   isHasSelect?: boolean;
   selectedRows?: (string | number)[];
   isLoading?: boolean;
+  isStickyHeader?: boolean;
 }

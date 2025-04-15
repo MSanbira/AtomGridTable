@@ -1,6 +1,6 @@
 .AGT-skeleton {
   --AGT-skeleton-width: auto;
-  --AGT-skeleton-height: 1em;
+  --AGT-skeleton-height: calc(var(--AGT-base-line-height) * 1em);
   --AGT-skeleton-color-start: var(--AGT-c-line);
   --AGT-skeleton-color-end: var(--AGT-c-hover);
   --AGT-skeleton-border-radius: var(--xs);

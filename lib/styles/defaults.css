@@ -1,4 +1,4 @@
-:root {
+.AGT-table-wrapper {
   /* Sizes */
   --AGT-base-size: 8px;
   --xxs: calc(var(--AGT-base-size) / 4);
@@ -31,9 +31,30 @@
   --AGT-c-text-annotation: #6b7280;
   --AGT-bold-font: 700;
   --AGT-regular-font: 400;
+  --AGT-base-font-size: 14px;
+  --AGT-base-line-height: 1.2;
 
   /* Transitions */
   --AGT-transition-time: 300ms;
+
+  /* Table defaults */
+  --AGT-border-width: 1px;
+  --AGT-line-style: solid var(--AGT-border-width) var(--AGT-c-line);
+  --AGT-c-table-background: var(--AGT-c-background);
+  --AGT-sticky-row-z-index: 100;
+  --AGT-sticky-row-offset: calc(
+    var(--AGT-base-font-size) * var(--AGT-base-line-height) + var(--sm) * 2 + var(--AGT-border-width)
+  );
+
+  /* Resize bar */
+  --AGT-resize-bar-hover-size: var(--md);
+  --AGT-resize-bar-color: var(--AGT-c-active);
+  --AGT-resize-bar-background: linear-gradient(
+    90deg,
+    #0000 calc(var(--hover-size) / 2 - 1px),
+    var(--AGT-c-resize-bar) 0 calc(var(--hover-size) / 2 + 1px),
+    #0000 0 100%
+  );
 }
 
 body {
@@ -41,7 +62,7 @@ body {
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  .AGT-table-wrapper {
     --AGT-c-background: #171539;
     --AGT-c-active: #302d6a;
     --AGT-c-hover: #363463;
@@ -55,4 +76,35 @@ body {
     --AGT-c-text-tertiary: #fff;
     --AGT-c-text-annotation: #fff;
   }
+}
+
+.AGT-table-wrapper.AGT-color-scheme-dark {
+  --AGT-c-background: #171539;
+  --AGT-c-active: #302d6a;
+  --AGT-c-hover: #363463;
+  --AGT-c-zebra: #14122b;
+  --AGT-c-header: #211f47;
+  --AGT-c-line: #5b5385;
+
+  /* Fonts */
+  --AGT-c-text-primary: #e1dfe9;
+  --AGT-c-text-secondary: #fff;
+  --AGT-c-text-tertiary: #fff;
+  --AGT-c-text-annotation: #fff;
+}
+
+.AGT-table-wrapper.AGT-color-scheme-light {
+  --AGT-c-background: #fff;
+  --AGT-c-active: #eeeefc;
+  --AGT-c-hover: #f4f4f7;
+  --AGT-c-zebra: #fbfbfc;
+  --AGT-c-header: #eeedf2;
+  --AGT-c-line: #dedce9;
+  --AGT-c-disabled: #c9c5da;
+
+  /* Fonts */
+  --AGT-c-text-primary: #1a1a1a;
+  --AGT-c-text-secondary: #4a4a4a;
+  --AGT-c-text-tertiary: #767676;
+  --AGT-c-text-annotation: #6b7280;
 }
