@@ -52,6 +52,19 @@
   position: sticky;
   top: 0;
   z-index: var(--AGT-sticky-row-z-index);
+  border-top: var(--AGT-line-style);
+}
+
+.AGT-table-row:has(+ .AGT-table-row.is-sticky) {
+  border-bottom: none;
+}
+
+.AGT-table-row.is-sticky:not(:first-child) {
+  top: var(--AGT-sticky-row-offset);
+}
+
+.AGT-table-row.is-header {
+  background-color: var(--AGT-c-header);
 }
 
 .AGT-table-cell,

@@ -38,9 +38,13 @@
   --AGT-transition-time: 300ms;
 
   /* Table defaults */
-  --AGT-line-style: solid 1px var(--AGT-c-line);
+  --AGT-border-width: 1px;
+  --AGT-line-style: solid var(--AGT-border-width) var(--AGT-c-line);
   --AGT-c-table-background: var(--AGT-c-background);
   --AGT-sticky-row-z-index: 100;
+  --AGT-sticky-row-offset: calc(
+    var(--AGT-base-font-size) * var(--AGT-base-line-height) + var(--sm) * 2 + var(--AGT-border-width)
+  );
 
   /* Resize bar */
   --AGT-resize-bar-hover-size: var(--md);

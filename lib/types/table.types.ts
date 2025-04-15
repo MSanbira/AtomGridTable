@@ -50,6 +50,7 @@ export interface TableRow extends Omit<React.HTMLAttributes<HTMLDivElement>, "co
   isActive?: boolean;
   selectIdentifier?: number | string;
   isHeader?: boolean;
+  isSticky?: boolean;
 }
 
 export interface TableCell extends Omit<React.HTMLAttributes<HTMLDivElement>, "content"> {
