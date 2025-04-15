@@ -218,19 +218,6 @@ interface AtomGridTableContextProps {
 }
 ```
 
-## Features
-
-- Column resizing
-- Row selection
-- Pagination
-- Sorting
-- Loading states
-- Custom themes
-- Zebra striping
-- Custom cell padding
-- Header row support
-- Sticky header and sticky row support
-
 ## License
 
 MIT
