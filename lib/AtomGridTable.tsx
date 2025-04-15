@@ -36,7 +36,15 @@ export default function AtomGridTable(props: TableProps) {
     tableStyleOptions,
   } = props;
 
-  const { isFirstRowHeader, isZebra, isNoXCellBorders, isSmallCellPadding, isStickyHeader, loaderRowsCount } = {
+  const {
+    isFirstRowHeader,
+    isZebra,
+    isNoXCellBorders,
+    isSmallCellPadding,
+    isStickyHeader,
+    loaderRowsCount,
+    colorScheme,
+  } = {
     ...defaultTableOptions?.tableStyleOptions,
     ...tableStyleOptions,
   };
@@ -84,6 +92,7 @@ export default function AtomGridTable(props: TableProps) {
       "is-zebra": !!isZebra,
       "is-no-x-cell-borders": !!isNoXCellBorders,
       "is-small-cell-padding": !!isSmallCellPadding,
+      [`AGT-color-scheme-${colorScheme}`]: !!colorScheme,
       [`AGT-table-theme-${tableTheme}`]: !!tableTheme,
     },
     className

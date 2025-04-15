@@ -70,4 +70,5 @@ export interface TableStyleOptions {
   isSmallCellPadding?: boolean;
   isStickyHeader?: boolean;
   loaderRowsCount?: number;
+  colorScheme?: "light" | "dark";
 }

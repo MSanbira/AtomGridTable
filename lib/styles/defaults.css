@@ -1,4 +1,4 @@
-:root {
+.AGT-table-wrapper {
   /* Sizes */
   --AGT-base-size: 8px;
   --xxs: calc(var(--AGT-base-size) / 4);
@@ -58,7 +58,7 @@ body {
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  .AGT-table-wrapper {
     --AGT-c-background: #171539;
     --AGT-c-active: #302d6a;
     --AGT-c-hover: #363463;
@@ -72,4 +72,35 @@ body {
     --AGT-c-text-tertiary: #fff;
     --AGT-c-text-annotation: #fff;
   }
+}
+
+.AGT-table-wrapper.AGT-color-scheme-dark {
+  --AGT-c-background: #171539;
+  --AGT-c-active: #302d6a;
+  --AGT-c-hover: #363463;
+  --AGT-c-zebra: #14122b;
+  --AGT-c-header: #211f47;
+  --AGT-c-line: #5b5385;
+
+  /* Fonts */
+  --AGT-c-text-primary: #e1dfe9;
+  --AGT-c-text-secondary: #fff;
+  --AGT-c-text-tertiary: #fff;
+  --AGT-c-text-annotation: #fff;
+}
+
+.AGT-table-wrapper.AGT-color-scheme-light {
+  --AGT-c-background: #fff;
+  --AGT-c-active: #eeeefc;
+  --AGT-c-hover: #f4f4f7;
+  --AGT-c-zebra: #fbfbfc;
+  --AGT-c-header: #eeedf2;
+  --AGT-c-line: #dedce9;
+  --AGT-c-disabled: #c9c5da;
+
+  /* Fonts */
+  --AGT-c-text-primary: #1a1a1a;
+  --AGT-c-text-secondary: #4a4a4a;
+  --AGT-c-text-tertiary: #767676;
+  --AGT-c-text-annotation: #6b7280;
 }

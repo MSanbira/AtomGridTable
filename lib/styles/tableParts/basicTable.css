@@ -15,6 +15,11 @@
   align-content: start;
   overflow: auto;
   background-color: var(--AGT-c-table-background);
+  border-radius: var(--xs) var(--xs) 0 0;
+}
+
+.AGT-table:where(:has(.AGT-table-row.is-sticky:first-child)) {
+  border-radius: 0;
 }
 
 .AGT-table-row {
@@ -36,7 +41,11 @@
 
 .AGT-table-row:first-child {
   border-top: var(--AGT-line-style);
+}
+
+.AGT-table-row:first-child:not(.is-sticky) {
   border-radius: var(--xs) var(--xs) 0 0;
+  overflow: hidden;
 }
 
 .AGT-table-row.is-sticky {
