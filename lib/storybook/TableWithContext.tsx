@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { BasicTableProp } from "./tableConsts";
 import AtomGridTable from "../AtomGridTable";
 import { AtomGridTableProvider } from "../context/AtomGridTableProvider";
-import { Typography, TypographyProps } from "../components/Typography/Typography";
+import { TypographyProps } from "../components/Typography/Typography";
 import { AtomGridTableContextProps } from "../types/tableContext.types";
 
 export const TableWithContext = () => {
@@ -33,10 +33,8 @@ export const TableWithContext = () => {
     <div>
       <AtomGridTableProvider {...contextValue}>
         <AtomGridTable {...BasicTableProp} />
+        <AtomGridTable {...BasicTableProp} tableStyleOptions={{ isZebra: false }} />
       </AtomGridTableProvider>
-      <Typography>
-        <strong>Selected Row IDs:</strong> {selectedRows.join(", ")}
-      </Typography>
     </div>
   );
 };

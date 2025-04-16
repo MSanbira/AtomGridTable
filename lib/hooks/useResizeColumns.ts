@@ -1,11 +1,17 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { ColOption } from "../types/table.types";
 import { tableHelper } from "../helpers/tableHelper";
+import { AtomGridTableContext } from "../context/AtomGridTableContext";
 
 export const useResizeColumns = (props: useResizeColumnsProps) => {
   const { colOptions, isHasSelect } = props;
-
+  const { globalMouseClientX, isHasContext } = useContext(AtomGridTableContext);
   const [mouseClientX, setMouseClientX] = useState<number>(0);
+
+  const clientX = useMemo(() => {
+    return globalMouseClientX ?? mouseClientX;
+  }, [globalMouseClientX, mouseClientX]);
+
   const [isResizing, setIsResizing] = useState<boolean>(false);
 
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -33,10 +39,11 @@ export const useResizeColumns = (props: useResizeColumnsProps) => {
 
     const resizeCellOptions = JSON.parse(resizeCellOptionsStr);
 
-    const colResizeOptions = colOptions[resizeCellOptions?.index]?.resizeOptions;
+    const colIndex = resizeCellOptions?.index - (isHasSelect ? 1 : 0);
+    const colResizeOptions = colOptions[colIndex]?.resizeOptions;
     if (!colResizeOptions) return;
 
-    const delta = mouseClientX - resizeCellOptions.startX;
+    const delta = clientX - resizeCellOptions.startX;
     const colWidths = wrapperRef.current?.getAttribute("data-col-widths")?.split(";") ?? [];
     const colWidth = colWidths[resizeCellOptions.index];
     const colWidthNumber = colWidth.match(/^\d+px$/g)
@@ -53,8 +60,8 @@ export const useResizeColumns = (props: useResizeColumnsProps) => {
     wrapperRef.current?.setAttribute("data-col-widths", colWidths.join(";"));
     wrapperRef.current?.style.setProperty("--template-cols", colWidths.join(" "));
 
-    setResizeCellOptions({ ...resizeCellOptions, startX: mouseClientX });
-  }, [colOptions, mouseClientX, setResizeCellOptions]);
+    setResizeCellOptions({ ...resizeCellOptions, startX: clientX });
+  }, [colOptions, clientX, setResizeCellOptions, isHasSelect]);
 
   const handleRemoveResize = useCallback(() => {
     // to not register a click on a sorting header
@@ -84,7 +91,7 @@ export const useResizeColumns = (props: useResizeColumnsProps) => {
     if (isResizing) {
       handleResize();
     }
-  }, [mouseClientX, handleResize, isResizing]);
+  }, [clientX, handleResize, isResizing]);
 
   useEffect(() => {
     document.addEventListener("mouseup", handleRemoveResize);
@@ -92,9 +99,14 @@ export const useResizeColumns = (props: useResizeColumnsProps) => {
   }, [handleRemoveResize]);
 
   useEffect(() => {
+    if (isHasContext) {
+      document.removeEventListener("mousemove", handleMouseMove);
+      return;
+    }
+
     document.addEventListener("mousemove", handleMouseMove);
     return () => document.removeEventListener("mousemove", handleMouseMove);
-  }, [handleMouseMove]);
+  }, [handleMouseMove, isHasContext]);
 
   useEffect(() => {
     if (!wrapperRef.current) return;

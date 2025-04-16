@@ -6,8 +6,10 @@ import { TypographyProps } from "../components/Typography/Typography";
 import { TableProps } from "./table.types";
 
 export interface AtomGridTableContextProps {
+  isHasContext?: boolean;
   defaultTableOptions?: Partial<TableProps>;
   customComponents?: CustomComponents;
+  globalMouseClientX?: number;
 }
 
 export interface CustomComponents {

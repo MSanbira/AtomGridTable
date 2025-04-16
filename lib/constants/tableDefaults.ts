@@ -4,3 +4,5 @@ export enum TableType {
 }
 
 export const DefaultPaginationSizeOptions = [10, 20, 50, 100];
+
+export const DefaultResizeOptions = { min: 100, max: 800 };

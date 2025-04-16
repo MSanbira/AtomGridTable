@@ -45,6 +45,7 @@
   --AGT-sticky-row-offset: calc(
     var(--AGT-base-font-size) * var(--AGT-base-line-height) + var(--sm) * 2 + var(--AGT-border-width)
   );
+  --AGT-table-cell-word-break: break-all;
 
   /* Resize bar */
   --AGT-resize-bar-hover-size: var(--md);

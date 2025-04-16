@@ -72,6 +72,7 @@
   border-right: var(--AGT-line-style);
   padding: var(--md);
   grid-column: span var(--col-span, 1);
+  word-break: var(--AGT-table-cell-word-break);
 }
 
 .AGT-table-cell:last-child,
