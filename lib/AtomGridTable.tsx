@@ -13,13 +13,14 @@ import { usePagination } from "./hooks/usePagination";
 import { useSorting } from "./hooks/useSorting";
 import { AtomGridTableContext } from "./context/AtomGridTableContext";
 import { ComponentOverride } from "./components/ComponentOverride/ComponentOverride";
+import { DefaultResizeOptions } from "./constants/tableDefaults";
 import "./styles/index.css";
 
 export default function AtomGridTable(props: TableProps) {
   const { defaultTableOptions, customComponents } = useContext(AtomGridTableContext);
 
   const {
-    colOptions,
+    colOptions: colOptionsProp,
     rows,
     className,
     isLoading,
@@ -48,6 +49,13 @@ export default function AtomGridTable(props: TableProps) {
     ...defaultTableOptions?.tableStyleOptions,
     ...tableStyleOptions,
   };
+
+  const colOptions = useMemo(() => {
+    return colOptionsProp.map((col) => ({
+      ...col,
+      resizeOptions: col.resizeOptions ?? (col.isResizable ? DefaultResizeOptions : undefined),
+    }));
+  }, [colOptionsProp]);
 
   const paginationStore = usePagination(paginationOptions ?? {});
   const { apiParams: paginationApiParams, page, pageSize, setPage } = paginationStore;

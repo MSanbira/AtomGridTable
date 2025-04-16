@@ -42,6 +42,7 @@ export interface ColOption {
   name?: string;
   width?: string;
   resizeOptions?: { min: number; max: number };
+  isResizable?: boolean;
   isHeadersColumn?: boolean;
 }
 

@@ -67,7 +67,6 @@ interface TableProps {
   rows: TableRow[];
   className?: string;
   isLoading?: boolean;
-  loaderRowsCount?: number;
   selectedRows?: (number | string)[];
   isHasSelect?: boolean;
   tableTheme?: string;
@@ -76,6 +75,9 @@ interface TableProps {
   paginationOptions?: PaginationOptions;
   sortingOptions?: SortingOptions;
   tableStyleOptions?: TableStyleOptions;
+  onPageOptionChange?: (pageOptions: PaginationChangeOptions) => void;
+  onSortOptionChange?: (sortOptions: SortingChangeOptions) => void;
+  onChange?: (generalOptions: { pageOptions: PaginationChangeOptions; sortOptions: SortingChangeOptions }) => void;
 }
 ```
 
@@ -87,6 +89,7 @@ interface ColOption {
   tooltip?: string;
   name?: string;
   width?: string;
+  isResizable?: boolean;
   resizeOptions?: { min: number; max: number };
   isHeadersColumn?: boolean;
 }
@@ -100,6 +103,7 @@ interface TableRow {
   isActive?: boolean;
   selectIdentifier?: number | string;
   isHeader?: boolean;
+  isSticky?: boolean;
 }
 ```
 
@@ -115,6 +119,20 @@ interface TableCell {
   isNoPadding?: boolean;
   isDisabled?: boolean;
   isCentered?: boolean;
+}
+```
+
+### TableStyleOptions
+
+```typescript
+interface TableStyleOptions {
+  isFirstRowHeader?: boolean;
+  isZebra?: boolean;
+  isNoXCellBorders?: boolean;
+  isSmallCellPadding?: boolean;
+  isStickyHeader?: boolean;
+  loaderRowsCount?: number;
+  colorScheme?: "light" | "dark";
 }
 ```
 

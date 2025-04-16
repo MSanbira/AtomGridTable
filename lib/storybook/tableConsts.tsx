@@ -12,10 +12,13 @@ export const BasicTableProp = {
     {
       label: "Age",
       width: "100px",
+      isResizable: true,
     },
     {
       label: "Email",
       width: "250px",
+      resizeOptions: { min: 100, max: 300 },
+      isResizable: true,
     },
     {
       label: "Status",
@@ -68,25 +71,22 @@ export const LargeTableProp = {
     {
       label: "Employee ID",
       name: "id",
-      width: "120px",
-      resizeOptions: { min: 100, max: 300 },
+      isResizable: true,
     },
     {
       label: "Full Name",
       name: "name",
-      width: "200px",
-      resizeOptions: { min: 100, max: 300 },
+      isResizable: true,
     },
     {
       label: "Department",
       name: "department",
-      width: "180px",
-      resizeOptions: { min: 100, max: 300 },
+      isResizable: true,
     },
     {
       label: "Performance",
       name: "performance",
-      width: "150px",
+      isResizable: true,
     },
   ] as ColOption[],
   rows: [], // Rows will be populated by the API simulator
