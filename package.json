@@ -15,14 +15,22 @@
     "dist",
     "lib"
   ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    }
+  },
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "package-publish": "npm run build && npm publish"
+    "package-publish": "npm run build && npm publish",
+    "install-local": "./install_local.sh"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -46,7 +54,8 @@
     "storybook": "^7.6.17",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.24.1",
-    "vite": "^5.1.4"
+    "vite": "^5.1.4",
+    "vite-plugin-dts": "^4.5.3"
   },
   "publishConfig": {
     "access": "public"
