@@ -11,6 +11,7 @@ export default defineConfig({
       include: ["lib/**/*"],
       outDir: "dist",
       rollupTypes: true,
+      insertTypesEntry: true,
     }),
   ],
   build: {
@@ -23,10 +24,6 @@ export default defineConfig({
     rollupOptions: {
       external: ["react", "react-dom"],
       output: {
-        globals: {
-          react: "React",
-          "react-dom": "ReactDOM",
-        },
         assetFileNames: (assetInfo) => {
           if (assetInfo.name === "style.css") return "index.css";
           return assetInfo.name || "unknown";
@@ -34,8 +31,8 @@ export default defineConfig({
       },
     },
     cssCodeSplit: false,
-    cssMinify: true,
     minify: true,
     sourcemap: true,
+    emptyOutDir: true,
   },
 });

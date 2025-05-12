@@ -36,6 +36,7 @@ npm install @sanbira/atom-grid-table
 
 ```tsx
 import { AtomGridTable } from "@sanbira/atom-grid-table";
+import "@sanbira/atom-grid-table/style.css";
 import type { TableProps, TableRow, TableCell, ColOption } from "@sanbira/atom-grid-table";
 
 const colOptions: ColOption[] = [

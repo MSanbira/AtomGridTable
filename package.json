@@ -1,7 +1,7 @@
 {
   "name": "@sanbira/atom-grid-table",
   "private": false,
-  "version": "1.0.7",
+  "version": "1.0.8",
   "license": "MIT",
   "type": "module",
   "repository": {
@@ -20,7 +20,8 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.js"
-    }
+    },
+    "./style.css": "./dist/index.css"
   },
   "scripts": {
     "dev": "vite",
