@@ -16,6 +16,7 @@
 * css API as props
 * dictionary
 * separate demo app
+* have a case for pagination  without row count
 
 components:
 * tooltip component ✅

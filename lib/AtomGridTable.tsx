@@ -35,6 +35,7 @@ export default function AtomGridTable(props: TableProps) {
     onChange = defaultTableOptions?.onChange,
     sortingOptions = defaultTableOptions?.sortingOptions,
     tableStyleOptions,
+    isPagination,
   } = props;
 
   const {
@@ -218,7 +219,7 @@ export default function AtomGridTable(props: TableProps) {
         isHasSelect={isHasSelect}
         selectedRows={selectedRows}
         paginationStore={paginationStore}
-        isPagination={!!paginationOptions}
+        isPagination={isPagination}
       />
     </div>
   );

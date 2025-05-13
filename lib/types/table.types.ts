@@ -13,8 +13,9 @@ export interface TableProps extends TableHandlers {
   selectionArea?: string;
   setSelected?: (selected: (number | string)[]) => void;
   paginationOptions?: PaginationOptions;
-  sortingOptions?: SortingOptions;
+  sortingOptions?: Partial<SortingOptions>;
   tableStyleOptions?: TableStyleOptions;
+  isPagination?: boolean;
 }
 
 interface TableHandlers {

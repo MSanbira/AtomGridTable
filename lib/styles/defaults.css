@@ -79,7 +79,7 @@ body {
   }
 }
 
-.AGT-table-wrapper.AGT-color-scheme-dark {
+.AGT-table-wrapper:where(.AGT-color-scheme-dark) {
   --AGT-c-background: #171539;
   --AGT-c-active: #302d6a;
   --AGT-c-hover: #363463;
@@ -94,7 +94,7 @@ body {
   --AGT-c-text-annotation: #fff;
 }
 
-.AGT-table-wrapper.AGT-color-scheme-light {
+.AGT-table-wrapper:where(.AGT-color-scheme-light) {
   --AGT-c-background: #fff;
   --AGT-c-active: #eeeefc;
   --AGT-c-hover: #f4f4f7;
