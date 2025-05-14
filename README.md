@@ -2,6 +2,8 @@
 
 A highly customizable React table component built with CSS Grid and Subgrid, offering cell-level control and modern layout capabilities.
 
+**Documentation:** [https://agt.sanbira.com/](https://agt.sanbira.com/)
+
 ## Features
 
 - 🎯 Built for React applications
