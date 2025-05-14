@@ -10,7 +10,9 @@ const DirectionOptions = [SortingDirection.ASC, SortingDirection.DESC, null];
 export const useSorting = (options: SortingOptions) => {
   const { defaultOrdering, defaultDirection, resetPage, getApiParams } = options;
   const [ordering, setOrdering] = useState<string>(defaultOrdering ?? "");
-  const [direction, setDirection] = useState<SortingDirection | null>(defaultDirection ?? null);
+  const [direction, setDirection] = useState<SortingDirection | null>(
+    defaultDirection ?? (defaultOrdering ? SortingDirection.ASC : null)
+  );
 
   const apiParams = useMemo<SortingApiParams | unknown>(() => {
     if (getApiParams) return getApiParams(ordering, direction);
