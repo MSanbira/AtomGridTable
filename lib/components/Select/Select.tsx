@@ -1,4 +1,4 @@
-import React, { ComponentProps } from "react";
+import React from "react";
 import { getClasses } from "../../helpers/classNameHelper";
 
 export const Select = (props: SelectProps) => {
@@ -15,8 +15,11 @@ export const Select = (props: SelectProps) => {
   );
 };
 
-export interface SelectProps extends ComponentProps<"select"> {
+export interface SelectProps {
   options: SelectOption[];
+  className?: string;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => void;
 }
 
 export type SelectOption = { label?: string; value: string };
