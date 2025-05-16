@@ -28,7 +28,7 @@ export const Checkbox = (props: CheckboxProps) => {
 
 export interface CheckboxProps {
   checked?: boolean;
-  onClick?: (e: React.MouseEvent, value: boolean) => void;
+  onClick?: (e: React.MouseEvent | React.ChangeEvent, value: boolean) => void;
   className?: string;
   indeterminate?: boolean;
   disabled?: boolean;

@@ -6,6 +6,7 @@ import { Select } from "../Select/Select";
 import { ArrowLeftPageIcon, ArrowRightPageIcon } from "../../icons/ArrowIcons";
 import { AtomGridTableContext } from "../../context/AtomGridTableContext";
 import { ComponentOverride } from "../ComponentOverride/ComponentOverride";
+import { IconButtonType } from "../../types/general.types";
 
 export const TablePagination = (props: TablePaginationProps) => {
   const {
@@ -27,7 +28,7 @@ export const TablePagination = (props: TablePaginationProps) => {
         <ComponentOverride
           defaultComponent={Select}
           overrideComponent={customComponents?.select}
-          value={pageSize}
+          value={pageSize.toString()}
           onChange={(e) => setPageSize(Number(e.target.value))}
           options={pageSizeOptions.map((option) => ({
             value: option.toString(),
@@ -49,6 +50,7 @@ export const TablePagination = (props: TablePaginationProps) => {
           onClick={() => setPage(page - 1)}
           disabled={page === 0}
           icon={<ArrowLeftPageIcon />}
+          iconType={IconButtonType.ArrowLeft}
         />
         <ComponentOverride
           defaultComponent={IconButton}
@@ -56,6 +58,7 @@ export const TablePagination = (props: TablePaginationProps) => {
           onClick={() => setPage(page + 1)}
           disabled={page === Math.ceil(rowCount / pageSize) - 1}
           icon={<ArrowRightPageIcon />}
+          iconType={IconButtonType.ArrowRight}
         />
       </div>
     </div>

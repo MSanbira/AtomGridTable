@@ -16,6 +16,7 @@ export type {
   TypographyVariantOptions,
   TypographyColorOptions,
 } from "./components/Typography/Typography";
+export { IconButtonType } from "./types/general.types";
 
 export { Typography } from "./components/Typography/Typography";
 export { Checkbox } from "./components/Checkbox/Checkbox";
