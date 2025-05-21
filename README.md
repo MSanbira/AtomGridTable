@@ -150,7 +150,7 @@ interface TableStyleOptions {
 
 ```typescript
 interface VirtualizationOptions {
-  rowHight?: number;
+  rowHeight?: number;
   isStickyHeader?: boolean;
   tableHeight?: string | number;
 }
@@ -166,7 +166,7 @@ Atom Grid Table supports virtualization for efficiently rendering large datasets
   rows={largeDataset}
   isVirtualization={true}
   virtualizationOptions={{
-    rowHight: 48, // Height of each row in pixels
+    rowHeight: 48, // Height of each row in pixels
     isStickyHeader: true, // Whether the header should stick to the top
     tableHeight: "80dvh", // Height of the table container (px or CSS value)
   }}

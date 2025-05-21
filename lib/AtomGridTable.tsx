@@ -55,7 +55,7 @@ export default function AtomGridTable(props: TableProps) {
 
   const {
     isStickyHeader: isVirtualizationStickyHeader = true,
-    rowHight = isSmallCellPadding ? 32 : 48,
+    rowHeight = isSmallCellPadding ? 32 : 48,
     tableHeight: tableHeightProp = "80dvh",
   } = {
     ...defaultTableOptions?.virtualizationOptions,
@@ -92,7 +92,7 @@ export default function AtomGridTable(props: TableProps) {
 
   const { rowToShowSlice } = useVirtualization({
     isVirtualization: !!isVirtualization,
-    rowHight,
+    rowHeight,
     tableWrapperRef,
     rowsLength: rows.length,
   });

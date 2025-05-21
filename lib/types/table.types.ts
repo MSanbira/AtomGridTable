@@ -39,7 +39,7 @@ export type SortingChangeOptions = {
 };
 
 export interface VirtualizationOptions {
-  rowHight?: number;
+  rowHeight?: number;
   isStickyHeader?: boolean;
   tableHeight?: string | number;
 }

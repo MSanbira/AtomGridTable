@@ -3,19 +3,19 @@ import { RowSlice } from "../types/table.types";
 import { DefaultVirtualizationRowBuffer } from "../constants/tableDefaults";
 
 export const useVirtualization = (options: VirtualizationHookOptions) => {
-  const { isVirtualization, rowHight, tableWrapperRef, rowsLength } = options;
+  const { isVirtualization, rowHeight, tableWrapperRef, rowsLength } = options;
 
   const [rowToShowSlice, setRowToShowSlice] = useState<RowSlice | null>(null);
 
   const rowsToShowNumber = useMemo<number>(() => {
-    return Math.round(window.innerHeight / rowHight) + DefaultVirtualizationRowBuffer;
-  }, [rowHight]);
+    return Math.round(window.innerHeight / rowHeight) + DefaultVirtualizationRowBuffer;
+  }, [rowHeight]);
 
   const handleScroll = useCallback(
     (e: WheelEvent) => {
       if (!rowToShowSlice) return;
 
-      const rowOffset = Math.round(e.deltaY / rowHight);
+      const rowOffset = Math.round(e.deltaY / rowHeight);
       const start = Math.min(rowsLength - rowsToShowNumber, Math.max(0, rowToShowSlice?.start + rowOffset));
       const end = Math.min(rowsLength, start + rowsToShowNumber);
 
@@ -26,17 +26,17 @@ export const useVirtualization = (options: VirtualizationHookOptions) => {
         end,
       });
     },
-    [rowHight, rowToShowSlice, rowsLength, rowsToShowNumber]
+    [rowHeight, rowToShowSlice, rowsLength, rowsToShowNumber]
   );
 
   useEffect(() => {
-    if (!isVirtualization || !!rowToShowSlice || !rowHight) return;
+    if (!isVirtualization || !!rowToShowSlice || !rowHeight) return;
 
     const start = 0;
     const end = start + rowsToShowNumber;
 
     setRowToShowSlice({ start, end });
-  }, [isVirtualization, rowToShowSlice, rowHight, rowsToShowNumber]);
+  }, [isVirtualization, rowToShowSlice, rowHeight, rowsToShowNumber]);
 
   useEffect(() => {
     if (!isVirtualization || !tableWrapperRef.current) return;
@@ -58,7 +58,7 @@ export const useVirtualization = (options: VirtualizationHookOptions) => {
 
 interface VirtualizationHookOptions {
   isVirtualization: boolean;
-  rowHight: number;
+  rowHeight: number;
   tableWrapperRef: React.RefObject<HTMLDivElement>;
   rowsLength: number;
 }
