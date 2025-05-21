@@ -1,7 +1,8 @@
 import React from "react";
+import { VirtualizationDemo } from "../lib/demos/virtualizationDemo";
 
 function App() {
-  return <h1>Atom Grid Table</h1>;
+  return <VirtualizationDemo />;
 }
 
 export default App;

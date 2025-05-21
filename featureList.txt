@@ -16,7 +16,11 @@
 * css API as props
 * dictionary
 * separate demo app
-* have a case for pagination  without row count
+* have a case for pagination without row count
+* filtering?
+* virtualization
+  * for desctop ✅
+  * for mobile
 
 components:
 * tooltip component ✅

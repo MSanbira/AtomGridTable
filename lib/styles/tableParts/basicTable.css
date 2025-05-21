@@ -3,7 +3,7 @@
   grid-template-columns: minmax(0, 1fr);
   grid-template-rows: auto minmax(0, 1fr);
   gap: var(--md);
-  height: 100%;
+  height: var(--table-height, 100%);
   width: max-content;
   max-width: 100%;
   font-size: var(--AGT-base-font-size);

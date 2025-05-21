@@ -1,8 +1,7 @@
-import React, { CSSProperties, ReactElement, useContext, useEffect, useMemo } from "react";
+import React, { CSSProperties, ReactElement, useContext, useEffect, useMemo, useRef } from "react";
 import { Typography } from "./components/Typography/Typography";
 import { getClasses } from "./helpers/classNameHelper";
 import { tableHelper } from "./helpers/tableHelper";
-import { Skeleton } from "./components/Skeleton/Skeleton";
 import { useResizeColumns } from "./hooks/useResizeColumns";
 import { TableProps, TableRow } from "./types/table.types";
 import { useSelectRows } from "./hooks/useSelectRows";
@@ -11,6 +10,7 @@ import { TableRow as TableRowComponent } from "./components/TableParts/TableRow"
 import { TableFooter } from "./components/TableParts/TableFooter";
 import { usePagination } from "./hooks/usePagination";
 import { useSorting } from "./hooks/useSorting";
+import { useVirtualization } from "./hooks/useVirtualization";
 import { AtomGridTableContext } from "./context/AtomGridTableContext";
 import { ComponentOverride } from "./components/ComponentOverride/ComponentOverride";
 import { DefaultResizeOptions } from "./constants/tableDefaults";
@@ -36,6 +36,8 @@ export default function AtomGridTable(props: TableProps) {
     sortingOptions = defaultTableOptions?.sortingOptions,
     tableStyleOptions,
     isPagination,
+    isVirtualization,
+    virtualizationOptions,
   } = props;
 
   const {
@@ -43,7 +45,7 @@ export default function AtomGridTable(props: TableProps) {
     isZebra,
     isNoXCellBorders,
     isSmallCellPadding,
-    isStickyHeader,
+    isStickyHeader: defaultIsStickyHeader,
     loaderRowsCount,
     colorScheme,
   } = {
@@ -51,12 +53,30 @@ export default function AtomGridTable(props: TableProps) {
     ...tableStyleOptions,
   };
 
+  const {
+    isStickyHeader: isVirtualizationStickyHeader = true,
+    rowHeight = isSmallCellPadding ? 32 : 48,
+    tableHeight: tableHeightProp = "80dvh",
+  } = {
+    ...defaultTableOptions?.virtualizationOptions,
+    ...virtualizationOptions,
+  };
+
+  const isStickyHeader = isVirtualization ? isVirtualizationStickyHeader : defaultIsStickyHeader;
+  const tableHeight = isVirtualization
+    ? typeof tableHeightProp === "number"
+      ? `${tableHeightProp}px`
+      : tableHeightProp
+    : undefined;
+
   const colOptions = useMemo(() => {
     return colOptionsProp.map((col) => ({
       ...col,
       resizeOptions: col.resizeOptions ?? (col.isResizable ? DefaultResizeOptions : undefined),
     }));
   }, [colOptionsProp]);
+
+  const tableWrapperRef = useRef<HTMLDivElement>(null);
 
   const paginationStore = usePagination(paginationOptions ?? {});
   const { apiParams: paginationApiParams, page, pageSize, setPage } = paginationStore;
@@ -70,13 +90,27 @@ export default function AtomGridTable(props: TableProps) {
     setSelected,
   });
 
-  const rowsToDisplay = useMemo<TableRow[]>(() => {
-    if (!isFirstRowHeader) return rows;
+  const { rowToShowSlice } = useVirtualization({
+    isVirtualization: !!isVirtualization,
+    rowHeight,
+    tableWrapperRef,
+    rowsLength: rows.length,
+  });
 
-    const temp = [...rows];
-    temp.shift();
-    return temp;
-  }, [rows, isFirstRowHeader]);
+  const isOneLineAll = useMemo<boolean>(() => !!isVirtualization, [isVirtualization]);
+
+  const rowsToDisplay = useMemo<TableRow[]>(() => {
+    const tempRows = [...rows];
+    if (isFirstRowHeader) {
+      tempRows.shift();
+    }
+
+    if (rowToShowSlice) {
+      return tempRows.slice(rowToShowSlice.start, rowToShowSlice.end);
+    }
+
+    return tempRows;
+  }, [rows, isFirstRowHeader, rowToShowSlice]);
 
   useEffect(() => {
     onPageOptionChange?.({ apiParams: paginationApiParams, page, pageSize });
@@ -110,7 +144,7 @@ export default function AtomGridTable(props: TableProps) {
   const tableContent = useMemo<ReactElement>(() => {
     if (isLoading) {
       return (
-        <div className="AGT-table">
+        <div className="AGT-table" ref={tableWrapperRef}>
           <TableHeader
             rows={rows}
             isFirstRowHeader={isFirstRowHeader}
@@ -125,29 +159,14 @@ export default function AtomGridTable(props: TableProps) {
             isStickyHeader={isStickyHeader}
           />
           {tableHelper.numLengthArr(loaderRowsCount ?? pageSize).map((i) => (
-            <TableRowComponent
-              key={i}
-              index={i}
-              row={{
-                cells: tableHelper.numLengthArr(colOptions.length + (isHasSelect ? 1 : 0)).map((j) => ({
-                  content: (
-                    <ComponentOverride
-                      key={j}
-                      defaultComponent={Skeleton}
-                      overrideComponent={customComponents?.skeleton}
-                    />
-                  ),
-                })),
-              }}
-              colOptions={colOptions}
-            />
+            <TableRowComponent key={i} index={i} colOptions={colOptions} isSkeleton />
           ))}
         </div>
       );
     }
 
     return (
-      <div className="AGT-table">
+      <div className="AGT-table" ref={tableWrapperRef}>
         <TableHeader
           rows={rows}
           isFirstRowHeader={isFirstRowHeader}
@@ -183,6 +202,7 @@ export default function AtomGridTable(props: TableProps) {
             selectedRows={selectedRows}
             handleSelectRowClick={handleSelectRowClick}
             handleMouseDownResize={handleMouseDownResize}
+            isOneLineAll={isOneLineAll}
           />
         ))}
 
@@ -210,10 +230,11 @@ export default function AtomGridTable(props: TableProps) {
     loaderRowsCount,
     pageSize,
     handleSelectRowClick,
+    isOneLineAll,
   ]);
 
   return (
-    <div className={wrapperClasses} ref={wrapperRef}>
+    <div className={wrapperClasses} ref={wrapperRef} style={{ "--table-height": tableHeight } as CSSProperties}>
       {tableContent}
       <TableFooter
         isHasSelect={isHasSelect}

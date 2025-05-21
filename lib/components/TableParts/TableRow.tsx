@@ -1,25 +1,40 @@
-import React, { CSSProperties, useContext } from "react";
+import React, { CSSProperties, useContext, useMemo } from "react";
 import { Checkbox } from "../Checkbox/Checkbox";
 import { getClasses } from "../../helpers/classNameHelper";
 import { TableCell } from "./TableCell";
 import { ColOption, TableRow as TableRowType } from "../../types/table.types";
 import { AtomGridTableContext } from "../../context/AtomGridTableContext";
 import { ComponentOverride } from "../ComponentOverride/ComponentOverride";
-
-interface TableRowProps {
-  row: TableRowType;
-  index: number;
-  isHasSelect?: boolean;
-  colOptions: ColOption[];
-  selectedRows?: (string | number)[];
-  handleSelectRowClick?: (e: React.MouseEvent, identifier: string | number) => void;
-  handleMouseDownResize?: (e: React.MouseEvent<HTMLDivElement>, index: number) => void;
-}
+import { tableHelper } from "../../helpers/tableHelper";
+import { Skeleton } from "../Skeleton/Skeleton";
 
 export const TableRow = (props: TableRowProps) => {
-  const { row, index, isHasSelect, colOptions, selectedRows = [], handleSelectRowClick, handleMouseDownResize } = props;
-  const { isActive, onClick, isHeader, className, selectIdentifier, cells, isSticky, ...rest } = row;
+  const {
+    row: rowProp = { cells: [] },
+    index,
+    isHasSelect,
+    colOptions,
+    selectedRows = [],
+    handleSelectRowClick,
+    handleMouseDownResize,
+    isSkeleton,
+    isOneLineAll,
+  } = props;
   const { customComponents } = useContext(AtomGridTableContext);
+
+  const row = useMemo<TableRowType>(() => {
+    if (!isSkeleton) return rowProp;
+
+    return {
+      cells: tableHelper.numLengthArr(colOptions.length + (isHasSelect ? 1 : 0)).map((i) => ({
+        content: (
+          <ComponentOverride key={i} defaultComponent={Skeleton} overrideComponent={customComponents?.skeleton} />
+        ),
+      })),
+    };
+  }, [isSkeleton, rowProp, colOptions.length, isHasSelect, customComponents]);
+
+  const { isActive, onClick, isHeader, className, selectIdentifier, cells, isSticky, ...rest } = row;
 
   return (
     <div
@@ -46,8 +61,8 @@ export const TableRow = (props: TableRowProps) => {
               <ComponentOverride
                 defaultComponent={Checkbox}
                 overrideComponent={customComponents?.checkbox}
-                checked={selectedRows.includes(selectIdentifier ?? index)}
-                onClick={(e) => handleSelectRowClick?.(e, selectIdentifier ?? index)}
+                checked={selectedRows.includes(selectIdentifier ?? index.toString())}
+                onClick={(e) => handleSelectRowClick?.(e, selectIdentifier ?? index.toString())}
               />
             ),
           }}
@@ -66,9 +81,22 @@ export const TableRow = (props: TableRowProps) => {
             cell={cell}
             colOptions={colOptions}
             handleMouseDownResize={handleMouseDownResize}
+            isOneLineAll={isOneLineAll}
           />
         );
       })}
     </div>
   );
 };
+
+interface TableRowProps {
+  index: number;
+  row?: TableRowType;
+  isHasSelect?: boolean;
+  colOptions: ColOption[];
+  selectedRows?: (string | number)[];
+  handleSelectRowClick?: (e: React.MouseEvent, identifier: string) => void;
+  handleMouseDownResize?: (e: React.MouseEvent<HTMLDivElement>, index: number) => void;
+  isSkeleton?: boolean;
+  isOneLineAll?: boolean;
+}
