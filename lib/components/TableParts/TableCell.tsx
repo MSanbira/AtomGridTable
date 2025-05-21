@@ -7,7 +7,7 @@ import { AtomGridTableContext } from "../../context/AtomGridTableContext";
 import { ComponentOverride } from "../ComponentOverride/ComponentOverride";
 
 export const TableCell = (props: TableCellProps) => {
-  const { index, cell, withResize, handleMouseDownResize, colOptions } = props;
+  const { index, cell, withResize, handleMouseDownResize, colOptions, isOneLineAll } = props;
   const { customComponents } = useContext(AtomGridTableContext);
 
   const {
@@ -32,14 +32,14 @@ export const TableCell = (props: TableCellProps) => {
       <ComponentOverride
         defaultComponent={Typography}
         overrideComponent={customComponents?.typography}
-        className={getClasses({ "AGT-one-line-text": !!isOneLine })}
+        className={getClasses({ "AGT-one-line-text": !!isOneLine || !!isOneLineAll })}
       >
         {content}
       </ComponentOverride>
     ) : (
       content
     );
-  }, [content, isOneLine, isContentStringOrNumber, customComponents]);
+  }, [content, isOneLine, isOneLineAll, isContentStringOrNumber, customComponents]);
 
   return (
     <div
@@ -65,7 +65,7 @@ export const TableCell = (props: TableCellProps) => {
       }
       {...rest}
     >
-      {content && isOneLine && isContentStringOrNumber ? (
+      {content && (isOneLine || isOneLineAll) && isContentStringOrNumber ? (
         <ComponentOverride
           defaultComponent={Tooltip}
           overrideComponent={customComponents?.tooltip}
@@ -87,4 +87,5 @@ export interface TableCellProps {
   colOptions: ColOption[];
   handleMouseDownResize?: (e: React.MouseEvent<HTMLDivElement>, index: number) => void;
   withResize?: boolean;
+  isOneLineAll?: boolean;
 }

@@ -7,15 +7,17 @@ export interface TableProps extends TableHandlers {
   rows: TableRow[];
   className?: string;
   isLoading?: boolean;
-  selectedRows?: (number | string)[];
+  isPagination?: boolean;
+  isVirtualization?: boolean;
   isHasSelect?: boolean;
-  tableTheme?: string;
-  selectionArea?: string;
-  setSelected?: (selected: (number | string)[]) => void;
+  selectedRows?: string[];
+  setSelected?: (selected: string[]) => void;
   paginationOptions?: PaginationOptions;
   sortingOptions?: Partial<SortingOptions>;
+  virtualizationOptions?: VirtualizationOptions;
   tableStyleOptions?: TableStyleOptions;
-  isPagination?: boolean;
+  selectionArea?: string;
+  tableTheme?: string;
 }
 
 interface TableHandlers {
@@ -36,6 +38,12 @@ export type SortingChangeOptions = {
   direction: SortingDirection | null;
 };
 
+export interface VirtualizationOptions {
+  rowHight?: number;
+  isStickyHeader?: boolean;
+  tableHeight?: string | number;
+}
+
 export interface ColOption {
   label?: string;
   tooltip?: string;
@@ -50,7 +58,7 @@ export interface ColOption {
 export interface TableRow extends Omit<React.HTMLAttributes<HTMLDivElement>, "content"> {
   cells: (TableCell | undefined)[];
   isActive?: boolean;
-  selectIdentifier?: number | string;
+  selectIdentifier?: string;
   isHeader?: boolean;
   isSticky?: boolean;
 }
@@ -74,4 +82,9 @@ export interface TableStyleOptions {
   isStickyHeader?: boolean;
   loaderRowsCount?: number;
   colorScheme?: "light" | "dark";
+}
+
+export interface RowSlice {
+  start: number;
+  end: number;
 }

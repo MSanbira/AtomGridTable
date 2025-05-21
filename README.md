@@ -4,6 +4,9 @@ A highly customizable React table component built with CSS Grid and Subgrid, off
 
 **Documentation:** [https://agt.sanbira.com/](https://agt.sanbira.com/)
 
+[![npm version](https://img.shields.io/npm/v/@sanbira/atom-grid-table.svg)](https://www.npmjs.com/package/@sanbira/atom-grid-table)
+[![GitHub repo](https://img.shields.io/badge/GitHub-Repository-blue.svg)](https://github.com/MSanbira/AtomGridTable)
+
 ## Features
 
 - 🎯 Built for React applications
@@ -18,6 +21,7 @@ A highly customizable React table component built with CSS Grid and Subgrid, off
 - 🎪 Zebra striping option
 - 📊 Header row configuration
 - 📌 Sticky header and sticky row support
+- 🚀 Virtualization support for large datasets
 - ⚡ Lightweight with minimal dependencies (only React and React DOM)
 
 ## Dependencies
@@ -70,13 +74,16 @@ interface TableProps {
   rows: TableRow[];
   className?: string;
   isLoading?: boolean;
-  selectedRows?: (number | string)[];
+  selectedRows?: string[];
   isHasSelect?: boolean;
   tableTheme?: string;
   selectionArea?: string;
-  setSelected?: (selected: (number | string)[]) => void;
+  isPagination?: boolean;
+  isVirtualization?: boolean;
+  setSelected?: (selected: string[]) => void;
   paginationOptions?: PaginationOptions;
-  sortingOptions?: SortingOptions;
+  sortingOptions?: Partial<SortingOptions>;
+  virtualizationOptions?: VirtualizationOptions;
   tableStyleOptions?: TableStyleOptions;
   onPageOptionChange?: (pageOptions: PaginationChangeOptions) => void;
   onSortOptionChange?: (sortOptions: SortingChangeOptions) => void;
@@ -104,7 +111,7 @@ interface ColOption {
 interface TableRow {
   cells: (TableCell | undefined)[];
   isActive?: boolean;
-  selectIdentifier?: number | string;
+  selectIdentifier?: string;
   isHeader?: boolean;
   isSticky?: boolean;
 }
@@ -138,6 +145,35 @@ interface TableStyleOptions {
   colorScheme?: "light" | "dark";
 }
 ```
+
+### VirtualizationOptions
+
+```typescript
+interface VirtualizationOptions {
+  rowHight?: number;
+  isStickyHeader?: boolean;
+  tableHeight?: string | number;
+}
+```
+
+## Virtualization
+
+Atom Grid Table supports virtualization for efficiently rendering large datasets. Enable it using the `isVirtualization` prop:
+
+```tsx
+<AtomGridTable
+  colOptions={colOptions}
+  rows={largeDataset}
+  isVirtualization={true}
+  virtualizationOptions={{
+    rowHight: 48, // Height of each row in pixels
+    isStickyHeader: true, // Whether the header should stick to the top
+    tableHeight: "80dvh", // Height of the table container (px or CSS value)
+  }}
+/>
+```
+
+Virtualization only renders the rows currently visible in the viewport, significantly improving performance for tables with many rows.
 
 ## Custom Components
 

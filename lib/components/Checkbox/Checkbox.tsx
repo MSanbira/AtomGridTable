@@ -18,7 +18,7 @@ export const Checkbox = (props: CheckboxProps) => {
       className={getClasses({ "AGT-checkbox": true, "is-selected": !!checked || !!indeterminate }, className)}
       role="checkbox"
       aria-checked={indeterminate ? "mixed" : checked ? "true" : "false"}
-      onClick={(e) => onClick?.(e, !checked)}
+      onClick={onClick}
       disabled={disabled}
     >
       {buttonContent}
@@ -28,7 +28,7 @@ export const Checkbox = (props: CheckboxProps) => {
 
 export interface CheckboxProps {
   checked?: boolean;
-  onClick?: (e: React.MouseEvent | React.ChangeEvent, value: boolean) => void;
+  onClick?: (e: React.MouseEvent) => void;
   className?: string;
   indeterminate?: boolean;
   disabled?: boolean;
