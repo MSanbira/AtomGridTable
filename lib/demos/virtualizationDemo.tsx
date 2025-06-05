@@ -93,7 +93,7 @@ export const VirtualizationDemo = () => {
           isZebra: true,
           isSmallCellPadding: true,
         }}
-        // isVirtualization
+        isVirtualization
         selectedRows={selectedRows}
         setSelected={setSelectedRows}
         isHasSelect

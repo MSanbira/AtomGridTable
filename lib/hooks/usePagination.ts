@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocalStorage } from "react-use";
 import { DefaultPaginationSizeOptions } from "../constants/tableDefaults";
 
@@ -8,6 +8,7 @@ export const usePagination = (options: PaginationOptions) => {
     pageSizeKey = "AGTGeneralPageSizePref",
     pageSizeOptions = DefaultPaginationSizeOptions,
     getApiParams,
+    overridePage,
   } = options;
 
   const [page, setPage] = useState<number>(0);
@@ -27,6 +28,12 @@ export const usePagination = (options: PaginationOptions) => {
     [setPageSize]
   );
 
+  useEffect(() => {
+    if (overridePage !== undefined) {
+      setPage(overridePage);
+    }
+  }, [overridePage]);
+
   return { rowCount, page, setPage, pageSize, setPageSize: handleSetPageSize, apiParams, pageSizeOptions };
 };
 
@@ -38,4 +45,5 @@ export interface PaginationOptions {
   pageSizeKey?: string;
   pageSizeOptions?: number[];
   getApiParams?: (page: number, pageSize: number) => unknown;
+  overridePage?: number;
 }
