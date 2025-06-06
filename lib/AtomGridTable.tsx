@@ -243,6 +243,7 @@ export default function AtomGridTable(props: TableProps) {
         selectedRows={selectedRows}
         paginationStore={paginationStore}
         isPagination={isPagination}
+        isLoading={isLoading}
       />
     </div>
   );

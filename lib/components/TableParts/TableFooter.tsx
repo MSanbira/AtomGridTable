@@ -6,7 +6,7 @@ import { AtomGridTableContext } from "../../context/AtomGridTableContext";
 import { ComponentOverride } from "../ComponentOverride/ComponentOverride";
 
 export const TableFooter = (props: TableFooterProps) => {
-  const { isHasSelect, selectedRows = [], paginationStore, isPagination } = props;
+  const { isHasSelect, selectedRows = [], paginationStore, isPagination, isLoading } = props;
   const { customComponents } = useContext(AtomGridTableContext);
 
   if (!isHasSelect && !paginationStore) return null;
@@ -19,7 +19,7 @@ export const TableFooter = (props: TableFooterProps) => {
         </ComponentOverride>
       )}
 
-      {isPagination && <TablePagination paginationStore={paginationStore} />}
+      {isPagination && <TablePagination paginationStore={paginationStore} isLoading={isLoading} />}
     </div>
   );
 };
@@ -29,4 +29,5 @@ interface TableFooterProps {
   isPagination?: boolean;
   isHasSelect?: boolean;
   selectedRows?: (string | number)[];
+  isLoading?: boolean;
 }
