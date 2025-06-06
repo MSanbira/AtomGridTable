@@ -52,7 +52,7 @@ export const TableRow = (props: TableRowProps) => {
       style={{ ...rest.style, "--grid-row": `${index + 2} / ${index + 3}` } as CSSProperties}
       {...rest}
     >
-      {isHasSelect && (
+      {isHasSelect && !isSkeleton && (
         <TableCell
           key={0}
           index={-1}

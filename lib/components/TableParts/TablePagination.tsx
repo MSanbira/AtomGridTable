@@ -7,7 +7,6 @@ import { ArrowLeftPageIcon, ArrowRightPageIcon } from "../../icons/ArrowIcons";
 import { AtomGridTableContext } from "../../context/AtomGridTableContext";
 import { ComponentOverride } from "../ComponentOverride/ComponentOverride";
 import { IconButtonType } from "../../types/general.types";
-import { Skeleton } from "../Skeleton/Skeleton";
 
 export const TablePagination = (props: TablePaginationProps) => {
   const {
@@ -18,11 +17,7 @@ export const TablePagination = (props: TablePaginationProps) => {
   const { customComponents } = useContext(AtomGridTableContext);
 
   if (isLoading) {
-    return (
-      <div className="AGT-table-pagination">
-        <ComponentOverride defaultComponent={Skeleton} overrideComponent={customComponents?.skeleton} />
-      </div>
-    );
+    return null;
   }
 
   return (

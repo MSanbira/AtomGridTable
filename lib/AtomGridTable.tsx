@@ -161,7 +161,7 @@ export default function AtomGridTable(props: TableProps) {
             isStickyHeader={isStickyHeader}
           />
           {tableHelper.numLengthArr(loaderRowsCount ?? pageSize).map((i) => (
-            <TableRowComponent key={i} index={i} colOptions={colOptions} isSkeleton />
+            <TableRowComponent key={i} index={i} colOptions={colOptions} isSkeleton isHasSelect={isHasSelect} />
           ))}
         </div>
       );
