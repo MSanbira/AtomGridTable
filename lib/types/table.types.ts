@@ -82,6 +82,7 @@ export interface TableStyleOptions {
   isStickyHeader?: boolean;
   loaderRowsCount?: number;
   colorScheme?: "light" | "dark";
+  isFullWidth?: boolean;
 }
 
 export interface RowSlice {

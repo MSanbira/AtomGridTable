@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useLocalStorage } from "react-use";
 import { DefaultPaginationSizeOptions } from "../constants/tableDefaults";
 
@@ -8,33 +8,45 @@ export const usePagination = (options: PaginationOptions) => {
     pageSizeKey = "AGTGeneralPageSizePref",
     pageSizeOptions = DefaultPaginationSizeOptions,
     getApiParams,
-    overridePage,
+    pageState: { page: overridePage, setPage: overrideSetPage } = {},
   } = options;
 
-  const [page, setPage] = useState<number>(0);
+  const [page, setPage] = useState<number>(overridePage ?? 0);
   const [pageSize = pageSizeOptions[0], setPageSize] = useLocalStorage<number>(pageSizeKey);
 
-  const apiParams = useMemo<PaginationApiParams | unknown>(() => {
-    if (!getApiParams) return { limit: pageSize, offset: page * pageSize };
+  const pageToUse = useMemo(() => (overridePage !== undefined ? overridePage : page), [overridePage, page]);
 
-    return getApiParams(page, pageSize);
-  }, [page, pageSize, getApiParams]);
+  const handleSetPage = useCallback(
+    (newPage: number) => {
+      setPage(newPage);
+      overrideSetPage?.(newPage);
+    },
+    [overrideSetPage]
+  );
+
+  const apiParams = useMemo<PaginationApiParams | unknown>(() => {
+    if (!getApiParams) return { limit: pageSize, offset: pageToUse * pageSize };
+
+    return getApiParams(pageToUse, pageSize);
+  }, [pageToUse, pageSize, getApiParams]);
 
   const handleSetPageSize = useCallback(
     (newPageSize: number) => {
       setPageSize(newPageSize);
-      setPage(0);
+      handleSetPage(0);
     },
-    [setPageSize]
+    [setPageSize, handleSetPage]
   );
 
-  useEffect(() => {
-    if (overridePage !== undefined) {
-      setPage(overridePage);
-    }
-  }, [overridePage]);
-
-  return { rowCount, page, setPage, pageSize, setPageSize: handleSetPageSize, apiParams, pageSizeOptions };
+  return {
+    rowCount,
+    page: pageToUse,
+    setPage: handleSetPage,
+    pageSize,
+    setPageSize: handleSetPageSize,
+    apiParams,
+    pageSizeOptions,
+  };
 };
 
 export type PaginationApiParams = { limit: number; offset: number };
@@ -45,5 +57,8 @@ export interface PaginationOptions {
   pageSizeKey?: string;
   pageSizeOptions?: number[];
   getApiParams?: (page: number, pageSize: number) => unknown;
-  overridePage?: number;
+  pageState?: {
+    page: number;
+    setPage: (page: number) => void;
+  };
 }

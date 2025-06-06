@@ -48,6 +48,7 @@ export default function AtomGridTable(props: TableProps) {
     isStickyHeader: defaultIsStickyHeader,
     loaderRowsCount,
     colorScheme,
+    isFullWidth,
   } = {
     ...defaultTableOptions?.tableStyleOptions,
     ...tableStyleOptions,
@@ -135,6 +136,7 @@ export default function AtomGridTable(props: TableProps) {
       "is-zebra": !!isZebra,
       "is-no-x-cell-borders": !!isNoXCellBorders,
       "is-small-cell-padding": !!isSmallCellPadding,
+      "is-full-width": !!isFullWidth,
       [`AGT-color-scheme-${colorScheme}`]: !!colorScheme,
       [`AGT-table-theme-${tableTheme}`]: !!tableTheme,
     },
