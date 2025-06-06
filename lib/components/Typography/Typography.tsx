@@ -45,13 +45,13 @@ export const Typography = forwardRef<HTMLHeadingElement | HTMLParagraphElement, 
 
 export interface TypographyProps extends React.HTMLAttributes<HTMLHeadingElement | HTMLParagraphElement> {
   children: React.ReactNode;
-  variant?: TypographyVariantOptions;
-  color?: TypographyColorOptions;
+  variant?: TypographyVariantOptions | string;
+  color?: TypographyColorOptions | string;
   underline?: boolean;
   balanced?: boolean;
   bold?: boolean;
   lowOpacity?: boolean;
 }
 
-export type TypographyVariantOptions = "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "body1" | "body2" | string;
+export type TypographyVariantOptions = "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "body1" | "body2";
 export type TypographyColorOptions = "primary" | "secondary" | "tertiary" | "error" | "warning" | "active" | "success";
