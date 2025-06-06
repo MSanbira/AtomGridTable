@@ -53,5 +53,5 @@ export interface TypographyProps extends React.HTMLAttributes<HTMLHeadingElement
   lowOpacity?: boolean;
 }
 
-export type TypographyVariantOptions = "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "body1" | "body2";
+export type TypographyVariantOptions = "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "body1" | "body2" | string;
 export type TypographyColorOptions = "primary" | "secondary" | "tertiary" | "error" | "warning" | "active" | "success";

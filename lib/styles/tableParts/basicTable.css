@@ -174,7 +174,7 @@
 }
 
 .AGT-table-pagination .AGT-skeleton {
-  width: min(100%, 200px);
+  width: 200px;
 }
 
 .AGT-table-selection-area {
