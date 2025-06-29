@@ -18,6 +18,7 @@
 * separate demo app
 * have a case for pagination without row count
 * filtering?
+* get filtering object for reset page
 * virtualization
   * for desctop ✅
   * for mobile
