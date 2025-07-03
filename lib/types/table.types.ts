@@ -24,7 +24,11 @@ export interface TableProps extends TableHandlers {
 interface TableHandlers {
   onPageOptionChange?: (pageOptions: PaginationChangeOptions) => void;
   onSortOptionChange?: (sortOptions: SortingChangeOptions) => void;
-  onChange?: (generalOptions: { pageOptions: PaginationChangeOptions; sortOptions: SortingChangeOptions }) => void;
+  onChange?: (generalOptions: {
+    pageOptions: PaginationChangeOptions;
+    sortOptions: SortingChangeOptions;
+    filterDependencies: unknown | null;
+  }) => void;
 }
 
 export type PaginationChangeOptions = {
