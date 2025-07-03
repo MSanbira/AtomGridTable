@@ -18,6 +18,7 @@ export interface TableProps extends TableHandlers {
   tableStyleOptions?: TableStyleOptions;
   selectionArea?: string;
   tableTheme?: string;
+  filterDependencies?: unknown;
 }
 
 interface TableHandlers {
