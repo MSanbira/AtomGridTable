@@ -12,8 +12,13 @@ export const TablePagination = (props: TablePaginationProps) => {
   const {
     paginationStore: { page, pageSize, rowCount, setPage, setPageSize, pageSizeOptions },
     dictionary,
+    isLoading,
   } = props;
   const { customComponents } = useContext(AtomGridTableContext);
+
+  if (isLoading) {
+    return null;
+  }
 
   return (
     <div className="AGT-table-pagination">
@@ -68,4 +73,5 @@ export const TablePagination = (props: TablePaginationProps) => {
 export interface TablePaginationProps {
   paginationStore: PaginationStore;
   dictionary?: { showing: string };
+  isLoading?: boolean;
 }

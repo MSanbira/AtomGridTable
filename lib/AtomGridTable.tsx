@@ -48,6 +48,7 @@ export default function AtomGridTable(props: TableProps) {
     isStickyHeader: defaultIsStickyHeader,
     loaderRowsCount,
     colorScheme,
+    isFullWidth,
   } = {
     ...defaultTableOptions?.tableStyleOptions,
     ...tableStyleOptions,
@@ -135,6 +136,7 @@ export default function AtomGridTable(props: TableProps) {
       "is-zebra": !!isZebra,
       "is-no-x-cell-borders": !!isNoXCellBorders,
       "is-small-cell-padding": !!isSmallCellPadding,
+      "is-full-width": !!isFullWidth,
       [`AGT-color-scheme-${colorScheme}`]: !!colorScheme,
       [`AGT-table-theme-${tableTheme}`]: !!tableTheme,
     },
@@ -159,7 +161,7 @@ export default function AtomGridTable(props: TableProps) {
             isStickyHeader={isStickyHeader}
           />
           {tableHelper.numLengthArr(loaderRowsCount ?? pageSize).map((i) => (
-            <TableRowComponent key={i} index={i} colOptions={colOptions} isSkeleton />
+            <TableRowComponent key={i} index={i} colOptions={colOptions} isSkeleton isHasSelect={isHasSelect} />
           ))}
         </div>
       );
@@ -241,6 +243,7 @@ export default function AtomGridTable(props: TableProps) {
         selectedRows={selectedRows}
         paginationStore={paginationStore}
         isPagination={isPagination}
+        isLoading={isLoading}
       />
     </div>
   );

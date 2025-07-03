@@ -9,6 +9,10 @@
   font-size: var(--AGT-base-font-size);
 }
 
+.AGT-table-wrapper.is-full-width {
+  width: 100%;
+}
+
 .AGT-table {
   display: grid;
   grid-template-columns: var(--template-cols);
@@ -167,6 +171,10 @@
   display: flex;
   align-items: center;
   gap: var(--xxxl);
+}
+
+.AGT-table-pagination .AGT-skeleton {
+  width: 200px;
 }
 
 .AGT-table-selection-area {
