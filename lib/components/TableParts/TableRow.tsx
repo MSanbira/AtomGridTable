@@ -65,6 +65,7 @@ export const TableRow = (props: TableRowProps) => {
                 onClick={(e) => handleSelectRowClick?.(e, selectIdentifier ?? index.toString())}
               />
             ),
+            isCentered: true,
           }}
           colOptions={colOptions}
           handleMouseDownResize={handleMouseDownResize}

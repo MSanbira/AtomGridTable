@@ -1,7 +1,7 @@
 {
   "name": "@sanbira/atom-grid-table",
   "private": false,
-  "version": "1.0.24",
+  "version": "1.0.25",
   "license": "MIT",
   "type": "module",
   "repository": {
