@@ -17,7 +17,7 @@
 * get filtering object for reset page ✅
 * dictionary
 * virtualization
-  * for desctop ✅
+  * for desktop ✅
   * for mobile
 
 components:
