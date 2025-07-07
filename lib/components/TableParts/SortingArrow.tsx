@@ -1,13 +1,24 @@
-import React, { useMemo } from "react";
+import React, { useContext, useMemo } from "react";
 import { ArrowDownIcon, ArrowUpIcon } from "../../icons/ArrowIcons";
 import { getClasses } from "../../helpers/classNameHelper";
+import { AtomGridTableContext } from "../../context/AtomGridTableContext";
+import { ComponentOverride } from "../ComponentOverride/ComponentOverride";
 
 export const SortingArrow = (props: SortingArrowProps) => {
   const { direction, isOrdered } = props;
+  const { customComponents } = useContext(AtomGridTableContext);
 
   const arrowContent = useMemo(
-    () => (direction === "asc" || !direction || !isOrdered ? <ArrowDownIcon /> : <ArrowUpIcon />),
-    [direction, isOrdered]
+    () =>
+      direction === "asc" || !direction || !isOrdered ? (
+        <ComponentOverride
+          defaultComponent={ArrowDownIcon}
+          overrideComponent={customComponents?.sortingArrowDownIcon}
+        />
+      ) : (
+        <ComponentOverride defaultComponent={ArrowUpIcon} overrideComponent={customComponents?.sortingArrowUpIcon} />
+      ),
+    [direction, isOrdered, customComponents]
   );
 
   return (

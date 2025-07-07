@@ -19,4 +19,7 @@ export interface CustomComponents {
   typography?: React.ComponentType<TypographyProps>;
   skeleton?: React.ComponentType;
   checkbox?: React.ComponentType<CheckboxProps>;
+  sortingArrowUpIcon?: React.ComponentType;
+  sortingArrowDownIcon?: React.ComponentType;
+  headerInfoIcon?: React.ComponentType;
 }

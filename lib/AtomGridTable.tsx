@@ -38,6 +38,7 @@ export default function AtomGridTable(props: TableProps) {
     isPagination,
     isVirtualization,
     virtualizationOptions,
+    filterDependencies,
   } = props;
 
   const {
@@ -121,11 +122,22 @@ export default function AtomGridTable(props: TableProps) {
     onSortOptionChange?.({ apiParams: sortingApiParams, ordering, direction });
   }, [sortingApiParams, ordering, direction, onSortOptionChange]);
 
+  const filterChangeRef = useRef<boolean>(false);
+
+  useEffect(() => {
+    if (filterDependencies !== undefined) {
+      filterChangeRef.current = true;
+      setPage(0);
+    }
+  }, [filterDependencies, setPage]);
+
   useEffect(() => {
     onChange?.({
       pageOptions: { apiParams: paginationApiParams, page, pageSize },
       sortOptions: { apiParams: sortingApiParams, ordering, direction },
     });
+
+    filterChangeRef.current = false;
   }, [paginationApiParams, page, pageSize, ordering, direction, sortingApiParams, onChange]);
 
   const wrapperClasses = getClasses(

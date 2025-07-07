@@ -11,7 +11,7 @@ export const InformationToolTipContent = (props: InformationToolTipContentProps)
   return (
     <ComponentOverride defaultComponent={Tooltip} overrideComponent={customComponents?.tooltip} title={tooltipTitle}>
       <div className="AGT-info-tooltip">
-        <InfoIcon />
+        <ComponentOverride defaultComponent={InfoIcon} overrideComponent={customComponents?.headerInfoIcon} />
       </div>
     </ComponentOverride>
   );
