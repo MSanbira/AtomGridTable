@@ -90,7 +90,7 @@ export default function AtomGridTable<
   const tableWrapperRef = useRef<HTMLDivElement>(null);
 
   const paginationStore = usePagination<CustomPaginationApiParams>(paginationOptions ?? {});
-  const { apiParams: paginationApiParams, page, pageSize, setPage, isPageChange, setIsPageChange } = paginationStore;
+  const { apiParams: paginationApiParams, page, pageSize, setPage, isPageChange } = paginationStore;
   const sortingStore = useSorting<CustomSortingApiParams>({
     ...sortingOptions,
     resetPage: sortingOptions?.resetPage ?? (() => setPage(0)),
@@ -136,13 +136,12 @@ export default function AtomGridTable<
 
   useEffect(() => {
     if (!isPageChange && page !== 0) {
-      console.log("!isPageChange && page !== 0");
+      console.log("!isPageChange && page !== 0", page);
       setPage(0);
       return;
     }
 
-    console.log("onChange");
-    setIsPageChange(false);
+    console.log("onChange", page);
 
     onChange?.({
       pageOptions: { apiParams: paginationApiParams, page, pageSize },
@@ -159,7 +158,6 @@ export default function AtomGridTable<
     onChange,
     filterDependencies,
     isPageChange,
-    setIsPageChange,
     setPage,
   ]);
 
