@@ -13,13 +13,11 @@ export const usePagination = <CustomPaginationApiParams>(options: PaginationOpti
 
   const [page, setPage] = useState<number>(overridePage ?? 0);
   const [pageSize = pageSizeOptions[0], setPageSize] = useLocalStorage<number>(pageSizeKey);
-  const [isPageChange, setIsPageChange] = useState<boolean>(false);
 
   const pageToUse = useMemo(() => (overridePage !== undefined ? overridePage : page), [overridePage, page]);
 
   const handleSetPage = useCallback(
-    (newPage: number, isFromFilter: boolean = true) => {
-      setIsPageChange(!isFromFilter);
+    (newPage: number) => {
       setPage(newPage);
       overrideSetPage?.(newPage);
     },
@@ -43,8 +41,6 @@ export const usePagination = <CustomPaginationApiParams>(options: PaginationOpti
   return {
     rowCount,
     page: pageToUse,
-    isPageChange,
-    setIsPageChange,
     setPage: handleSetPage,
     pageSize,
     setPageSize: handleSetPageSize,

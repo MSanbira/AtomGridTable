@@ -52,7 +52,7 @@ export const TablePagination = (props: TablePaginationProps) => {
         <ComponentOverride
           defaultComponent={IconButton}
           overrideComponent={customComponents?.iconButton}
-          onClick={() => setPage(page - 1, false)}
+          onClick={() => setPage(page - 1)}
           disabled={page === 0}
           icon={<ArrowLeftPageIcon />}
           iconType={IconButtonType.ArrowLeft}
@@ -60,7 +60,7 @@ export const TablePagination = (props: TablePaginationProps) => {
         <ComponentOverride
           defaultComponent={IconButton}
           overrideComponent={customComponents?.iconButton}
-          onClick={() => setPage(page + 1, false)}
+          onClick={() => setPage(page + 1)}
           disabled={page === Math.ceil(rowCount / pageSize) - 1}
           icon={<ArrowRightPageIcon />}
           iconType={IconButtonType.ArrowRight}

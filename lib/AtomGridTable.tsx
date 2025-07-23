@@ -90,7 +90,7 @@ export default function AtomGridTable<
   const tableWrapperRef = useRef<HTMLDivElement>(null);
 
   const paginationStore = usePagination<CustomPaginationApiParams>(paginationOptions ?? {});
-  const { apiParams: paginationApiParams, page, pageSize, setPage, isPageChange } = paginationStore;
+  const { apiParams: paginationApiParams, page, pageSize, setPage } = paginationStore;
   const sortingStore = useSorting<CustomSortingApiParams>({
     ...sortingOptions,
     resetPage: sortingOptions?.resetPage ?? (() => setPage(0)),
@@ -134,32 +134,23 @@ export default function AtomGridTable<
     onSortOptionChange?.({ apiParams: sortingApiParams, ordering, direction });
   }, [sortingApiParams, ordering, direction, onSortOptionChange]);
 
+  const filterChangeRef = useRef<boolean>(false);
+
   useEffect(() => {
-    if (!isPageChange && page !== 0) {
-      console.log("!isPageChange && page !== 0", page);
+    if (filterDependencies !== undefined) {
+      filterChangeRef.current = true;
       setPage(0);
-      return;
     }
+  }, [filterDependencies, setPage]);
 
-    console.log("onChange", page);
-
+  useEffect(() => {
     onChange?.({
       pageOptions: { apiParams: paginationApiParams, page, pageSize },
       sortOptions: { apiParams: sortingApiParams, ordering, direction },
-      filterDependencies,
     });
-  }, [
-    paginationApiParams,
-    page,
-    pageSize,
-    ordering,
-    direction,
-    sortingApiParams,
-    onChange,
-    filterDependencies,
-    isPageChange,
-    setPage,
-  ]);
+
+    filterChangeRef.current = false;
+  }, [paginationApiParams, page, pageSize, ordering, direction, sortingApiParams, onChange]);
 
   const wrapperClasses = getClasses(
     {
