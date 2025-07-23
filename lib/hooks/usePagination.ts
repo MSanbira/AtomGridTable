@@ -2,7 +2,7 @@ import { useCallback, useMemo, useState } from "react";
 import { useLocalStorage } from "react-use";
 import { DefaultPaginationSizeOptions } from "../constants/tableDefaults";
 
-export const usePagination = (options: PaginationOptions) => {
+export const usePagination = <CustomPaginationApiParams>(options: PaginationOptions<CustomPaginationApiParams>) => {
   const {
     rowCount = 0,
     pageSizeKey = "AGTGeneralPageSizePref",
@@ -24,8 +24,8 @@ export const usePagination = (options: PaginationOptions) => {
     [overrideSetPage]
   );
 
-  const apiParams = useMemo<PaginationApiParams | unknown>(() => {
-    if (!getApiParams) return { limit: pageSize, offset: pageToUse * pageSize };
+  const apiParams = useMemo<CustomPaginationApiParams>(() => {
+    if (!getApiParams) return { limit: pageSize, offset: pageToUse * pageSize } as CustomPaginationApiParams;
 
     return getApiParams(pageToUse, pageSize);
   }, [pageToUse, pageSize, getApiParams]);
@@ -52,11 +52,11 @@ export const usePagination = (options: PaginationOptions) => {
 export type PaginationApiParams = { limit: number; offset: number };
 export type PaginationStore = ReturnType<typeof usePagination>;
 
-export interface PaginationOptions {
+export interface PaginationOptions<CustomPaginationApiParams> {
   rowCount?: number;
   pageSizeKey?: string;
   pageSizeOptions?: number[];
-  getApiParams?: (page: number, pageSize: number) => unknown;
+  getApiParams?: (page: number, pageSize: number) => CustomPaginationApiParams;
   pageState?: {
     page: number;
     setPage: (page: number) => void;

@@ -1,8 +1,13 @@
 import { ReactNode } from "react";
-import { SortingApiParams, SortingDirection, SortingOptions } from "../hooks/useSorting";
+import { SortingDirection, SortingOptions } from "../hooks/useSorting";
 import { PaginationApiParams, PaginationOptions } from "../hooks/usePagination";
+import { SortingApiParams } from "../hooks/useSorting";
 
-export interface TableProps extends TableHandlers {
+export interface TableProps<
+  CustomFilterDependencies = unknown,
+  CustomPaginationApiParams = PaginationApiParams,
+  CustomSortingApiParams = SortingApiParams,
+> extends TableHandlers<CustomPaginationApiParams, CustomSortingApiParams> {
   colOptions: ColOption[];
   rows: TableRow[];
   className?: string;
@@ -12,29 +17,32 @@ export interface TableProps extends TableHandlers {
   isHasSelect?: boolean;
   selectedRows?: string[];
   setSelected?: (selected: string[]) => void;
-  paginationOptions?: PaginationOptions;
-  sortingOptions?: Partial<SortingOptions>;
+  paginationOptions?: PaginationOptions<CustomPaginationApiParams>;
+  sortingOptions?: Partial<SortingOptions<CustomSortingApiParams>>;
   virtualizationOptions?: VirtualizationOptions;
   tableStyleOptions?: TableStyleOptions;
   selectionArea?: string;
   tableTheme?: string;
-  filterDependencies?: unknown;
+  filterDependencies?: CustomFilterDependencies;
 }
 
-interface TableHandlers {
-  onPageOptionChange?: (pageOptions: PaginationChangeOptions) => void;
-  onSortOptionChange?: (sortOptions: SortingChangeOptions) => void;
-  onChange?: (generalOptions: { pageOptions: PaginationChangeOptions; sortOptions: SortingChangeOptions }) => void;
+interface TableHandlers<CustomPaginationApiParams, CustomSortingApiParams> {
+  onPageOptionChange?: (pageOptions: PaginationChangeOptions<CustomPaginationApiParams>) => void;
+  onSortOptionChange?: (sortOptions: SortingChangeOptions<CustomSortingApiParams>) => void;
+  onChange?: (generalOptions: {
+    pageOptions: PaginationChangeOptions<CustomPaginationApiParams>;
+    sortOptions: SortingChangeOptions<CustomSortingApiParams>;
+  }) => void;
 }
 
-export type PaginationChangeOptions = {
-  apiParams: PaginationApiParams | unknown;
+export type PaginationChangeOptions<CustomPaginationApiParams = PaginationApiParams> = {
+  apiParams: CustomPaginationApiParams;
   page: number;
   pageSize: number;
 };
 
-export type SortingChangeOptions = {
-  apiParams: SortingApiParams | unknown;
+export type SortingChangeOptions<CustomSortingApiParams = SortingApiParams> = {
+  apiParams: CustomSortingApiParams;
   ordering: string;
   direction: SortingDirection | null;
 };
