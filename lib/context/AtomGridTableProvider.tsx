@@ -1,8 +1,18 @@
-import React, { FC, PropsWithChildren, useCallback, useEffect, useState } from "react";
+import React, { PropsWithChildren, useCallback, useEffect, useState } from "react";
 import { AtomGridTableContextProps } from "../types/tableContext.types";
 import { AtomGridTableContext } from "./AtomGridTableContext";
+import { PaginationApiParams } from "../hooks/usePagination";
+import { SortingApiParams } from "../hooks/useSorting";
 
-export const AtomGridTableProvider: FC<PropsWithChildren<AtomGridTableContextProps>> = (props) => {
+export const AtomGridTableProvider = <
+  CustomFilterDependencies = unknown,
+  CustomPaginationApiParams = PaginationApiParams,
+  CustomSortingApiParams = SortingApiParams,
+>(
+  props: PropsWithChildren<
+    AtomGridTableContextProps<CustomFilterDependencies, CustomPaginationApiParams, CustomSortingApiParams>
+  >
+) => {
   const { children, ...rest } = props;
   const [globalMouseClientX, setGlobalMouseClientX] = useState<number>(0);
 
@@ -18,7 +28,9 @@ export const AtomGridTableProvider: FC<PropsWithChildren<AtomGridTableContextPro
   }, [handleMouseMove]);
 
   return (
-    <AtomGridTableContext.Provider value={{ ...rest, globalMouseClientX, isHasContext: true }}>
+    <AtomGridTableContext.Provider
+      value={{ ...rest, globalMouseClientX, isHasContext: true } as AtomGridTableContextProps}
+    >
       {children}
     </AtomGridTableContext.Provider>
   );

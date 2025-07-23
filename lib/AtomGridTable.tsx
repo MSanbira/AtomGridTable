@@ -1,4 +1,4 @@
-import React, { CSSProperties, ReactElement, useContext, useEffect, useMemo, useRef } from "react";
+import React, { Context, CSSProperties, ReactElement, useContext, useEffect, useMemo, useRef } from "react";
 import { Typography } from "./components/Typography/Typography";
 import { getClasses } from "./helpers/classNameHelper";
 import { tableHelper } from "./helpers/tableHelper";
@@ -8,16 +8,25 @@ import { useSelectRows } from "./hooks/useSelectRows";
 import { TableHeader } from "./components/TableParts/TableHeader";
 import { TableRow as TableRowComponent } from "./components/TableParts/TableRow";
 import { TableFooter } from "./components/TableParts/TableFooter";
-import { usePagination } from "./hooks/usePagination";
-import { useSorting } from "./hooks/useSorting";
+import { PaginationApiParams, usePagination } from "./hooks/usePagination";
+import { SortingApiParams, useSorting } from "./hooks/useSorting";
 import { useVirtualization } from "./hooks/useVirtualization";
 import { AtomGridTableContext } from "./context/AtomGridTableContext";
 import { ComponentOverride } from "./components/ComponentOverride/ComponentOverride";
 import { DefaultResizeOptions } from "./constants/tableDefaults";
 import "./styles/index.css";
+import { AtomGridTableContextProps } from "./types/tableContext.types";
 
-export default function AtomGridTable(props: TableProps) {
-  const { defaultTableOptions, customComponents } = useContext(AtomGridTableContext);
+export default function AtomGridTable<
+  CustomFilterDependencies = unknown,
+  CustomPaginationApiParams = PaginationApiParams,
+  CustomSortingApiParams = SortingApiParams,
+>(props: TableProps<CustomFilterDependencies, CustomPaginationApiParams, CustomSortingApiParams>) {
+  const { defaultTableOptions, customComponents } = useContext(
+    AtomGridTableContext as unknown as Context<
+      AtomGridTableContextProps<CustomFilterDependencies, CustomPaginationApiParams, CustomSortingApiParams>
+    >
+  );
 
   const {
     colOptions: colOptionsProp,
@@ -80,9 +89,12 @@ export default function AtomGridTable(props: TableProps) {
 
   const tableWrapperRef = useRef<HTMLDivElement>(null);
 
-  const paginationStore = usePagination(paginationOptions ?? {});
-  const { apiParams: paginationApiParams, page, pageSize, setPage } = paginationStore;
-  const sortingStore = useSorting({ ...sortingOptions, resetPage: sortingOptions?.resetPage ?? (() => setPage(0)) });
+  const paginationStore = usePagination<CustomPaginationApiParams>(paginationOptions ?? {});
+  const { apiParams: paginationApiParams, page, pageSize, setPage, isPageChange, setIsPageChange } = paginationStore;
+  const sortingStore = useSorting<CustomSortingApiParams>({
+    ...sortingOptions,
+    resetPage: sortingOptions?.resetPage ?? (() => setPage(0)),
+  });
   const { apiParams: sortingApiParams, ordering, direction } = sortingStore;
 
   const { wrapperRef, isResizing, handleMouseDownResize } = useResizeColumns({ colOptions, isHasSelect });
@@ -122,23 +134,34 @@ export default function AtomGridTable(props: TableProps) {
     onSortOptionChange?.({ apiParams: sortingApiParams, ordering, direction });
   }, [sortingApiParams, ordering, direction, onSortOptionChange]);
 
-  const filterChangeRef = useRef<boolean>(false);
-
   useEffect(() => {
-    if (filterDependencies !== undefined) {
-      filterChangeRef.current = true;
+    if (!isPageChange && page !== 0) {
+      console.log("!isPageChange && page !== 0");
       setPage(0);
+      return;
     }
-  }, [filterDependencies, setPage]);
 
-  useEffect(() => {
+    console.log("onChange");
+    setIsPageChange(false);
+
     onChange?.({
       pageOptions: { apiParams: paginationApiParams, page, pageSize },
       sortOptions: { apiParams: sortingApiParams, ordering, direction },
+      filterDependencies,
     });
-
-    filterChangeRef.current = false;
-  }, [paginationApiParams, page, pageSize, ordering, direction, sortingApiParams, onChange]);
+  }, [
+    paginationApiParams,
+    page,
+    pageSize,
+    ordering,
+    direction,
+    sortingApiParams,
+    onChange,
+    filterDependencies,
+    isPageChange,
+    setIsPageChange,
+    setPage,
+  ]);
 
   const wrapperClasses = getClasses(
     {

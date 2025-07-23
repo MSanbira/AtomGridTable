@@ -7,19 +7,19 @@ export enum SortingDirection {
 
 const DirectionOptions = [SortingDirection.ASC, SortingDirection.DESC, null];
 
-export const useSorting = (options: SortingOptions) => {
+export const useSorting = <CustomSortingApiParams>(options: SortingOptions<CustomSortingApiParams>) => {
   const { defaultOrdering, defaultDirection, resetPage, getApiParams } = options;
   const [ordering, setOrdering] = useState<string>(defaultOrdering ?? "");
   const [direction, setDirection] = useState<SortingDirection | null>(
     defaultDirection ?? (defaultOrdering ? SortingDirection.ASC : null)
   );
 
-  const apiParams = useMemo<SortingApiParams | unknown>(() => {
+  const apiParams = useMemo<CustomSortingApiParams>(() => {
     if (getApiParams) return getApiParams(ordering, direction);
 
-    if (!direction || !ordering) return { ordering: undefined };
+    if (!direction || !ordering) return { ordering: undefined } as CustomSortingApiParams;
 
-    return { ordering: `${direction === SortingDirection.ASC ? "" : "-"}${ordering}` };
+    return { ordering: `${direction === SortingDirection.ASC ? "" : "-"}${ordering}` } as CustomSortingApiParams;
   }, [direction, ordering, getApiParams]);
 
   const handleChangeSort = useCallback(
@@ -43,9 +43,9 @@ export const useSorting = (options: SortingOptions) => {
 export type SortingApiParams = { ordering: string | undefined };
 
 export type SortingStore = ReturnType<typeof useSorting>;
-export interface SortingOptions {
+export interface SortingOptions<CustomSortingApiParams> {
   defaultOrdering?: string;
   defaultDirection?: SortingDirection | null;
   resetPage: () => void;
-  getApiParams?: (ordering: string, direction: SortingDirection | null) => unknown;
+  getApiParams?: (ordering: string, direction: SortingDirection | null) => CustomSortingApiParams;
 }

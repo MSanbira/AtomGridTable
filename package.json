@@ -29,6 +29,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "package-publish": "npm run build && npm publish",
+    "package-publish-canary": "npm run build && npm version prerelease --preid=canary && npm publish --tag canary",
+    "package-publish-canary-ci": "npm run build && npm version prerelease --preid=canary --no-git-tag-version && npm publish --tag canary",
     "install-local": "./install_local.sh"
   },
   "dependencies": {
