@@ -1,9 +1,13 @@
 import { ReactNode } from "react";
 import { SortingDirection, SortingOptions } from "../hooks/useSorting";
-import { PaginationOptions } from "../hooks/usePagination";
+import { PaginationApiParams, PaginationOptions } from "../hooks/usePagination";
+import { SortingApiParams } from "../hooks/useSorting";
 
-export interface TableProps<CustomFilterDependencies, CustomPaginationApiParams, CustomSortingApiParams>
-  extends TableHandlers<CustomFilterDependencies, CustomPaginationApiParams, CustomSortingApiParams> {
+export interface TableProps<
+  CustomFilterDependencies = unknown,
+  CustomPaginationApiParams = PaginationApiParams,
+  CustomSortingApiParams = SortingApiParams,
+> extends TableHandlers<CustomFilterDependencies, CustomPaginationApiParams, CustomSortingApiParams> {
   colOptions: ColOption[];
   rows: TableRow[];
   className?: string;
@@ -32,13 +36,13 @@ interface TableHandlers<CustomFilterDependencies, CustomPaginationApiParams, Cus
   }) => void;
 }
 
-export type PaginationChangeOptions<CustomPaginationApiParams> = {
+export type PaginationChangeOptions<CustomPaginationApiParams = PaginationApiParams> = {
   apiParams: CustomPaginationApiParams;
   page: number;
   pageSize: number;
 };
 
-export type SortingChangeOptions<CustomSortingApiParams> = {
+export type SortingChangeOptions<CustomSortingApiParams = SortingApiParams> = {
   apiParams: CustomSortingApiParams;
   ordering: string;
   direction: SortingDirection | null;
