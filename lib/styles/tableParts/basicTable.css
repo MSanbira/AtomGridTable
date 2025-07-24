@@ -223,3 +223,7 @@ body:has(.AGT-table-wrapper.is-resizing) {
 .is-small-cell-padding .AGT-table-header {
   padding: var(--sm);
 }
+
+.AGT-table-wrapper.is-hidden {
+  display: none !important;
+}

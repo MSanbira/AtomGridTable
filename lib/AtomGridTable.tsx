@@ -69,6 +69,7 @@ export default function AtomGridTable<
     loaderRowsCount,
     colorScheme,
     isFullWidth,
+    isHidden,
   } = {
     ...defaultTableOptions?.tableStyleOptions,
     ...tableStyleOptions,
@@ -199,6 +200,7 @@ export default function AtomGridTable<
       "is-no-x-cell-borders": !!isNoXCellBorders,
       "is-small-cell-padding": !!isSmallCellPadding,
       "is-full-width": !!isFullWidth,
+      "is-hidden": !!isHidden,
       [`AGT-color-scheme-${colorScheme}`]: !!colorScheme,
       [`AGT-table-theme-${tableTheme}`]: !!tableTheme,
     },
