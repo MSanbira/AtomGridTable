@@ -167,12 +167,9 @@ export default function AtomGridTable<
   }, [filterDependencies, setPage]);
 
   useEffect(() => {
-    console.log("shouldChange", shouldChange);
     if (!shouldChange) {
       return;
     }
-
-    console.log("onChange", page, filterDependencies);
 
     onChange?.({
       pageOptions: { apiParams: paginationApiParams, page, pageSize },
