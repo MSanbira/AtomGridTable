@@ -99,7 +99,7 @@ export default function AtomGridTable<
 
   const tableWrapperRef = useRef<HTMLDivElement>(null);
 
-  const [shouldChange, setShouldChange] = useState<boolean>(false);
+  const [shouldChange, setShouldChange] = useState<boolean>(true);
 
   const paginationStore = usePagination<CustomPaginationApiParams>({
     ...paginationOptions,
