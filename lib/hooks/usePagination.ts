@@ -2,13 +2,16 @@ import { useCallback, useMemo, useState } from "react";
 import { useLocalStorage } from "react-use";
 import { DefaultPaginationSizeOptions } from "../constants/tableDefaults";
 
-export const usePagination = <CustomPaginationApiParams>(options: PaginationOptions<CustomPaginationApiParams>) => {
+export const usePagination = <CustomPaginationApiParams>(
+  options: PaginationOptions<CustomPaginationApiParams> & { setShouldChange: (shouldChange: boolean) => void }
+) => {
   const {
     rowCount = 0,
     pageSizeKey = "AGTGeneralPageSizePref",
     pageSizeOptions = DefaultPaginationSizeOptions,
     getApiParams,
     pageState: { page: overridePage, setPage: overrideSetPage } = {},
+    setShouldChange,
   } = options;
 
   const [page, setPage] = useState<number>(overridePage ?? 0);
@@ -20,8 +23,9 @@ export const usePagination = <CustomPaginationApiParams>(options: PaginationOpti
     (newPage: number) => {
       setPage(newPage);
       overrideSetPage?.(newPage);
+      setShouldChange(true);
     },
-    [overrideSetPage]
+    [overrideSetPage, setShouldChange]
   );
 
   const apiParams = useMemo<CustomPaginationApiParams>(() => {

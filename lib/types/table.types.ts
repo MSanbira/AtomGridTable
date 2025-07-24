@@ -7,7 +7,7 @@ export interface TableProps<
   CustomFilterDependencies = unknown,
   CustomPaginationApiParams = PaginationApiParams,
   CustomSortingApiParams = SortingApiParams,
-> extends TableHandlers<CustomPaginationApiParams, CustomSortingApiParams> {
+> extends TableHandlers<CustomFilterDependencies, CustomPaginationApiParams, CustomSortingApiParams> {
   colOptions: ColOption[];
   rows: TableRow[];
   className?: string;
@@ -26,12 +26,13 @@ export interface TableProps<
   filterDependencies?: CustomFilterDependencies;
 }
 
-interface TableHandlers<CustomPaginationApiParams, CustomSortingApiParams> {
+interface TableHandlers<CustomFilterDependencies, CustomPaginationApiParams, CustomSortingApiParams> {
   onPageOptionChange?: (pageOptions: PaginationChangeOptions<CustomPaginationApiParams>) => void;
   onSortOptionChange?: (sortOptions: SortingChangeOptions<CustomSortingApiParams>) => void;
   onChange?: (generalOptions: {
     pageOptions: PaginationChangeOptions<CustomPaginationApiParams>;
     sortOptions: SortingChangeOptions<CustomSortingApiParams>;
+    filterDependencies?: CustomFilterDependencies;
   }) => void;
 }
 
