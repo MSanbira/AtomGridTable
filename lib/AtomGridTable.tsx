@@ -1,4 +1,14 @@
-import React, { Context, CSSProperties, ReactElement, useContext, useEffect, useMemo, useRef } from "react";
+import React, {
+  Context,
+  CSSProperties,
+  ReactElement,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { Typography } from "./components/Typography/Typography";
 import { getClasses } from "./helpers/classNameHelper";
 import { tableHelper } from "./helpers/tableHelper";
@@ -89,11 +99,27 @@ export default function AtomGridTable<
 
   const tableWrapperRef = useRef<HTMLDivElement>(null);
 
-  const paginationStore = usePagination<CustomPaginationApiParams>(paginationOptions ?? {});
+  const [shouldChange, setShouldChange] = useState<boolean>(false);
+
+  const paginationStore = usePagination<CustomPaginationApiParams>({
+    ...paginationOptions,
+    setShouldChange,
+  });
   const { apiParams: paginationApiParams, page, pageSize, setPage } = paginationStore;
+
+  const handleResetPage = useCallback(() => {
+    const customFunction = sortingOptions?.resetPage;
+    if (customFunction) {
+      customFunction();
+      setShouldChange(true);
+    } else {
+      setPage(0);
+    }
+  }, [setPage, setShouldChange, sortingOptions?.resetPage]);
+
   const sortingStore = useSorting<CustomSortingApiParams>({
     ...sortingOptions,
-    resetPage: sortingOptions?.resetPage ?? (() => setPage(0)),
+    resetPage: handleResetPage,
   });
   const { apiParams: sortingApiParams, ordering, direction } = sortingStore;
 
@@ -134,26 +160,38 @@ export default function AtomGridTable<
     onSortOptionChange?.({ apiParams: sortingApiParams, ordering, direction });
   }, [sortingApiParams, ordering, direction, onSortOptionChange]);
 
-  const filterChangeRef = useRef<boolean>(false);
-
   useEffect(() => {
     if (filterDependencies !== undefined) {
-      filterChangeRef.current = true;
-      tableWrapperRef.current?.setAttribute("data-filters", JSON.stringify(filterDependencies));
       setPage(0);
     }
   }, [filterDependencies, setPage]);
 
   useEffect(() => {
-    const filterDependenciesFromTable = tableWrapperRef.current?.getAttribute("data-filters");
+    console.log("shouldChange", shouldChange);
+    if (!shouldChange) {
+      return;
+    }
+
+    console.log("onChange", page, filterDependencies);
+
     onChange?.({
       pageOptions: { apiParams: paginationApiParams, page, pageSize },
       sortOptions: { apiParams: sortingApiParams, ordering, direction },
-      filterDependencies: filterDependenciesFromTable ? JSON.parse(filterDependenciesFromTable) : undefined,
+      filterDependencies,
     });
 
-    filterChangeRef.current = false;
-  }, [paginationApiParams, page, pageSize, ordering, direction, sortingApiParams, onChange]);
+    setShouldChange(false);
+  }, [
+    paginationApiParams,
+    page,
+    pageSize,
+    ordering,
+    direction,
+    sortingApiParams,
+    onChange,
+    shouldChange,
+    filterDependencies,
+  ]);
 
   const wrapperClasses = getClasses(
     {
