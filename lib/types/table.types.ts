@@ -93,6 +93,7 @@ export interface TableStyleOptions {
   loaderRowsCount?: number;
   colorScheme?: "light" | "dark";
   isFullWidth?: boolean;
+  isHidden?: boolean;
 }
 
 export interface RowSlice {
