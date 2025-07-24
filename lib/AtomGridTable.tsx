@@ -139,14 +139,17 @@ export default function AtomGridTable<
   useEffect(() => {
     if (filterDependencies !== undefined) {
       filterChangeRef.current = true;
+      tableWrapperRef.current?.setAttribute("data-filters", JSON.stringify(filterDependencies));
       setPage(0);
     }
   }, [filterDependencies, setPage]);
 
   useEffect(() => {
+    const filterDependenciesFromTable = tableWrapperRef.current?.getAttribute("data-filters");
     onChange?.({
       pageOptions: { apiParams: paginationApiParams, page, pageSize },
       sortOptions: { apiParams: sortingApiParams, ordering, direction },
+      filterDependencies: filterDependenciesFromTable ? JSON.parse(filterDependenciesFromTable) : undefined,
     });
 
     filterChangeRef.current = false;
