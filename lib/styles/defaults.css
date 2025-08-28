@@ -52,8 +52,8 @@
   --AGT-resize-bar-color: var(--AGT-c-active);
   --AGT-resize-bar-background: linear-gradient(
     90deg,
-    #0000 calc(var(--hover-size) / 2 - 1px),
-    var(--AGT-c-resize-bar) 0 calc(var(--hover-size) / 2 + 1px),
+    #0000 calc(var(--AGT-resize-bar-hover-size) / 2 - 1px),
+    var(--AGT-c-resize-bar) 0 calc(var(--AGT-resize-bar-hover-size) / 2 + 1px),
     #0000 0 100%
   );
 }

@@ -47,7 +47,7 @@ export const TablePagination = (props: TablePaginationProps) => {
           className="AGT-one-line-text"
           color="secondary"
         >
-          {page * pageSize + 1} - {Math.min(page * pageSize + pageSize, rowCount)} of {rowCount}
+          {rowCount > 0 ? page * pageSize + 1 : 0} - {Math.min(page * pageSize + pageSize, rowCount)} of {rowCount}
         </ComponentOverride>
         <ComponentOverride
           defaultComponent={IconButton}
@@ -61,7 +61,7 @@ export const TablePagination = (props: TablePaginationProps) => {
           defaultComponent={IconButton}
           overrideComponent={customComponents?.iconButton}
           onClick={() => setPage(page + 1)}
-          disabled={page === Math.ceil(rowCount / pageSize) - 1}
+          disabled={page === Math.max(0, Math.ceil(rowCount / pageSize) - 1)}
           icon={<ArrowRightPageIcon />}
           iconType={IconButtonType.ArrowRight}
         />
